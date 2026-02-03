@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>อ้อโฮมเมด - เอนไซม์สดและขนมปังเพื่อสุขภาพ</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Sarabun (Modern Thai Font) -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Sarabun', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            green: '#4A7c59', // Natural Green
+                            light: '#F3F4F6',
+                            brown: '#8D6E63', // Earthy Brown
+                            cream: '#FFF8E1'  // Warm background
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body class="bg-brand-light text-gray-700 font-sans antialiased">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md fixed w-full z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <!-- Logo Placeholder using the profile image -->
+                    <img src="https://lh3.googleusercontent.com/sitesv/APaQ0SQ3rIin3jzZUDiuDyDZj0G7KQ-YtQORbTjCp1bV5zBAgX3Y7QeFmN-IlDN3xuTLz3Fo5mtEuM6aIdEU0qAeXVWbp3UGqsEU-bo1cSKFt_Eubc_qY3bNj9vkAlpBppT2czCmeG-nvHPf2lFobtay1KRqO5Rq1-v4xqDOyaaB353FFC7kqsWRM9iB=w16383" alt="Logo" class="h-10 w-10 rounded-full border-2 border-brand-green">
+                    <span class="font-bold text-xl text-brand-green">อ้อโฮมเมด</span>
+                </div>
+                <div class="hidden md:flex space-x-6 font-medium">
+                    <a href="#story" class="hover:text-brand-green transition">เรื่องราวของเรา</a>
+                    <a href="#products" class="hover:text-brand-green transition">สินค้า</a>
+                    <a href="#contact" class="px-4 py-2 bg-brand-green text-white rounded-full hover:bg-green-700 transition">ติดต่อเรา</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative pt-24 pb-12 lg:pt-32 lg:pb-20 overflow-hidden bg-brand-cream">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="space-y-6">
+                    <span class="inline-block py-1 px-3 rounded-full bg-green-100 text-brand-green text-sm font-semibold">
+                        Health & Homemade
+                    </span>
+                    <h1 class="text-4xl md:text-5xl font-bold leading-tight text-gray-900">
+                        อาหารเป็นยา <br>
+                        <span class="text-brand-green">จากความรักของแม่</span>
+                    </h1>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        "ทำทานแบบไหน ทำขายแบบนั้น" เราคัดสรรวัตถุดิบอินทรีย์ ปลอดสาร 
+                        เพื่อสุขภาพที่ดีอย่างยั่งยืน เริ่มต้นจากครัวเล็กๆ ที่ทำเพื่อลูกสาว สู่สุขภาพดีที่ส่งต่อถึงคุณ
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="https://aorhomemade.page365.net/" target="_blank" class="flex justify-center items-center px-8 py-3 text-base font-medium text-white bg-brand-green rounded-lg hover:bg-green-700 md:text-lg transition shadow-lg">
+                            <i class="fas fa-shopping-cart mr-2"></i> สั่งซื้อสินค้า (Page365)
+                        </a>
+                        <a href="https://line.me/R/ti/p/%40438gkaxg" target="_blank" class="flex justify-center items-center px-8 py-3 text-base font-medium text-brand-green bg-white border-2 border-brand-green rounded-lg hover:bg-green-50 md:text-lg transition">
+                            <i class="fab fa-line mr-2"></i> สอบถามทาง LINE
+                        </a>
+                    </div>
+                </div>
+                <!-- Image -->
+                <div class="relative">
+                    <div class="absolute inset-0 bg-brand-green rounded-2xl transform rotate-3 opacity-20"></div>
+                    <img src="https://lh3.googleusercontent.com/sitesv/APaQ0SSc-n65fMpO-dBZgylYy9rVqL6xjRRKFg1Kq4SCXZFDI3dk45AknGZIEWIFXGXLbdcl4I5TYyDnEEVfJSz5ARF9sDAdo3XJm89ffejavXfkNf2eo2dYDea1VxBgRVs4hG1PKWrovaH2ihpcqSw08xC2rZh4mjlFDs8qEAMd3crEySn7qUJl2vX0XY2lrYF8SkzBQIdh-GdOGN3a6_mRjT1YnQ35tV9UV07hQ8I=w1280" alt="อ้อโฮมเมด" class="relative rounded-2xl shadow-2xl w-full object-cover h-80 lg:h-auto">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Story Section (The Why) -->
+    <section id="story" class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800">จุดเริ่มต้นจาก "วิกฤต" สู่ "ปาฏิหาริย์"</h2>
+                <div class="w-16 h-1 bg-brand-green mx-auto mt-4 rounded"></div>
+            </div>
+
+            <div class="space-y-12">
+                <!-- Part 1 -->
+                <div class="flex flex-col md:flex-row gap-8 items-start">
+                    <div class="md:w-1/4 flex justify-center">
+                        <div class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center text-2xl">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-3/4">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">เมื่อโรคร้ายมาเยือน</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            "อ้อโฮมเมด เอนไซม์สด" เกิดขึ้นจากการที่คุณอ้อและพี่อั๋น (สามี) พยายามหาวิธีดูแลลูกสาวคนโตที่ป่วยด้วยโรค <strong>anti NMDAR (แพ้ภูมิตัวเอง)</strong> สมองอักเสบเมื่ออายุเพียง 8 ปี ต้องรักษาด้วยเคมีบำบัดต่อเนื่องนานกว่า 2 ปี จนป่วยติดเตียงในสภาพเจ้าหญิงนิทรา
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Part 2 -->
+                <div class="flex flex-col md:flex-row gap-8 items-start">
+                    <div class="md:w-1/4 flex justify-center">
+                        <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-3/4">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">ค้นพบทางออกด้วย "เอนไซม์"</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            เราได้พบกับ <strong>ดร.อานนท์ เอื้อตระกูล</strong> ผู้มีพระคุณที่สอนให้ทำเอนไซม์สดจากจุลินทรีย์ดี ทานเห็ดเป็นยาเพื่อปรับภูมิคุ้มกัน จากเด็กที่ป่วยติดเตียง เริ่มขยับแขน ยิ้ม และหัวเราะได้อีกครั้ง ทำให้เราประจักษ์ว่า "เอนไซม์สดมีความสำคัญมากกับร่างกาย"
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Part 3 -->
+                <div class="flex flex-col md:flex-row gap-8 items-start">
+                    <div class="md:w-1/4 flex justify-center">
+                        <div class="w-16 h-16 bg-orange-100 text-orange-500 rounded-full flex items-center justify-center text-2xl">
+                            <i class="fas fa-hands-holding-circle"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-3/4">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">ส่งต่อสุขภาพดีสู่ทุกคน</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            เราจึงเริ่มแบ่งปันสิ่งที่เราทำให้ลูกทาน มาทำขายด้วยความพิถีพิถัน คัดสรรวัตถุดิบอินทรีย์ เพราะเราถือคติว่า <strong>“ทำทานแบบไหน ก็จะทำขายแบบเดียวกัน”</strong> โดยไม่มีสารกันบูด และทำสดใหม่ทุกออเดอร์
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy / Trust Points -->
+    <section class="py-12 bg-brand-green text-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="p-6">
+                    <i class="fas fa-seedling text-4xl mb-4 text-green-200"></i>
+                    <h3 class="text-xl font-bold mb-2">วัตถุดิบอินทรีย์</h3>
+                    <p class="text-green-100">คัดสรรวัตถุดิบปลอดสารจากเกษตรกรโดยตรง</p>
+                </div>
+                <div class="p-6 border-l-0 md:border-l border-green-600">
+                    <i class="fas fa-flask text-4xl mb-4 text-green-200"></i>
+                    <h3 class="text-xl font-bold mb-2">ไม่ใส่สารกันบูด</h3>
+                    <p class="text-green-100">ทำสดใหม่ ปลอดภัย ไร้สารเคมีตกค้าง</p>
+                </div>
+                <div class="p-6 border-l-0 md:border-l border-green-600">
+                    <i class="fas fa-graduation-cap text-4xl mb-4 text-green-200"></i>
+                    <h3 class="text-xl font-bold mb-2">ยินดีให้คำแนะนำ</h3>
+                    <p class="text-green-100">พร้อมสอนวิธีทำและให้ความรู้เรื่องเอนไซม์</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-16 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800">สินค้าแนะนำ</h2>
+                <p class="text-gray-600 mt-2">เมนูสุขภาพที่เราทำทานเองที่บ้าน สู่มือคุณ</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product Card 1 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+                    <div class="h-48 bg-purple-100 flex items-center justify-center">
+                         <i class="fas fa-wine-bottle text-6xl text-purple-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">เอนไซม์สดข้าวก่ำธัญพืช</h3>
+                        <p class="text-gray-600 text-sm mb-4">สินค้าขายดีที่สุด! ผสมผสานคุณค่าจากธัญพืชและเอนไซม์สด ทานง่าย ได้ประโยชน์เต็มๆ</p>
+                        <a href="https://aorhomemade.page365.net/" class="text-brand-green font-semibold hover:underline">ดูรายละเอียด <i class="fas fa-arrow-right text-xs"></i></a>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+                    <div class="h-48 bg-orange-100 flex items-center justify-center">
+                        <i class="fas fa-prescription-bottle text-6xl text-orange-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">น้ำเอนไซม์เห็ด (Mushroom Cider)</h3>
+                        <p class="text-gray-600 text-sm mb-4">เข้มข้นด้วยคุณค่าจากเห็ด ช่วยปรับสมดุลลำไส้และภูมิคุ้มกัน</p>
+                        <a href="https://aorhomemade.page365.net/" class="text-brand-green font-semibold hover:underline">ดูรายละเอียด <i class="fas fa-arrow-right text-xs"></i></a>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+                    <div class="h-48 bg-yellow-100 flex items-center justify-center">
+                         <i class="fas fa-bread-slice text-6xl text-yellow-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">ขนมปังโฮลวีท & เทมเป้</h3>
+                        <p class="text-gray-600 text-sm mb-4">ขนมปังโฮมเมดแท้ๆ และเทมเป้โปรตีนสูง อร่อย สะอาด ดีต่อสุขภาพ</p>
+                        <a href="https://aorhomemade.page365.net/" class="text-brand-green font-semibold hover:underline">ดูรายละเอียด <i class="fas fa-arrow-right text-xs"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Big Image Bottom -->
+            <div class="mt-12 rounded-xl overflow-hidden shadow-xl">
+                 <img src="https://lh3.googleusercontent.com/sitesv/APaQ0SSAcbgXG7OnOY9xulq26qoDUquHxa5XWfon_N1el0EygeCOP2RDs2qXvDQpbKYXI17mnf4qChyuNCBRjyBUxSmzH4WqwSFVTvggcdUDTB6xi-YnSBITA8wx-kI5K-Ilh1LfP-sWyB2jEtmGyydSQU0DUxilb1f6_HyAuPbZK1Xc-Mb6E956mbFh3b3EyEDGpH-W7cM3NklXl6FQloLJ1pL1WTm21n6Mv32PS0w=w1280" alt="สินค้าอ้อโฮมเมด" class="w-full h-auto object-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <footer id="contact" class="bg-gray-800 text-white pt-16 pb-8">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">อ้อโฮมเมด เอนไซม์สด</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        เราหวังให้เอนไซม์สดเป็นอาหารประจำบ้านของทุกๆ บ้าน เพราะ "เอนไซม์คือชีวิต" 
+                        ปรึกษาเราได้เสมอ เรายินดีถ่ายทอดความรู้เพื่อให้คนไทยสุขภาพดี
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/aorhomemade" target="_blank" class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center hover:bg-blue-700 transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://line.me/R/ti/p/%40438gkaxg" target="_blank" class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center hover:bg-green-600 transition">
+                            <i class="fab fa-line"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-6">ช่องทางติดต่อ & สั่งซื้อ</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-center">
+                            <i class="fas fa-store text-brand-green mr-3 w-6"></i>
+                            <a href="https://aorhomemade.page365.net/" target="_blank" class="text-gray-300 hover:text-white transition">หน้าร้าน Page365 (สั่งซื้อสินค้า)</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fab fa-facebook-square text-blue-500 mr-3 w-6"></i>
+                            <a href="https://www.facebook.com/aorhomemade" target="_blank" class="text-gray-300 hover:text-white transition">Page: อ้อโฮมเมด เอนไซม์สด</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fab fa-line text-green-500 mr-3 w-6"></i>
+                            <a href="https://line.me/R/ti/p/%40438gkaxg" target="_blank" class="text-gray-300 hover:text-white transition">Line ID: @aorhomemade</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-500 text-sm">
+                &copy; 2025 Aor Homemade. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
