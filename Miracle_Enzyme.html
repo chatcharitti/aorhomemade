@@ -28,13 +28,34 @@
         }
     </script>
     <style>
+        :root { --base-font-size: 1.125rem; }
         body { font-family: 'Sarabun', sans-serif; scroll-behavior: smooth; }
+        .dynamic-text { font-size: var(--base-font-size); }
         .gradient-bg { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); }
         .content-card { transition: transform 0.2s ease; }
         .content-card:hover { transform: translateY(-4px); }
+        .sticky-nav { backdrop-filter: blur(10px); background-color: rgba(255, 255, 255, 0.8); }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased">
+
+    <!-- Top Navigation & Accessibility Bar -->
+    <nav class="sticky top-0 z-50 sticky-nav border-b border-slate-200">
+        <div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
+            <!-- Back Button -->
+            <a href="index.html" class="flex items-center text-slate-600 hover:text-enzyme-blue transition font-medium text-sm">
+                <i class="fas fa-arrow-left mr-2"></i> กลับหน้าแรก
+            </a>
+            
+            <!-- Font Control -->
+            <div class="flex items-center space-x-2 bg-slate-100 p-1 rounded-lg border border-slate-200">
+                <span class="text-[10px] uppercase font-bold text-slate-400 px-2">ขนาดอักษร</span>
+                <button onclick="changeFontSize(-0.125)" class="w-8 h-8 flex items-center justify-center bg-white rounded shadow-sm hover:bg-slate-50 transition text-sm" title="ลดขนาด">A-</button>
+                <button onclick="resetFontSize()" class="w-8 h-8 flex items-center justify-center bg-white rounded shadow-sm hover:bg-slate-50 transition text-sm" title="ค่าเริ่มต้น"><i class="fas fa-redo-alt text-[10px]"></i></button>
+                <button onclick="changeFontSize(0.125)" class="w-8 h-8 flex items-center justify-center bg-white rounded shadow-sm hover:bg-slate-50 transition text-sm" title="เพิ่มขนาด">A+</button>
+            </div>
+        </div>
+    </nav>
 
     <!-- Hero Header -->
     <header class="relative bg-white pt-16 pb-24 overflow-hidden border-b border-slate-200">
@@ -52,16 +73,16 @@
         </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-6 -mt-12 pb-24 relative z-20">
+    <main id="main-content" class="dynamic-text max-w-5xl mx-auto px-6 -mt-12 pb-24 relative z-20">
         
-        <!-- Intro Section: What is Enzyme? -->
+        <!-- Intro Section -->
         <section class="bg-white rounded-3xl shadow-xl shadow-slate-200/60 overflow-hidden mb-12">
             <div class="grid grid-cols-1 lg:grid-cols-2">
                 <div class="p-8 md:p-12">
                     <h2 class="text-3xl font-bold text-enzyme-blue mb-6 flex items-center">
                         <i class="fas fa-microscope mr-3"></i> เอนไซม์ คือ อะไร
                     </h2>
-                    <div class="space-y-4 text-lg leading-relaxed text-slate-600">
+                    <div class="space-y-4 leading-relaxed text-slate-600">
                         <p>
                             เป็นที่ทราบกันดีว่า วิตามินและแร่ธาดุ เป็นสิ่งจำเป็นสำหรับการมีสุขภาพดี และสมุนไพรก็มีความสำคัญเป็นที่รับรู้กันอย่างกว้างขวาง แต่สำหรับเอนไซม์นั้น ได้มีการศึกษาในแง่ชีวเคมืกันมาช้านาน 
                         </p>
@@ -82,23 +103,17 @@
 
         <!-- Enzyme Types Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            <!-- Amylase -->
             <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm content-card">
-                <div class="w-12 h-12 bg-blue-100 text-enzyme-blue rounded-xl flex items-center justify-center mb-6 text-xl">
-                    <i class="fas fa-bread-slice"></i>
-                </div>
+                <div class="w-12 h-12 bg-blue-100 text-enzyme-blue rounded-xl flex items-center justify-center mb-6 text-xl"><i class="fas fa-bread-slice"></i></div>
                 <h3 class="text-xl font-bold text-slate-800 mb-3">เอนไซม์ อะไมเลส</h3>
                 <p class="text-slate-600 mb-4 italic">ย่อยอาหารกลุ่มคาร์โบไฮเครตและแป้ง (เช่น ข้าว ขนมปัง ผักและผลไม้)</p>
                 <div class="bg-red-50 p-4 rounded-lg border-l-4 border-enzyme-red text-sm text-enzyme-red">
-                    <strong>หากย่อยไม่สมบูรณ์:</strong> จะทำให้เกิดภาวะเหมือนการหมักแป้งในท้อง ทำให้เกิดแก๊สและมีอาการไม่สบายต่างๆ
+                    <strong>หากย่อยไม่สมบูรณ์:</strong> ทำให้เกิดภาวะเหมือนการหมักแป้งในท้อง ทำให้เกิดแก๊ส
                 </div>
             </div>
 
-            <!-- Protease -->
             <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm content-card">
-                <div class="w-12 h-12 bg-red-100 text-enzyme-red rounded-xl flex items-center justify-center mb-6 text-xl">
-                    <i class="fas fa-drumstick-bite"></i>
-                </div>
+                <div class="w-12 h-12 bg-red-100 text-enzyme-red rounded-xl flex items-center justify-center mb-6 text-xl"><i class="fas fa-drumstick-bite"></i></div>
                 <h3 class="text-xl font-bold text-slate-800 mb-3">เอนไซม์ โปรตีเอส</h3>
                 <p class="text-slate-600 mb-4 italic">ย่อยอาหารกลุ่มโปรตีน (เช่นเนื้อสัตว์ต่างๆ ไก่ ปลา ถั่ว)</p>
                 <div class="bg-red-50 p-4 rounded-lg border-l-4 border-enzyme-red text-sm text-enzyme-red">
@@ -106,33 +121,27 @@
                 </div>
             </div>
 
-            <!-- Lipase -->
             <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm content-card">
-                <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center mb-6 text-xl">
-                    <i class="fas fa-oil-can"></i>
-                </div>
+                <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center mb-6 text-xl"><i class="fas fa-oil-can"></i></div>
                 <h3 class="text-xl font-bold text-slate-800 mb-3">เอนไซม์ไลเปส</h3>
-                <p class="text-slate-600 mb-4 italic">มีหน้าที่ย่อยสลายไขมัน และช่วยรักษาสมดุลย์กรดไขมันในร่างกาย</p>
+                <p class="text-slate-600 mb-4 italic">ย่อยไขมัน และช่วยรักษาสมดุลย์กรดไขมันในร่างกาย</p>
                 <div class="bg-red-50 p-4 rounded-lg border-l-4 border-enzyme-red text-sm text-enzyme-red">
-                    <strong>หากย่อยไม่ดี:</strong> ไขมันไม่ถูกย่อยจะเหม็นหืน เหม็นเปรี้ยว และโคเลสเตอรอลเสียสมดุลย์
+                    <strong>หากย่อยไม่ดี:</strong> ไขมันไม่ถูกย่อยจะเหม็นหืน และโคเลสเตอรอลเสียสมดุลย์
                 </div>
             </div>
 
-            <!-- Cellulase -->
             <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm content-card">
-                <div class="w-12 h-12 bg-green-100 text-enzyme-green rounded-xl flex items-center justify-center mb-6 text-xl">
-                    <i class="fas fa-leaf"></i>
-                </div>
+                <div class="w-12 h-12 bg-green-100 text-enzyme-green rounded-xl flex items-center justify-center mb-6 text-xl"><i class="fas fa-leaf"></i></div>
                 <h3 class="text-xl font-bold text-slate-800 mb-3">เอนไซม์เซลลูเลส</h3>
-                <p class="text-slate-600 mb-4 italic">ย่อยสลายเซลูโลส (ไฟเบอร์ในผัก) ร่างกายเราผลิตเองไม่ได้</p>
+                <p class="text-slate-600 mb-4 italic">ย่อยสลายเซลูโลส ร่างกายเราผลิตเองไม่ได้</p>
                 <div class="bg-amber-50 p-4 rounded-lg border-l-4 border-amber-600 text-sm text-amber-800">
-                    <strong>ข้อควรระวัง:</strong> ไฟเบอร์สังเคราะห์ที่ใช้ล้างลำไส้ มักทำให้เกิดปัญหากลายเป็นไขเคลือบผนังลำไส้แทน
+                    <strong>ข้อควรระวัง:</strong> ไฟเบอร์สังเคราะห์ที่ใช้ล้างลำไส้ มักทำให้เกิดปัญหาไขเคลือบผนังลำไส้
                 </div>
             </div>
         </div>
 
-        <!-- Sources & Miracle -->
-        <section class="bg-slate-900 rounded-3xl overflow-hidden mb-12 text-white">
+        <!-- Sources Section -->
+        <section class="bg-slate-900 rounded-3xl overflow-hidden mb-12 text-white shadow-2xl">
             <div class="grid grid-cols-1 md:grid-cols-2">
                 <div class="relative min-h-[400px]">
                     <img src="Picture2.jpg" alt="ระบบนิเวศทางธรรมชาติ" class="absolute inset-0 w-full h-full object-cover opacity-80">
@@ -150,18 +159,18 @@
             </div>
         </section>
 
-        <!-- Microbial Enzymes Section -->
+        <!-- Microbial Enzymes -->
         <section class="mb-12">
             <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-slate-100">
                 <div class="flex flex-col lg:flex-row gap-12 items-center">
                     <div class="lg:w-1/2 space-y-6">
                         <h2 class="text-3xl font-bold text-enzyme-green">เอนไซม์ที่ดีที่สุด: จากจุลินทรีย์</h2>
-                        <p class="text-lg text-slate-600 leading-relaxed">
-                            เอนไซม์ที่ได้จากการหมักของจุลินทรีย์ที่มีประโยชน์ รวมทั้งจุลินทรีย์ที่ใช้ทำนมเปรี้ยวและยีสต์ ที่อยู่ในระบบทางเดินอาหาร จะช่วยระบบย่อยอาหารได้ครบถ้วนและยังช่วยเสริมการทำงานของระบบต่อมไร้ท่อ จึงมีประโยชน์ต่อร่างกายมากกว่าเอนไซม์จากแหล่งอื่นๆ
+                        <p class="text-slate-600 leading-relaxed">
+                            เอนไซม์ที่ได้จากการหมักของจุลินทรีย์ที่มีประโยชน์ รวมทั้งจุลินทรีย์ที่ใช้ทำนมเปรี้ยวและยีสต์ จะช่วยระบบย่อยอาหารได้ครบถ้วนและยังช่วยเสริมการทำงานของระบบต่อมไร้ท่อ
                         </p>
                         <ul class="space-y-3 text-slate-600">
-                            <li class="flex items-start"><i class="fas fa-check-circle text-enzyme-green mt-1 mr-3"></i> <strong>เอนไซม์แพนเครียติน:</strong> จากตับอ่อนหมูและวัว ทำงานในสภาวะที่เป็นด่าง</li>
-                            <li class="flex items-start"><i class="fas fa-check-circle text-enzyme-green mt-1 mr-3"></i> <strong>บรอมเมลเลน & ปาเปน:</strong> จากสัปปะรดและมะละกอ ช่วยให้เนื้อนุ่ม</li>
+                            <li class="flex items-start"><i class="fas fa-check-circle text-enzyme-green mt-1 mr-3"></i> <strong>เอนไซม์แพนเครียติน:</strong> จากตับอ่อนหมูและวัว</li>
+                            <li class="flex items-start"><i class="fas fa-check-circle text-enzyme-green mt-1 mr-3"></i> <strong>บรอมเมลเลน & ปาเปน:</strong> จากสัปปะรดและมะละกอ</li>
                         </ul>
                     </div>
                     <div class="lg:w-1/2 grid grid-cols-2 gap-4">
@@ -172,23 +181,21 @@
             </div>
         </section>
 
-        <!-- Why We Need Enzymes / Heat Warning -->
-        <section class="bg-enzyme-red rounded-3xl p-8 md:p-12 text-white mb-12 relative overflow-hidden">
-            <div class="absolute top-0 right-0 p-8 opacity-10">
-                <i class="fas fa-fire text-9xl"></i>
-            </div>
+        <!-- Heat Warning -->
+        <section class="bg-enzyme-red rounded-3xl p-8 md:p-12 text-white mb-12 relative overflow-hidden shadow-xl">
+            <div class="absolute top-0 right-0 p-8 opacity-10"><i class="fas fa-fire text-9xl"></i></div>
             <div class="relative z-10 max-w-3xl">
                 <h2 class="text-3xl font-bold mb-6">ทำไมเราจึงต้องการเอนไซม์?</h2>
                 <div class="bg-black/20 p-8 rounded-2xl border border-white/20 mb-8">
                     <h3 class="text-2xl font-bold mb-4">เอนไซม์ถูกทำลายได้ง่ายด้วย "ความร้อน"</h3>
-                    <p class="text-lg text-white/90 leading-relaxed">
-                        เอนไซม์จะถูกทำลายจากการต้ม การอุ่นไมโครเวฟ หรือแม้กระทั่งการลวกที่อุณหภูมิสูงเกิน <strong>45 องศาเซลเซียส</strong> แม้แต่ความร้อนจากเครื่องคั้นน้ำผลไม้ก็ยับยั้งการทำงานได้ 80 เปอร์เซนต์ของพลังงานในร่างกายถูกใช้ไปในขบวนการย่อยอาหาร ยิ่งเครียด อ่อนเพลีย หรืออายุมาก ร่างกายยิ่งต้องการเอนไซม์เสริม
+                    <p class="text-white/90 leading-relaxed">
+                        เอนไซม์จะถูกทำลายจากการต้ม ไมโครเวฟ หรือการลวกที่อุณหภูมิสูงเกิน <strong>45 องศาเซลเซียส</strong> ยิ่งเครียด หรืออายุมาก ร่างกายยิ่งต้องการเอนไซม์เสริม
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Life Saving Equipment Section -->
+        <!-- Life Saving Equipment -->
         <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
             <div class="lg:col-span-2 space-y-8">
                 <div class="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-slate-100">
@@ -196,99 +203,83 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
                             <h4 class="font-bold text-slate-800 text-xl mb-4">1. ย่อยสลายสารอาหาร</h4>
-                            <p class="text-slate-600 leading-relaxed">เพื่อให้โมเลกุลเล็กพอที่จะผ่านผนังลำไส้เข้าสู่กระแสเลือด หากย่อยไม่สมบูรณ์ แป้งจะหมัก โปรตีนจะเน่า ไขมันจะเหม็นหืน ทำให้เกิดแก๊สและท้องผูก</p>
+                            <p class="text-slate-600 leading-relaxed">เพื่อให้โมเลกุลเล็กพอที่จะผ่านผนังลำไส้เข้าสู่กระแสเลือด</p>
                         </div>
                         <div>
                             <h4 class="font-bold text-slate-800 text-xl mb-4">2. รักษาระบบเผาผลาญ</h4>
-                            <p class="text-slate-600 leading-relaxed">สลายไขมัน ลำเลียงอาหารเข้าเซลล์ กำจัดพิษ ทุกกลไกตั้งแต่กล้ามเนื้อไปจนถึงเส้นประสาทล้วนต้องพึ่งพาเอนไซม์</p>
+                            <p class="text-slate-600 leading-relaxed">สลายไขมัน ลำเลียงอาหารเข้าเซลล์ กำจัดพิษ ล้วนต้องพึ่งพาเอนไซม์</p>
                         </div>
                     </div>
-                    
-                    <div class="mt-12 p-8 bg-blue-50 rounded-2xl italic text-slate-700 relative border-l-4 border-enzyme-blue">
+                    <div class="mt-12 p-8 bg-blue-50 rounded-2xl italic text-slate-700 relative border-l-4 border-enzyme-blue shadow-inner">
                         <i class="fas fa-quote-left absolute top-4 left-4 text-slate-200 text-3xl"></i>
-                        "จากหลักฐานต่างๆ การรับประทานเอนไซม์มีผลดีต่อระบบภูมิคุ้มกัน โรคข้อ และโรคภูมิคุ้มกันเฉียบพลันอื่นๆ"
-                        <footer class="mt-4 not-italic font-bold text-enzyme-blue">— นพ.ดร.ปีเตอร์ รอทชายด์ (ผู้ได้รับการเสนอชื่อรางวัลโนเบล)</footer>
+                        "จากหลักฐานต่างๆ การรับประทานเอนไซม์มีผลดีต่อระบบภูมิคุ้มกัน และโรคภูมิคุ้มกันผิดปกติอื่นๆ"
+                        <footer class="mt-4 not-italic font-bold text-enzyme-blue text-right">— นพ.ดร.ปีเตอร์ รอทชายด์</footer>
                     </div>
                 </div>
             </div>
             <div class="lg:col-span-1 flex flex-col space-y-4">
                 <img src="Picture5.jpg" alt="อาหารเป็นยา" class="rounded-3xl shadow-lg h-full object-cover border-4 border-white">
-                <div class="bg-enzyme-green p-8 rounded-3xl text-white text-center">
+                <div class="bg-enzyme-green p-8 rounded-3xl text-white text-center shadow-lg">
                     <p class="text-xl font-bold">“ เอนไซม์เป็นอุปกรณ์ช่วยชีวิตจากธรรมชาติ “</p>
                 </div>
             </div>
         </section>
 
-        <!-- Enzyme Bank Account -->
+        <!-- Bank Account Section -->
         <section class="bg-enzyme-blue rounded-3xl p-8 md:p-12 text-white mb-12 shadow-2xl">
-            <h2 class="text-3xl font-bold mb-8 flex items-center">
-                <i class="fas fa-university mr-4"></i> บัญชีเงินฝากเอนไซม์
-            </h2>
+            <h2 class="text-3xl font-bold mb-8 flex items-center"><i class="fas fa-university mr-4"></i> บัญชีเงินฝากเอนไซม์</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div class="space-y-6">
-                    <p class="text-lg text-blue-100">
-                        ดร. เอ็คเวิร์ค โฮเวล เปรียบร่างกายเราเหมือน <strong>"สมุดบัญชีสะสมเอนไซม์"</strong> เซลล์นับร้อยล้านเซลล์ทำงานตลอดเวลาเพื่อรักษาระดับให้สมดุล
-                    </p>
+                    <p class="text-blue-100">ดร. เอ็คเวิร์ค โฮเวล เปรียบร่างกายเหมือน <strong>"สมุดบัญชีสะสมเอนไซม์"</strong></p>
                     <div class="bg-red-900/30 p-6 rounded-2xl border border-red-400/30">
-                        <h4 class="font-bold text-red-200 mb-2 underline italic">สภาวะล้มละลาย:</h4>
-                        <p class="text-sm">การติดเชื้อไวรัส ออกกำลังกายหนักเกิน ความเครียด อากาศไม่บริสุทธิ์ และอารมณ์โมโห ทำให้เราสูญเสียเอนไซม์มากจนเข้าสู่ภาวะล้มละลาย</p>
+                        <h4 class="font-bold text-red-200 mb-2">สภาวะล้มละลาย:</h4>
+                        <p class="text-sm text-red-50">ความเครียด อากาศไม่บริสุทธิ์ และอารมณ์โมโห ทำให้ร่างกายสูญเสียเอนไซม์มากจนเข้าสู่ภาวะล้มละลาย</p>
                     </div>
                 </div>
                 <div class="bg-white/10 p-8 rounded-2xl border border-white/20">
-                    <h4 class="text-xl font-bold mb-4 text-green-300">วิธีฝากเงิน (เอนไซม์) เข้าบัญชี:</h4>
-                    <p class="leading-relaxed mb-4 text-blue-50">รับประทานเอนไซม์จากจุลินทรีย์ดีและยีสต์ ซึ่งจะช่วยทั้งการย่อย สร้างกล้ามเนื้อ และเติมระบบเผาผลาญโดยตรง</p>
-                    <p class="text-xs text-blue-200 italic font-medium">* การกินผักผลไม้สดเพียงพอแค่ย่อยตัวมันเองเท่านั้น ไม่พอสำหรับการ "ฝากสะสม"</p>
+                    <h4 class="text-xl font-bold mb-4 text-green-300">วิธีฝากเงินเข้าบัญชี:</h4>
+                    <p class="leading-relaxed text-blue-50">รับประทานเอนไซม์จากจุลินทรีย์ดีและยีสต์ เพื่อเติมเอนไซม์ให้ระบบผาผลาญโดยตรง</p>
                 </div>
             </div>
         </section>
 
-        <!-- Nutrition Summary Table -->
+        <!-- Nutrition Stats -->
         <section class="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-100 mb-12">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-enzyme-blue">สารอาหาร 45 ชนิด ที่ร่างกายต้องการ</h2>
-                <p class="text-slate-500 mt-2 italic">ปริมาณที่เหมาะสมที่นำไปหล่อเลี้ยงเซลล์</p>
             </div>
-            
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div class="bg-slate-50 p-6 rounded-2xl text-center">
-                    <div class="text-enzyme-blue font-bold text-2xl mb-1">19</div>
-                    <div class="text-slate-500 text-sm">แร่ธาตุต่างๆ</div>
+                <div class="bg-slate-50 p-6 rounded-2xl text-center shadow-inner">
+                    <div class="text-enzyme-blue font-bold text-2xl">19</div><div class="text-slate-500 text-sm">แร่ธาตุ</div>
                 </div>
-                <div class="bg-slate-50 p-6 rounded-2xl text-center">
-                    <div class="text-enzyme-blue font-bold text-2xl mb-1">13</div>
-                    <div class="text-slate-500 text-sm">วิตามินต่างๆ</div>
+                <div class="bg-slate-50 p-6 rounded-2xl text-center shadow-inner">
+                    <div class="text-enzyme-blue font-bold text-2xl">13</div><div class="text-slate-500 text-sm">วิตามิน</div>
                 </div>
-                <div class="bg-slate-50 p-6 rounded-2xl text-center">
-                    <div class="text-enzyme-blue font-bold text-2xl mb-1">9</div>
-                    <div class="text-slate-500 text-sm">กรดอะมิโน</div>
+                <div class="bg-slate-50 p-6 rounded-2xl text-center shadow-inner">
+                    <div class="text-enzyme-blue font-bold text-2xl">9</div><div class="text-slate-500 text-sm">กรดอะมิโน</div>
                 </div>
-                <div class="bg-slate-50 p-6 rounded-2xl text-center">
-                    <div class="text-enzyme-blue font-bold text-2xl mb-1">4</div>
-                    <div class="text-slate-500 text-sm">สารอาหารหลัก</div>
+                <div class="bg-slate-50 p-6 rounded-2xl text-center shadow-inner">
+                    <div class="text-enzyme-blue font-bold text-2xl">4</div><div class="text-slate-500 text-sm">สารอาหารหลัก</div>
                 </div>
             </div>
-
             <div class="bg-gradient-to-r from-enzyme-blue to-blue-700 p-8 rounded-3xl text-white text-center">
-                <span class="text-lg opacity-80">และการสร้างเซลล์หนึ่งเซลล์ ต้องใช้เอนไซม์อย่างน้อย</span>
+                <span class="text-lg opacity-80 italic leading-relaxed">ในการสร้างเซลล์หนึ่งเซลล์ ต้องใช้เอนไซม์อย่างน้อย</span>
                 <div class="text-5xl font-bold my-2">1,300 ชนิด</div>
-                <p class="text-sm opacity-80 mt-2">ร่างกายเรามีเซลล์อย่างน้อย 100 ล้านล้านเซลล์ ทุกส่วนต้องพึ่งพาเอนไซม์</p>
+                <p class="text-sm opacity-80 mt-2">ร่างกายสร้างเอนไซม์จากอาหารที่เราย่อยได้อย่างสมบูรณ์</p>
             </div>
         </section>
 
-        <!-- Final Quotes & Why Not Heard -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <!-- Final Quotes -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 text-sm">
             <div class="bg-slate-100 p-8 rounded-3xl border border-slate-200">
                 <h4 class="font-bold text-slate-800 mb-4">ทำไมไม่เคยได้ยินเรื่องเอนไซม์?</h4>
-                <p class="text-slate-600 leading-relaxed text-sm">
-                    เพราะผู้เชี่ยวชาญด้านนี้มีน้อย ข้อมูลที่เผยแพร่ตามหน้าหนังสือพิมพ์หรือนิตยสารก็ไม่สามารถอธิบายความมหัศจรรย์ได้หมด ทั้งที่มีการบันทึกการรักษาด้วยเอนไซม์บำบัดมานานหลายสิบปีแล้ว
-                </p>
+                <p class="text-slate-600 leading-relaxed">เพราะข้อมูลที่เผยแพร่มีน้อยและผู้เชี่ยวชาญมีจำกัด ทั้งที่พลังแห่งเอนไซม์บำบัดมีการบันทึกมานานหลายสิบปีแล้ว</p>
             </div>
             <div class="bg-slate-100 p-8 rounded-3xl border border-slate-200 italic text-slate-600">
-                "เราคิดว่าเอนไซม์บำบัด จะเป็นการรักษาหลักทางการแพทย์ในอนาคต เพราะศักยภาพสูงมาก เราเชื่อว่าเอนไซม์จะเป็นวิถีการรักษาแห่งอนาคต"
-                <footer class="mt-4 not-italic font-bold text-slate-700 text-right">— นพ. ลี เอ โลเปซ & คณะ</footer>
+                "เราเชื่อว่าเอนไซม์จะเป็นวิถีการรักษาแห่งอนาคต เพราะศักยภาพบำบัดสูงมาก"
+                <footer class="mt-4 not-italic font-bold text-slate-700 text-right">— นพ. ลี เอ โลเปซ</footer>
             </div>
         </div>
-
     </main>
 
     <!-- Footer -->
@@ -296,11 +287,10 @@
         <div class="max-w-4xl mx-auto px-6 text-center">
             <div class="inline-flex items-center space-x-2 mb-8 bg-white/5 px-4 py-2 rounded-full">
                 <i class="fas fa-heart text-enzyme-red"></i>
-                <span class="text-sm">เผยแพร่โดย Facebook Page : อ้อโฮมเมดเอนไซม์สดและขนมปัง</span>
+                <span class="text-sm">เผยแพร่โดย Facebook Page : อ้อโฮมเมด</span>
             </div>
             <p class="mb-6 leading-relaxed">
-                ขอขอบคุณข้อมูลอันทรงคุณค่าจาก <strong>อ.อานนท์ เอื้อตระกูล - อานนท์ไบโอเทค</strong><br>
-                เพื่อประชาสัมพันธ์ให้ทราบถึงประโยชน์ และความจำเป็นของเอนไซม์ในร่างกาย
+                ขอขอบคุณข้อมูลจาก <strong>อ.อานนท์ เอื้อตระกูล - อานนท์ไบโอเทค</strong>
             </p>
             <div class="pt-8 border-t border-slate-800 text-xs uppercase tracking-widest opacity-50">
                 &copy; 2025 Miracle of Enzymes - Educational Content
@@ -308,5 +298,21 @@
         </div>
     </footer>
 
+    <script>
+        let currentSize = 1.125;
+        const main = document.getElementById('main-content');
+        
+        function changeFontSize(delta) {
+            currentSize = Math.min(Math.max(0.875, currentSize + delta), 2.5);
+            main.style.fontSize = `${currentSize}rem`;
+            document.documentElement.style.setProperty('--base-font-size', `${currentSize}rem`);
+        }
+        
+        function resetFontSize() {
+            currentSize = 1.125;
+            main.style.fontSize = `${currentSize}rem`;
+            document.documentElement.style.setProperty('--base-font-size', `${currentSize}rem`);
+        }
+    </script>
 </body>
 </html>
