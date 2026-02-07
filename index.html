@@ -31,6 +31,8 @@
     <style>
         .dropdown:hover .dropdown-menu { display: block; }
         html { scroll-behavior: smooth; }
+        /* สไตล์เพิ่มเติมสำหรับหมุนลูกศรตอนเปิดเมนูย่อยบนมือถือ */
+        .rotate-180 { transform: rotate(180deg); }
     </style>
 </head>
 <body class="bg-brand-light text-gray-700 font-sans antialiased">
@@ -74,15 +76,23 @@
         </div>
 
         <!-- Mobile Menu Wrapper -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 pb-4 px-4 shadow-inner">
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 pb-4 px-4 shadow-inner overflow-y-auto max-h-[80vh]">
             <a href="#story" class="block py-3 border-b border-gray-50 hover:text-brand-green">เรื่องราวของเรา</a>
             <a href="#products" class="block py-3 border-b border-gray-50 hover:text-brand-green">สินค้า</a>
+            
+            <!-- Mobile Submenu: คลิกอ่านสิ (มีประโยชน์) -->
             <div class="py-3 border-b border-gray-50">
-                <span class="font-bold text-brand-green">คลิกอ่านสิ (มีประโยชน์)</span>
-                <div class="pl-4 mt-2 space-y-2 text-sm">
-                    <a href="#" class="block text-gray-500 italic">บทความใหม่ๆ จะอัปเดตเร็วๆ นี้</a>
+                <button id="mobile-submenu-button" class="flex justify-between items-center w-full font-bold text-brand-green focus:outline-none">
+                    <span>คลิกอ่านสิ (มีประโยชน์)</span>
+                    <i id="submenu-arrow" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                </button>
+                <div id="mobile-submenu-content" class="hidden pl-4 mt-2 space-y-3 text-sm">
+                    <a href="Miracle_Enzyme.html" class="block py-1 text-gray-600 hover:text-brand-green border-l-2 border-brand-green/20 pl-3">มหัศจรรย์เอนไซม์</a>
+                    <a href="Rice_enzyme_v1.html" class="block py-1 text-gray-600 hover:text-brand-green border-l-2 border-brand-green/20 pl-3">ประโยชน์ของข้าวก่ำ</a>
+                    <a href="#" class="block py-1 text-gray-600 hover:text-brand-green border-l-2 border-brand-green/20 pl-3">การดูแลสุขภาพด้วยโภชนบำบัด</a>
                 </div>
             </div>
+
             <a href="#contact" class="block py-3 text-brand-green font-bold">ติดต่อเรา</a>
         </div>
     </nav>
@@ -279,12 +289,25 @@
         // Mobile Menu Toggle Script
         const menuBtn = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
+        
+        // Mobile Submenu Toggle
+        const submenuBtn = document.getElementById('mobile-submenu-button');
+        const submenuContent = document.getElementById('mobile-submenu-content');
+        const submenuArrow = document.getElementById('submenu-arrow');
 
+        // Toggle Main Mobile Menu
         menuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
 
-        // Close menu when clicking a link
+        // Toggle Submenu on Mobile
+        submenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // กันไม่ให้ไปปิดเมนูหลัก
+            submenuContent.classList.toggle('hidden');
+            submenuArrow.classList.toggle('rotate-180');
+        });
+
+        // Close menu when clicking a link (except submenu button)
         const mobileLinks = mobileMenu.querySelectorAll('a');
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
