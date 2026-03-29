@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เอนไซม์ข้าวก่ำ อ้อโฮมเมด — Q&A Live</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple-main:   #6B21A8;
+    --purple-mid:    #7E22CE;
+    --purple-soft:   #9333EA;
+    --purple-pale:   #F3E8FF;
+    --purple-light:  #EDE9FE;
+    --accent:        #7C3AED;
+    --accent-dark:   #5B21B6;
+    --green:         #166534;
+    --green-bg:      #DCFCE7;
+    --orange:        #9A3412;
+    --orange-bg:     #FFF7ED;
+    --bg-page:       #F8F5FF;
+    --bg-card:       #FFFFFF;
+    --bg-a-block:    #FAFAFF;
+    --text-main:     #1E1040;
+    --text-body:     #3B1F6A;
+    --text-muted:    #6B7280;
+    --border:        #DDD6FE;
+    --gold:          #D97706;
+    --gold-bg:       #FFFBEB;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Sarabun', sans-serif;
+    background: var(--bg-page);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ===== TOP BAR ===== */
+  .top-bar {
+    background: linear-gradient(135deg, var(--purple-mid) 0%, var(--purple-soft) 100%);
+    border-bottom: 3px solid var(--accent-dark);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .brand-icon {
+    width: 52px; height: 52px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+  }
+  .brand-name {
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+  }
+  .brand-sub {
+    font-size: 0.95rem;
+    color: #E9D5FF;
+    font-weight: 400;
+  }
+  .live-badge {
+    display: flex; align-items: center; gap: 8px;
+    background: #C0020A;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 7px 18px;
+    border-radius: 30px;
+    letter-spacing: 1px;
+    animation: pulse 1.4s infinite;
+  }
+  .live-dot {
+    width: 10px; height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    animation: blink 1s infinite;
+  }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(192,2,10,0.5)} 50%{box-shadow:0 0 0 10px rgba(192,2,10,0)} }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  /* ===== NAV TABS ===== */
+  .nav-tabs {
+    display: flex;
+    gap: 10px;
+    padding: 14px 28px;
+    overflow-x: auto;
+    background: #fff;
+    border-bottom: 2px solid var(--border);
+    flex-shrink: 0;
+  }
+  .nav-tabs::-webkit-scrollbar { height: 4px; }
+  .nav-tabs::-webkit-scrollbar-thumb { background: var(--purple-soft); border-radius: 2px; }
+  .tab-btn {
+    background: transparent;
+    border: 2px solid var(--border);
+    color: var(--text-body);
+    font-family: 'Sarabun', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 9px 18px;
+    border-radius: 24px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { border-color: var(--purple-soft); color: var(--purple-soft); }
+  .tab-btn.active {
+    background: var(--purple-soft);
+    border-color: var(--purple-soft);
+    color: #fff;
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .content-area {
+    flex: 1;
+    padding: 28px 32px 32px;
+    overflow-y: auto;
+  }
+
+  .section { display: none; }
+  .section.visible { display: block; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-num {
+    background: var(--purple-soft);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.1rem;
+    padding: 6px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .section-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--purple-main);
+    line-height: 1.3;
+  }
+
+  /* ===== Q&A CARD ===== */
+  .qa-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--purple-soft);
+    border-radius: 14px;
+    margin-bottom: 22px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(107,33,168,0.07);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .qa-card:hover { border-left-color: var(--accent-dark); box-shadow: 0 4px 16px rgba(107,33,168,0.13); }
+  .qa-card.highlighted { border-left-color: var(--accent-dark); background: var(--purple-pale); }
+
+  .q-block {
+    padding: 20px 24px 14px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    cursor: pointer;
+    background: var(--bg-card);
+  }
+  .qa-card.highlighted .q-block { background: var(--purple-pale); }
+  .q-tag {
+    background: var(--purple-soft);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.15rem;
+    padding: 4px 14px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .q-text {
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.45;
+  }
+
+  .a-block {
+    background: var(--bg-a-block);
+    padding: 18px 24px 20px 62px;
+    border-top: 1px solid var(--border);
+  }
+  .a-tag {
+    display: inline-block;
+    background: var(--green-bg);
+    color: var(--green);
+    font-weight: 800;
+    font-size: 1rem;
+    padding: 3px 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+  .a-tag.warn {
+    background: var(--orange-bg);
+    color: var(--orange);
+  }
+  .a-text {
+    font-size: 1.45rem;
+    font-weight: 500;
+    color: var(--text-body);
+    line-height: 1.75;
+  }
+  .a-text ul {
+    margin: 10px 0 0 6px;
+    padding: 0;
+    list-style: none;
+  }
+  .a-text ul li {
+    padding: 9px 0 9px 22px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    font-size: 1.35rem;
+    color: var(--text-body);
+  }
+  .a-text ul li:last-child { border-bottom: none; }
+  .a-text ul li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    color: var(--purple-soft);
+    font-size: 0.7rem;
+    top: 14px;
+  }
+  .a-text strong { color: var(--accent-dark); font-weight: 700; }
+
+  /* highlight keyword chips */
+  .chip {
+    display: inline-block;
+    background: var(--purple-light);
+    border: 1px solid #C4B5FD;
+    color: var(--accent-dark);
+    border-radius: 6px;
+    padding: 1px 8px;
+    font-size: 0.92em;
+    font-weight: 700;
+    margin: 0 2px;
+    white-space: nowrap;
+  }
+
+  /* price tag */
+  .price-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+  .price-card {
+    flex: 1;
+    min-width: 220px;
+    background: var(--gold-bg);
+    border: 2px solid #F59E0B;
+    border-radius: 12px;
+    padding: 16px 20px;
+  }
+  .price-label {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #92400E;
+    margin-bottom: 4px;
+  }
+  .price-amount {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--gold);
+  }
+  .price-desc {
+    font-size: 1.05rem;
+    color: #78350F;
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* ===== FONT SIZE CONTROLS ===== */
+  .controls-bar {
+    background: #fff;
+    border-top: 2px solid var(--border);
+    padding: 12px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .ctrl-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .ctrl-btn {
+    background: var(--purple-pale);
+    border: 1px solid var(--border);
+    color: var(--text-body);
+    font-family: 'Sarabun', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 6px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .ctrl-btn:hover { background: var(--purple-soft); color: #fff; border-color: var(--purple-soft); }
+  .ctrl-btn.active-size { background: var(--purple-soft); color: #fff; border-color: var(--purple-soft); }
+
+  .progress-bar {
+    height: 5px;
+    background: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--purple-soft), var(--accent-dark));
+    transition: width 0.3s;
+  }
+
+  /* responsive */
+  @media (max-width: 640px) {
+    .content-area { padding: 20px 16px 24px; }
+    .q-text { font-size: 1.3rem; }
+    .a-text { font-size: 1.2rem; }
+    .a-text ul li { font-size: 1.15rem; }
+    .section-title { font-size: 1.3rem; }
+    .top-bar { padding: 14px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="brand">
+    <div class="brand-icon">🌾</div>
+    <div>
+      <div class="brand-name">อ้อโฮมเมด</div>
+      <div class="brand-sub">เอนไซม์ข้าวก่ำ — คำถาม &amp; คำตอบ Live</div>
+    </div>
+  </div>
+  <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-bar"><div class="progress-fill" id="progress" style="width:20%"></div></div>
+
+<!-- NAV TABS -->
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="showSection(0, this)">🌾 ความรู้พื้นฐาน</button>
+  <button class="tab-btn" onclick="showSection(1, this)">💊 แก้ปัญหาสุขภาพ</button>
+  <button class="tab-btn" onclick="showSection(2, this)">🛒 รายละเอียดสินค้า</button>
+  <button class="tab-btn" onclick="showSection(3, this)">🥄 วิธีทานและเก็บรักษา</button>
+</div>
+
+<!-- CONTENT AREA -->
+<div class="content-area">
+
+  <!-- SECTION 1 -->
+  <div class="section visible" id="sec0">
+    <div class="section-header">
+      <div class="section-num">หมวด 1</div>
+      <div class="section-title">ความรู้พื้นฐานเกี่ยวกับเอนไซม์ และข้าวก่ำ</div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="qa-card highlighted">
+      <div class="q-block">
+        <div class="q-tag">Q1</div>
+        <div class="q-text">เอนไซม์ข้าวก่ำ คืออะไร?</div>
+      </div>
+      <div class="a-block">
+        <div class="a-tag">✅ คำตอบ</div>
+        <div class="a-text">
+          ผลิตภัณฑ์ <strong>โภชนาการบำบัด</strong> ที่นำข้าวก่ำสายพันธุ์คัดคุณภาพ มาผ่านกระบวนการ
+          <span class="chip">หมักชีวภาพ (Bio-Fermentation)</span>
+          เพื่อสร้างจุลินทรีย์ดี <span class="chip">Probiotics</span>
+          และ <strong>เอนไซม์สดที่ยังมีชีวิต</strong>
+          ซึ่งทำหน้าที่เป็นตัวเร่งปฏิกิริยาในการย่อยและดูดซึมสารอาหารเข้าสู่เซลล์โดยตรง
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="qa-card">
+      <div class="q-block">
+        <div class="q-tag">Q2</div>
+        <div class="q-text">ทำไมร่างกายขาดเอนไซม์ไม่ได้?</div>
+      </div>
+      <div class="a-block">
+        <div class="a-tag">✅ คำตอบ</div>
+        <div class="a-text">
+          เอนไซม์คือ <strong>"คนงาน" ของร่างกาย</strong> — ถ้าขาดเอนไซม์:
+          <ul>
+            <li>วิตามินและโปรตีนที่ทานเข้าไปจะ <strong>ไม่ถูกนำไปใช้งาน</strong></li>
+            <li>อาหารตกค้างและ <strong>เน่าเสียในลำไส้</strong></li>
+            <li>ร่างกายเสื่อมโทรม อ่อนเพลีย และนำไปสู่ <span class="chip">โรคเรื้อรัง (NCDs)</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="qa-card">
+      <div class="q-block">
+        <div class="q-tag">Q3</div>
+        <div class="q-text">เอนไซม์ข้าวก่ำอ้อโฮมเมด ต่างจากข้าวหมากทั่วไปอย่างไร?</div>
+      </div>
+      <div class="a-block">
+        <div class="a-tag">✅ คำตอบ</div>
+        <div class="a-text">
+          เราใช้ <strong>หลักการแพทย์และโภชนาการ</strong> ในทุกขั้นตอนการผลิต:
+          <ul>
+            <li><strong>ไม่มีน้ำตาลทราย</strong> ไม่แต่งกลิ่น ไม่ปรุงเพิ่ม</li>
+            <li>ควบคุม <strong>อุณหภูมิการหมักอย่างเข้มงวด</strong> เพื่อให้เอนไซม์ยังมีชีวิต</li>
+            <li>คงคุณค่า <span class="chip">สารต้านอนุมูลอิสระ</span> ไว้สูงสุด</li>
+            <li>ไม่ใช่แค่ขนม — แต่คือ <strong>อาหารเป็นยา</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="qa-card">
+      <div class="q-block">
+        <div class="q-tag">Q4</div>
+        <div class="q-text">สีม่วงดำของข้าวก่ำ มีประโยชน์อะไรในเชิงลึก?</div>
+      </div>
+      <div class="a-block">
+        <div class="a-tag">✅ คำตอบ</div>
+        <div class="a-text">
+          สีม่วงดำคือสาร <span class="chip">แอนโทไซยานิน (Anthocyanin)</span>
+          สารต้านอนุมูลอิสระประสิทธิภาพสูง มีฤทธิ์:
+          <ul>
+            <li>ลดการ <strong>อักเสบซ่อนเร้น</strong> ในร่างกาย (Systemic Inflammation)</li>
+            <li><strong>ชะลอความเสื่อมของเซลล์</strong></li>
+            <li>บำรุงและเสริมความแข็งแรงของ <strong>ระบบหลอดเลือด</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section" id="sec1">
+    <div class="section-header">
+      <div class="section-num">หมวด 2</div>
+      <div class="section-title">การแก้ปัญหาสุขภาพ</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="qa-card highlighted">
+      <div class="q-block">
+        <div class="q-tag">Q5</div>
+        <div class="q-text">ช่วยเรื่องภูมิคุ้มกันตก ป่วยบ่อย ได้จริงไหม?</div>
+      </div>
+      <div class="a-block">
+        <div class="a-tag">✅ คำตอบ</div>
+        <div class="a-text">
+          <strong>จริง — ตามหลักวิทยาศาสตร์</strong><br><br>
+          <span class="chip">70%</span> ของเซลล์ภูมิคุ้มกันอาศัยอยู่ใน <strong>ลำไส้</strong>
+          (สมองที่สองของร่างกาย)<br><br>
+          โพรไบโอติกส์จากเอนไซม์ข้าวก่ำ จะ <strong>ปรับสมดุลจุลินทรีย์ในลำไส้</strong>
+          ทำให้ระบบภูมิคุ้มกันทำงานได้อย่างมีประสิทธิภาพสูงสุด
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="qa-card">
+      <div class="q-block">
+        <div class="q-tag">Q6</div>
+        <div class="q-text">ท้องอืด กรดไหลย้อน อาหารไม่ย่อย ทานได้ไหม?</div>
+      </div>
+      <div class="a-block">
+        <div class="a-tag">✅ คำตอบ</div>
+        <div class="a-text">
+          <strong>เหมาะสมอย่างยิ่ง!</strong> เอนไซม์สดจะเข้าไปช่วย
+          <span class="chip">ย่อยอาหารล่วงหน้า (Pre-digestion)</span>
+          <ul>
+            <li>ลดภาระการทำงานของ <strong>ตับอ่อนและกระเพาะอาหาร</strong></li>
+            <li>ลดการเกิด <strong>แก๊ส และอาการท้องอืด</strong> หลังมื้ออาหาร</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="qa-card">
+      <div class="q-block">
+        <div class="q-tag">Q7</div>
+        <div class="q-text">ผู้ที่มีภาวะเบาหวาน หรือต้องควบคุมน้ำตาล ทานได้ไหม?</div>
+      </div>
+      <div class="a-block">
+        <div class="a-tag">✅ คำตอบ</div>
+        <div class="a-text">
+          <strong>ทานได้ในปริมาณที่เหมาะสม</strong>
+          <ul>
+            <li>ความหวานเกิดจาก <strong>การแตกตัวของคาร์โบไฮเดรตเชิงซ้อน</strong> โดยจุลินทรีย์ตามธรรมชาติ</li>
+            <li><span class="chip">Zero Added Sugar</span> — ไม่มีน้ำตาลเพิ่มเติม</li>
+            <li>ร่างกายนำไปใช้เป็น <strong>พลังงานได้ทันที</strong></li>
+            <li>⚠️ ยังต้องจำกัดโควตาคาร์โบไฮเดรต <strong>ตามแผนการรักษาของแพทย์</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="qa-card">
+      <div class="q-block">
+        <div class="q-tag">Q8</div>
+        <div class="q-text">ช่วยเรื่องขับถ่ายและดีท็อกซ์ลำไส้ด้วยกลไกใด?</div>
+      </div>
+      <div class="a-block">
+        <div class="a-tag">✅ คำตอบ</div>
+        <div class="a-text">
+          <ul>
+            <li><strong>ไฟเบอร์สูงจากข้าวไม่ขัดสี</strong> ทำหน้าที่เป็น "ไม้กวาด" ทำความสะอาดผนังลำไส้</li>
+            <li>จุลินทรีย์ตัวดี ปรับสภาพแวดล้อมในทางเดินอาหาร <strong>ให้สมดุล</strong></li>
+            <li>ขับของเสียตกค้างออก <strong>อย่างเป็นธรรมชาติ</strong> — ไม่ปวดบิดแบบยาถ่าย</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section" id="sec2">
+    <div class="section-header">
+      <div class="section-num">หมวด 3</div>
+      <div class="section-title">รายละเอียดผลิตภัณฑ์และการเลือกซื้อ</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="qa-card highlighted">
+      <div class="q-block">
+        <div class="q-tag">Q9</div>
+        <div class="q-text">มีกี่สูตร และราคาเท่าไหร่?</div>
+      </div>
+      <div class="a-block">
+        <div class="a-tag">✅ คำตอบ</div>
+        <div class="a-text">
+          ผลิต <strong>สดใหม่ทุกรุ่น</strong> — มี 2 สูตร:
+          <div class="price-row">
+            <div class="price-card">
+              <div class="price-label">🌾 สูตรดั้งเดิม</div>
+              <div class="price-amount">220 ฿</div>
+              <div class="price-desc">ข้าวก่ำ · ลูกเดือยกล้อง · ข้าวโอ๊ตเต็มเมล็ด</div>
+            </div>
+            <div class="price-card">
+              <div class="price-label">✨ สูตรทรงเครื่อง</div>
+              <div class="price-amount">265 ฿</div>
+              <div class="price-desc">เพิ่มเก๋ากี้ · เมล็ดฟักทอง · งาขี้ม้อน</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="qa-card">
+      <div class="q-block">
+        <div class="q-tag">Q10</div>
+        <div class="q-text">สูตรดั้งเดิม vs. สูตรทรงเครื่อง — ควรเลือกแบบไหน?</div>
+      </div>
+      <div class="a-block">
+        <div class="a-tag">✅ คำตอบ</div>
+        <div class="a-text">
+          <ul>
+            <li>
+              <strong>🌾 สูตรดั้งเดิม</strong> — เหมาะสำหรับผู้ที่ต้องการ
+              <strong>ปรับสมดุลลำไส้</strong> รับไฟเบอร์และโพรไบโอติกส์พื้นฐาน
+            </li>
+            <li>
+              <strong>✨ สูตรทรงเครื่อง</strong> — เหมาะสำหรับผู้ที่ต้องการ
+              <strong>ฟื้นฟูร่างกายขั้นสุด</strong> รับวิตามิน บำรุงสายตา
+              และ <span class="chip">กรดไขมันดี (ต้านอักเสบ)</span> เพิ่มเติม
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section" id="sec3">
+    <div class="section-header">
+      <div class="section-num">หมวด 4</div>
+      <div class="section-title">วิธีการรับประทานและการเก็บรักษา</div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="qa-card highlighted">
+      <div class="q-block">
+        <div class="q-tag">Q11</div>
+        <div class="q-text">ช่วงเวลาใดที่ร่างกายดูดซึมได้ดีที่สุด?</div>
+      </div>
+      <div class="a-block">
+        <div class="a-tag">✅ คำตอบ</div>
+        <div class="a-text">
+          แนะนำ <strong>2 ช่วงเวลาหลัก</strong>:
+          <ul>
+            <li>
+              🌅 <strong>ตอนเช้าขณะท้องว่าง</strong>
+              — กระตุ้นระบบขับถ่าย และล้างสารพิษระดับจุลินทรีย์
+            </li>
+            <li>
+              🍽️ <strong>ก่อนหรือพร้อมมื้ออาหาร</strong>
+              — ปลุกระบบย่อย ลดภาระตับอ่อน และป้องกัน <span class="chip">Food Coma</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="qa-card">
+      <div class="q-block">
+        <div class="q-tag">Q12</div>
+        <div class="q-text">ปริมาณที่แนะนำต่อวัน ควรทานมากน้อยแค่ไหน?</div>
+      </div>
+      <div class="a-block">
+        <div class="a-tag">✅ คำตอบ</div>
+        <div class="a-text">
+          เพื่อประสิทธิภาพเชิงโภชนาการบำบัด แนะนำ
+          <strong><span class="chip">2–3 ช้อนโต๊ะ ต่อมื้อ</span></strong>
+          หรือ <strong>1 ถ้วยเล็กต่อวัน</strong>
+          ก็เพียงพอต่อการรับโพรไบโอติกส์เข้าสู่ร่างกายแล้ว
+        </div>
+      </div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="qa-card">
+      <div class="q-block">
+        <div class="q-tag">Q13</div>
+        <div class="q-text">การเก็บรักษาที่ถูกต้องต้องทำอย่างไร?</div>
+      </div>
+      <div class="a-block">
+        <div class="a-tag">✅ คำตอบ</div>
+        <div class="a-text">
+          ต้องเก็บใน <strong>ตู้เย็นทันที</strong>
+          <span class="chip">อุณหภูมิ 2–4 °C</span>
+          <ul>
+            <li>ความเย็น <strong>ชะลอการทำงานของจุลินทรีย์</strong> ทำให้รสชาติไม่เปรี้ยวจัด</li>
+            <li>ยืดอายุการเก็บรักษาโดย <strong>เอนไซม์ยังมีชีวิตอยู่ครบถ้วน</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="qa-card">
+      <div class="q-block">
+        <div class="q-tag">Q14</div>
+        <div class="q-text">นำไปอุ่นร้อนหรือผสมในน้ำร้อนก่อนทานได้ไหม?</div>
+      </div>
+      <div class="a-block">
+        <div class="a-tag warn">⚠️ ข้อควรระวัง</div>
+        <div class="a-text">
+          <strong>ห้ามผ่านความร้อนเด็ดขาด!</strong><br><br>
+          อุณหภูมิเกิน <span class="chip">45 °C</span> จะ:
+          <ul>
+            <li><strong>ทำลายโครงสร้างโปรตีนของเอนไซม์</strong></li>
+            <li><strong>ฆ่าจุลินทรีย์โพรไบโอติกส์ทั้งหมด</strong></li>
+            <li>สูญเสียคุณสมบัติทางโภชนาการบำบัดอย่างสิ้นเชิง</li>
+          </ul>
+          👉 ให้ <strong>ทานสดขณะเย็นเท่านั้น</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="qa-card">
+      <div class="q-block">
+        <div class="q-tag">Q15</div>
+        <div class="q-text">ผู้สูงอายุที่ป่วยติดเตียง หรือมีปัญหาการเคี้ยว ทานได้ไหม?</div>
+      </div>
+      <div class="a-block">
+        <div class="a-tag">✅ คำตอบ</div>
+        <div class="a-text">
+          <strong>เหมาะมากสำหรับผู้สูงอายุและผู้ป่วย</strong>
+          <ul>
+            <li>เนื้อสัมผัส <strong>นุ่มละมุน เคี้ยวง่าย</strong></li>
+            <li>กระบวนการหมักเปลี่ยนโครงสร้างอาหารให้ <strong>ดูดซึมง่ายที่สุด</strong></li>
+            <li>ช่วยแก้ปัญหา <strong>การขาดสารอาหาร</strong> และ <strong>ท้องผูกเรื้อรัง</strong> ในผู้ป่วยได้อย่างตรงจุด</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CONTROLS BAR -->
+<div class="controls-bar">
+  <span class="ctrl-label">ขนาดตัวอักษร :</span>
+  <button class="ctrl-btn" onclick="setSize('small')">เล็ก</button>
+  <button class="ctrl-btn active-size" onclick="setSize('normal')">ปกติ</button>
+  <button class="ctrl-btn" onclick="setSize('large')">ใหญ่</button>
+  <button class="ctrl-btn" onclick="setSize('xlarge')">ใหญ่มาก</button>
+</div>
+
+<script>
+  function showSection(idx, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('sec' + idx).classList.add('visible');
+    btn.classList.add('active');
+    const progress = (idx + 1) / 4 * 100;
+    document.getElementById('progress').style.width = progress + '%';
+    document.querySelector('.content-area').scrollTop = 0;
+  }
+
+  const sizeMap = {
+    small:  { q: '1.25rem', a: '1.15rem', li: '1.05rem' },
+    normal: { q: '1.55rem', a: '1.45rem', li: '1.35rem' },
+    large:  { q: '1.85rem', a: '1.75rem', li: '1.6rem'  },
+    xlarge: { q: '2.2rem',  a: '2rem',    li: '1.9rem'  },
+  };
+
+  function setSize(key) {
+    const s = sizeMap[key];
+    document.querySelectorAll('.q-text').forEach(el => el.style.fontSize = s.q);
+    document.querySelectorAll('.a-text').forEach(el => el.style.fontSize = s.a);
+    document.querySelectorAll('.a-text ul li').forEach(el => el.style.fontSize = s.li);
+    document.querySelectorAll('.ctrl-btn').forEach(b => b.classList.remove('active-size'));
+    event.target.classList.add('active-size');
+  }
+</script>
+</body>
+</html>
