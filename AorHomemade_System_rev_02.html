@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Order Management System</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans Thai', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #f8fafc; color: #0f172a; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .table-container { overflow-x: auto; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); border-radius: 0.5rem; background: white; }
+        
+        /* Guardrail styles */
+        #protocol-warning { display: none; }
+    </style>
+</head>
+<body>
+    <!-- 1. Environment Guardrail (Protocol Check) -->
+    <div id="protocol-warning" class="min-h-screen bg-red-50 flex flex-col items-center justify-center p-6 text-center">
+        <div class="bg-white p-8 rounded-xl shadow-lg max-w-lg border border-red-200">
+            <svg class="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <h1 class="text-2xl font-bold text-slate-900 mb-2">ข้อผิดพลาดด้านสภาพแวดล้อม</h1>
+            <p class="text-slate-600 mb-6">คุณกำลังเปิดไฟล์นี้ผ่านโปรโตคอล <code>file:///</code> ซึ่งละเมิดนโยบายความปลอดภัย CORS ของเบราว์เซอร์ ทำให้ระบบไม่สามารถโหลดโมดูลและฐานข้อมูลได้</p>
+            <div class="bg-slate-50 p-4 rounded-lg text-left text-sm text-slate-700 font-mono">
+                <strong>วิธีแก้ไข:</strong><br>
+                กรุณารันไฟล์นี้ผ่าน Local Web Server เช่น:<br>
+                - VS Code: ติดตั้งและใช้ "Live Server"<br>
+                - Terminal: รัน <code>python -m http.server 8000</code><br>
+                - Node.js: รัน <code>npx serve</code>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check protocol before attempting to load React or Babel
+        if (window.location.protocol === 'file:') {
+            document.getElementById('protocol-warning').style.display = 'flex';
+        } else {
+            // Load React and Babel dynamically only if environment is valid
+            const scripts = [
+                "https://unpkg.com/react@18/umd/react.development.js",
+                "https://unpkg.com/react-dom@18/umd/react-dom.development.js",
+                "https://unpkg.com/@babel/standalone/babel.min.js"
+            ];
+            
+            scripts.forEach(src => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.crossOrigin = "anonymous";
+                if(src.includes('babel')) script.onload = initApp;
+                document.head.appendChild(script);
+            });
+        }
+
+        function initApp() {
+            const rootDiv = document.createElement('div');
+            rootDiv.id = 'root';
+            document.body.appendChild(rootDiv);
+
+            const appScript = document.createElement('script');
+            appScript.type = 'text/babel';
+            appScript.setAttribute('data-type', 'module');
+            appScript.textContent = document.getElementById('app-code').textContent;
+            document.body.appendChild(appScript);
+        }
+    </script>
+
+    <!-- Application Code Template -->
+    <script type="text/plain" id="app-code">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const { useState, useEffect, useMemo } = React;
+
+        // ==========================================
+        // 1. Firebase Configuration (With Robust Fallback)
+        // ==========================================
+        const defaultMockConfig = {
+            apiKey: "demo-api-key-bypass-validation",
+            authDomain: "demo.firebaseapp.com",
+            projectId: "demo-project",
+            storageBucket: "demo.appspot.com",
+            messagingSenderId: "0000000000",
+            appId: "1:0000000000:web:0000000000"
+        };
+
+        const firebaseConfig = typeof __firebase_config !== 'undefined' 
+            ? JSON.parse(__firebase_config) 
+            : defaultMockConfig;
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'demo-oms';
+
+        // ==========================================
+        // 2. UI Components (Icons)
+        // ==========================================
+        const Icons = {
+            Package: () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>,
+            Users: () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>,
+            TrendingUp: () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>,
+            Search: () => <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>,
+            Trash: () => <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+        };
+
+        // ==========================================
+        // 3. Main Application Component
+        // ==========================================
+        function App() {
+            const [user, setUser] = useState(null);
+            const [activeTab, setActiveTab] = useState('orders');
+            const [orders, setOrders] = useState([]);
+            const [loading, setLoading] = useState(true);
+            const [searchTerm, setSearchTerm] = useState('');
+            const [systemError, setSystemError] = useState(null);
+
+            // Mock Data Generator for Local Viewing without real DB
+            const loadLocalMockData = () => {
+                setOrders([
+                    { id: '1', customer: "คุณสมชาย ใจดี (Mock)", items: "เซ็ตครัวซองต์ 4 ชิ้น", total: 450, status: "completed", timestamp: Date.now() - 100000 },
+                    { id: '2', customer: "บริษัท เอบีซี จำกัด (Mock)", items: "บราวนี่ถาดใหญ่", total: 1200, status: "pending", timestamp: Date.now() },
+                    { id: '3', customer: "คุณวิภาวรรณ (Mock)", items: "เค้กวันเกิด 2 ปอนด์", total: 850, status: "processing", timestamp: Date.now() - 50000 }
+                ]);
+                setLoading(false);
+            };
+
+            // --- Authentication Setup ---
+            useEffect(() => {
+                const initAuth = async () => {
+                    try {
+                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                            await signInWithCustomToken(auth, __initial_auth_token);
+                        } else {
+                            // Fallback might fail if config is dummy
+                            await signInAnonymously(auth).catch(e => {
+                                console.warn("Firebase Auth bypassed for local dev:", e);
+                                setUser({ uid: "local-dev-user" });
+                                loadLocalMockData();
+                            });
+                        }
+                    } catch (error) {
+                        console.error("Auth Error:", error);
+                        setSystemError("ไม่สามารถเข้าสู่ระบบฐานข้อมูลได้ (อาจเป็นเพราะเปิดโหมด Offline)");
+                        setUser({ uid: "offline-user" });
+                        loadLocalMockData();
+                    }
+                };
+                initAuth();
+
+                const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+                    if(currentUser) setUser(currentUser);
+                });
+                return () => { if(typeof unsubscribe === 'function') unsubscribe(); };
+            }, []);
+
+            // --- Real-time Data Fetching ---
+            useEffect(() => {
+                if (!user || user.uid === "local-dev-user" || user.uid === "offline-user") return;
+
+                try {
+                    const ordersRef = collection(db, 'artifacts', appId, 'users', user.uid, 'orders');
+                    
+                    const unsubscribe = onSnapshot(ordersRef, (snapshot) => {
+                        const data = snapshot.docs.map(doc => ({
+                            id: doc.id,
+                            ...doc.data()
+                        }));
+                        data.sort((a, b) => b.timestamp - a.timestamp);
+                        setOrders(data);
+                        setLoading(false);
+                    }, (error) => {
+                        console.error("Firestore Error:", error);
+                        setSystemError("การเชื่อมต่อฐานข้อมูลล้มเหลว โหลดข้อมูลจำลองแทน");
+                        loadLocalMockData();
+                    });
+
+                    return () => unsubscribe();
+                } catch(error) {
+                    console.error("Firestore Init Error:", error);
+                    loadLocalMockData();
+                }
+            }, [user]);
+
+            // --- Data Processing ---
+            const filteredOrders = useMemo(() => {
+                return orders.filter(order => 
+                    order.customer?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    order.items?.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }, [orders, searchTerm]);
+
+            const summaryMetrics = useMemo(() => {
+                const totalRevenue = orders.reduce((sum, order) => sum + (Number(order.total) || 0), 0);
+                const pendingOrders = orders.filter(o => o.status === 'pending' || o.status === 'processing').length;
+                return { totalRevenue, totalOrders: orders.length, pendingOrders };
+            }, [orders]);
+
+            const formatCurrency = (num) => new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(num);
+
+            if (!user && loading) {
+                return (
+                    <div className="flex items-center justify-center min-h-screen bg-slate-50">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-600"></div>
+                        <span className="ml-3 text-slate-600 font-medium">กำลังเตรียมระบบ...</span>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="min-h-screen bg-slate-50 flex flex-col">
+                    {/* Header */}
+                    <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between h-16 items-center">
+                                <div className="flex items-center gap-2">
+                                    <div className="bg-brand-600 p-2 rounded-lg text-white">
+                                        <Icons.Package />
+                                    </div>
+                                    <h1 className="text-xl font-semibold text-slate-800 tracking-tight">
+                                        Order Management <span className="text-brand-600 font-normal">System</span>
+                                    </h1>
+                                </div>
+                                <div className="text-sm text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">
+                                    Admin: {user?.uid?.substring(0, 8)}...
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+                        
+                        {systemError && (
+                            <div className="mb-6 bg-amber-50 border-l-4 border-amber-500 p-4 rounded-md">
+                                <div className="flex">
+                                    <div className="flex-shrink-0">
+                                        <svg class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div className="ml-3">
+                                        <p className="text-sm text-amber-700">{systemError}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Metrics Dashboard */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                            <MetricCard title="ยอดขายรวม (Total Revenue)" value={formatCurrency(summaryMetrics.totalRevenue)} icon={<Icons.TrendingUp />} color="brand" />
+                            <MetricCard title="คำสั่งซื้อทั้งหมด (Total Orders)" value={summaryMetrics.totalOrders} icon={<Icons.Package />} color="slate" />
+                            <MetricCard title="รอดำเนินการ (Pending)" value={summaryMetrics.pendingOrders} icon={<Icons.Users />} color="amber" />
+                        </div>
+
+                        {/* Control Panel */}
+                        <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                            <div className="flex space-x-1 bg-slate-100 p-1 rounded-lg w-full sm:w-auto">
+                                <TabButton active={activeTab === 'orders'} onClick={() => setActiveTab('orders')}>รายการคำสั่งซื้อ</TabButton>
+                                <TabButton active={activeTab === 'customers'} onClick={() => setActiveTab('customers')}>ฐานข้อมูลลูกค้า</TabButton>
+                            </div>
+                            
+                            <div className="relative w-full sm:w-72">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <Icons.Search />
+                                </div>
+                                <input
+                                    type="text"
+                                    className="block w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 sm:text-sm"
+                                    placeholder="ค้นหาชื่อลูกค้า, สินค้า..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        {/* Data View */}
+                        {activeTab === 'orders' ? (
+                            <div className="table-container">
+                                <table className="min-w-full divide-y divide-slate-200">
+                                    <thead className="bg-slate-50">
+                                        <tr>
+                                            <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">วันที่ (Date)</th>
+                                            <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">ลูกค้า (Customer)</th>
+                                            <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">รายการ (Items)</th>
+                                            <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">ยอดรวม (Total)</th>
+                                            <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">สถานะ (Status)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="bg-white divide-y divide-slate-200">
+                                        {filteredOrders.length > 0 ? filteredOrders.map((order) => (
+                                            <tr key={order.id} className="hover:bg-slate-50 transition-colors">
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{new Date(order.timestamp).toLocaleDateString('th-TH')}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{order.customer}</td>
+                                                <td className="px-6 py-4 text-sm text-slate-500 max-w-xs truncate">{order.items}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{formatCurrency(order.total)}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm"><StatusBadge status={order.status} /></td>
+                                            </tr>
+                                        )) : (
+                                            <tr>
+                                                <td colSpan="5" className="px-6 py-8 text-center text-slate-500">ไม่พบข้อมูลคำสั่งซื้อ</td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+                        ) : (
+                            <div className="bg-white p-8 rounded-xl shadow-sm border border-slate-200 text-center text-slate-500">
+                                ส่วนแสดงฐานข้อมูลลูกค้า (อยู่ระหว่างการพัฒนา)
+                            </div>
+                        )}
+                    </main>
+                </div>
+            );
+        }
+
+        // --- Sub-components ---
+        function MetricCard({ title, value, icon, color }) {
+            const colorClasses = { brand: "bg-brand-50 text-brand-600", slate: "bg-slate-100 text-slate-600", amber: "bg-amber-50 text-amber-600" };
+            return (
+                <div className="bg-white overflow-hidden shadow-sm rounded-xl border border-slate-200 p-6 flex items-center">
+                    <div className={`p-3 rounded-lg mr-4 ${colorClasses[color]}`}>{icon}</div>
+                    <div><p className="text-sm font-medium text-slate-500 truncate">{title}</p><p className="mt-1 text-2xl font-semibold text-slate-900">{value}</p></div>
+                </div>
+            );
+        }
+
+        function TabButton({ active, onClick, children }) {
+            return (
+                <button onClick={onClick} className={`flex-1 sm:flex-none px-4 py-2 text-sm font-medium rounded-md transition-colors ${active ? 'bg-white text-brand-700 shadow-sm border border-slate-200/50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'}`}>
+                    {children}
+                </button>
+            );
+        }
+
+        function StatusBadge({ status }) {
+            const styles = { completed: "bg-green-50 text-green-700 border-green-200", pending: "bg-amber-50 text-amber-700 border-amber-200", processing: "bg-blue-50 text-blue-700 border-blue-200" };
+            const labels = { completed: "เสร็จสิ้น", pending: "รอชำระเงิน", processing: "กำลังจัดเตรียม" };
+            return <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${styles[status] || "bg-slate-50"}`}>{labels[status] || status}</span>;
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
