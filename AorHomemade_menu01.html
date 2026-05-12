@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>อ้อโฮมเมด — ขนมปังอบสดใหม่ทุกก้อน</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── CSS Variables ── */
+    :root {
+      --cream:       #FAF5EC;
+      --cream-dark:  #F0E8D5;
+      --brown-light: #C8966A;
+      --brown:       #8B5E3C;
+      --brown-deep:  #5C3A1E;
+      --gold:        #D4A853;
+      --gold-light:  #EDD590;
+      --green-matcha:#4A7C59;
+      --text-main:   #3A2410;
+      --text-sub:    #7A5C3E;
+      --white:       #FFFFFF;
+      --shadow-warm: 0 4px 24px rgba(139,94,60,0.13);
+      --shadow-card: 0 8px 32px rgba(92,58,30,0.12);
+      --radius:      18px;
+      --radius-sm:   10px;
+      --transition:  0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Sarabun', sans-serif;
+      background-color: var(--cream);
+      color: var(--text-main);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Grain Overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: var(--brown-deep);
+      color: var(--cream);
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .header-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--gold-light);
+      white-space: nowrap;
+    }
+    .header-contact {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: 0.82rem;
+      color: var(--cream-dark);
+      opacity: 0.92;
+    }
+    .header-contact a {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: color var(--transition);
+    }
+    .header-contact a:hover { color: var(--gold-light); }
+    .header-contact svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--brown-deep) 0%, var(--brown) 55%, var(--brown-light) 100%);
+      padding: 72px 40px 64px;
+      text-align: center;
+      color: var(--cream);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 60px;
+      background: var(--cream);
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(212,168,83,0.22);
+      border: 1px solid rgba(212,168,83,0.45);
+      border-radius: 30px;
+      padding: 5px 18px;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 20px;
+      animation: fadeDown 0.7s ease both;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--cream);
+      margin-bottom: 12px;
+      animation: fadeDown 0.7s 0.1s ease both;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      color: rgba(250,245,236,0.82);
+      max-width: 520px;
+      margin: 0 auto 28px;
+      animation: fadeDown 0.7s 0.2s ease both;
+    }
+    .hero-tags {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeDown 0.7s 0.3s ease both;
+    }
+    .hero-tag {
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.82rem;
+      color: var(--cream-dark);
+    }
+
+    /* ── Section ── */
+    .section {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 60px 24px 40px;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 44px;
+    }
+    .section-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+      color: var(--brown-deep);
+      font-weight: 700;
+    }
+    .section-divider {
+      width: 52px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--brown-light));
+      border-radius: 3px;
+      margin: 14px auto 0;
+    }
+
+    /* ── Category Label ── */
+    .category-strip {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .category-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--brown-deep);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .category-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--brown-light), transparent);
+    }
+
+    /* ── Product Grid ── */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 26px;
+    }
+
+    /* ── Product Card ── */
+    .product-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--transition), box-shadow var(--transition);
+      animation: fadeUp 0.55s ease both;
+      border: 1px solid rgba(200,150,106,0.15);
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(92,58,30,0.18);
+    }
+
+    /* Staggered animation delay */
+    .product-card:nth-child(1) { animation-delay: 0.05s; }
+    .product-card:nth-child(2) { animation-delay: 0.12s; }
+    .product-card:nth-child(3) { animation-delay: 0.19s; }
+    .product-card:nth-child(4) { animation-delay: 0.26s; }
+    .product-card:nth-child(5) { animation-delay: 0.33s; }
+
+    .card-image-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 78%;
+      overflow: hidden;
+      background: var(--cream-dark);
+    }
+    .card-image-wrap img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .product-card:hover .card-image-wrap img {
+      transform: scale(1.06);
+    }
+    .card-code {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(92,58,30,0.82);
+      color: var(--gold-light);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      padding: 3px 9px;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+    }
+    .card-vegan-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(74,124,89,0.88);
+      color: #D6F0DE;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 3px 8px;
+      border-radius: 20px;
+    }
+
+    .card-body {
+      padding: 18px 18px 14px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--brown-deep);
+      line-height: 1.3;
+    }
+    .card-desc {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .card-footer {
+      padding: 12px 18px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border-top: 1px solid rgba(200,150,106,0.15);
+    }
+    .card-price {
+      font-size: 1.22rem;
+      font-weight: 700;
+      color: var(--brown);
+      font-family: 'Playfair Display', serif;
+      letter-spacing: 0.01em;
+    }
+    .card-price span {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--text-sub);
+      margin-left: 2px;
+    }
+    .btn-order {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, var(--brown) 0%, var(--brown-deep) 100%);
+      color: var(--cream);
+      font-family: 'Sarabun', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      transition: opacity var(--transition), transform var(--transition);
+      white-space: nowrap;
+    }
+    .btn-order:hover {
+      opacity: 0.88;
+      transform: scale(1.04);
+    }
+    .btn-order svg { width: 13px; height: 13px; }
+
+    /* ── Benefits Bar ── */
+    .benefits-bar {
+      background: linear-gradient(135deg, var(--brown-deep), var(--brown));
+      color: var(--cream);
+      padding: 36px 24px;
+      margin: 0;
+    }
+    .benefits-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 24px;
+      text-align: center;
+    }
+    .benefit-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .benefit-icon {
+      width: 46px; height: 46px;
+      background: rgba(212,168,83,0.18);
+      border: 1px solid rgba(212,168,83,0.35);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+    .benefit-title { font-weight: 600; font-size: 0.9rem; color: var(--gold-light); }
+    .benefit-desc  { font-size: 0.78rem; color: rgba(250,245,236,0.75); line-height: 1.5; }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--brown-deep);
+      color: rgba(250,245,236,0.75);
+      padding: 40px 24px 28px;
+      text-align: center;
+    }
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--gold-light);
+      margin-bottom: 18px;
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+    .footer-links a {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.85rem;
+      color: rgba(250,245,236,0.75);
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--gold-light); }
+    .footer-links svg { width: 16px; height: 16px; }
+    .footer-copy {
+      font-size: 0.73rem;
+      color: rgba(250,245,236,0.4);
+      margin-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 16px;
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .site-header { padding: 12px 18px; }
+      .header-brand { font-size: 1.05rem; }
+      .hero { padding: 52px 20px 52px; }
+      .section { padding: 44px 16px 32px; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .card-body { padding: 13px 13px 10px; }
+      .card-footer { padding: 10px 13px 14px; flex-direction: column; align-items: flex-start; gap: 8px; }
+      .btn-order { width: 100%; justify-content: center; }
+    }
+    @media (max-width: 380px) {
+      .product-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Site Header ── -->
+  <header class="site-header">
+    <div class="header-brand">🍞 อ้อโฮมเมด</div>
+    <nav class="header-contact">
+      <a href="tel:0924151550">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C9.61 21 3 14.39 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.26.2 2.47.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z"/></svg>
+        092-415-1550
+      </a>
+      <a href="https://lin.ee/aorhomemade" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.07 2 11.07c0 4.55 3.53 8.34 8.22 9l.78.1V17.5c-4.09-.67-7-3.8-7-7.43C4 6.98 7.58 4 12 4s8 2.98 8 6.07c0 2.05-1.28 3.9-3.38 5.12L15.5 17a.5.5 0 01-.5-.5v-1.93l-.45.06C14.37 14.87 13.2 15 12 15c-1.2 0-2.37-.13-3.05-.37v1.93a.5.5 0 01-.5.5l-1.12-2.31C9.12 15.65 10.5 16 12 16c.95 0 1.88-.1 2.72-.28A9.56 9.56 0 0022 11.07C22 6.07 17.52 2 12 2z"/></svg>
+        Line: @aorhomemade
+      </a>
+      <a href="https://www.facebook.com/aorhomemade" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        Facebook
+      </a>
+    </nav>
+  </header>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="hero-badge">🌿 อบสดใหม่ทุกก้อน · วัตถุดิบธรรมชาติ 100%</div>
+    <h1>อ้อโฮมเมด<br/><em>เอนไซม์สดและขนมปัง</em></h1>
+    <p class="hero-sub">ขนมปังโฮลวีทวีแกน หอมอบอุ่น หวานน้อย ดีต่อสุขภาพ เหมาะสำหรับทุกคน</p>
+    <div class="hero-tags">
+      <span class="hero-tag">🌱 Vegan</span>
+      <span class="hero-tag">🥥 น้ำมันมะพร้าวแท้</span>
+      <span class="hero-tag">🍯 น้ำตาลมะพร้าว</span>
+      <span class="hero-tag">💊 เหมาะผู้ป่วยเบาหวาน&ความดัน</span>
+    </div>
+  </section>
+
+  <!-- ── Benefits Bar ── -->
+  <div class="benefits-bar">
+    <div class="benefits-inner">
+      <div class="benefit-item">
+        <div class="benefit-icon">🌿</div>
+        <div class="benefit-title">วัตถุดิบธรรมชาติ</div>
+        <div class="benefit-desc">ไม่มีสารเคมี ไม่ใส่สีผสมอาหาร</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">🥥</div>
+        <div class="benefit-title">ไขมันดีจากมะพร้าว</div>
+        <div class="benefit-desc">ใช้น้ำมันมะพร้าวแทนเนยทุกชนิด</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">🍯</div>
+        <div class="benefit-title">หวานจากมะพร้าว</div>
+        <div class="benefit-desc">ไม่ใส่น้ำตาลขาว ค่า GI ต่ำกว่า</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">✨</div>
+        <div class="benefit-title">ชินนาม่อนแท้</div>
+        <div class="benefit-desc">ช่วยควบคุมน้ำตาล ลดความดันโลหิต</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       MAIN CONTENT — เพิ่มหมวดหมู่สินค้าได้ที่นี่
+  ══════════════════════════════════════════ -->
+  <main class="section">
+
+    <div class="section-header">
+      <div class="section-eyebrow">เมนูสินค้าของเรา</div>
+      <h2 class="section-title">สั่งซื้อออนไลน์ได้เลย</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <!-- ───────────────────────────────────────────
+         หมวด: ขนมปังชินนาม่อน อัลมอนด์ แครนเบอรี่
+         เพิ่มหมวดใหม่ได้โดย copy block นี้ทั้งหมด
+    ─────────────────────────────────────────── -->
+    <div class="category-strip">
+      <div class="category-label">🍞 ขนมปังชินนาม่อน อัลมอนด์ &amp; แครนเบอรี่</div>
+      <div class="category-line"></div>
+    </div>
+
+    <div class="product-grid">
+
+      <!-- ── CIN01 ดั้งเดิม ── -->
+      <article class="product-card">
+        <div class="card-image-wrap">
+          <img src="cin01.png" alt="ขนมปังชินนาม่อน ดั้งเดิม" loading="lazy" />
+          <span class="card-code">CIN01</span>
+          <span class="card-vegan-badge">Vegan</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">ดั้งเดิม</div>
+          <div class="card-desc">คลาสสิก หอมชินนาม่อนแท้ เพิ่มความกรุบกรอบจากอัลมอนด์ และความสดชื่นจากแครนเบอรี่</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">130 <span>บาท</span></div>
+          <a href="https://aorhomemade.page365.net/" target="_blank" rel="noopener" class="btn-order">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.99-1.74L23 6H6"/></svg>
+            สั่งซื้อ
+          </a>
+        </div>
+      </article>
+
+      <!-- ── CIN02 มอคค่า ── -->
+      <article class="product-card">
+        <div class="card-image-wrap">
+          <img src="cin02.png" alt="ขนมปังชินนาม่อน มอคค่า" loading="lazy" />
+          <span class="card-code">CIN02</span>
+          <span class="card-vegan-badge">Vegan</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">มอคค่า</div>
+          <div class="card-desc">เข้มข้นหอมกาแฟ ผสมชินนาม่อน เติมความสดชื่นด้วยแครนเบอรี่ และอัลมอนด์เพิ่ม texture</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">145 <span>บาท</span></div>
+          <a href="https://aorhomemade.page365.net/" target="_blank" rel="noopener" class="btn-order">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.99-1.74L23 6H6"/></svg>
+            สั่งซื้อ
+          </a>
+        </div>
+      </article>
+
+      <!-- ── CIN03 ฟักทอง ── -->
+      <article class="product-card">
+        <div class="card-image-wrap">
+          <img src="cin03.png" alt="ขนมปังชินนาม่อน ฟักทอง" loading="lazy" />
+          <span class="card-code">CIN03</span>
+          <span class="card-vegan-badge">Vegan</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">ฟักทอง</div>
+          <div class="card-desc">หวานธรรมชาติจากฟักทอง ตัดกับรสเปรี้ยวหวานของแครนเบอรี่ และความมันกรอบของอัลมอนด์</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">145 <span>บาท</span></div>
+          <a href="https://aorhomemade.page365.net/" target="_blank" rel="noopener" class="btn-order">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.99-1.74L23 6H6"/></svg>
+            สั่งซื้อ
+          </a>
+        </div>
+      </article>
+
+      <!-- ── CIN04 งาดำ ── -->
+      <article class="product-card">
+        <div class="card-image-wrap">
+          <img src="cin04.png" alt="ขนมปังชินนาม่อน งาดำ" loading="lazy" />
+          <span class="card-code">CIN04</span>
+          <span class="card-vegan-badge">Vegan</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">งาดำ</div>
+          <div class="card-desc">กลมกล่อมแบบไทยๆ จากงาดำคั่วหอม เสริมด้วยอัลมอนด์และแครนเบอรี่ รสชาติหลากหลาย</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">145 <span>บาท</span></div>
+          <a href="https://aorhomemade.page365.net/" target="_blank" rel="noopener" class="btn-order">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.99-1.74L23 6H6"/></svg>
+            สั่งซื้อ
+          </a>
+        </div>
+      </article>
+
+      <!-- ── CIN05 มัทฉะแท้ ── -->
+      <article class="product-card">
+        <div class="card-image-wrap">
+          <img src="cin05.png" alt="ขนมปังชินนาม่อน มัทฉะแท้" loading="lazy" />
+          <span class="card-code">CIN05</span>
+          <span class="card-vegan-badge">Vegan</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">มัทฉะแท้</div>
+          <div class="card-desc">กลิ่นหอมพรีเมียมจากมัทฉะแท้ รสขมนิดๆ ตัดกับความหวานเปรี้ยวของแครนเบอรี่ และความมันของอัลมอนด์</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">160 <span>บาท</span></div>
+          <a href="https://aorhomemade.page365.net/" target="_blank" rel="noopener" class="btn-order">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.99-1.74L23 6H6"/></svg>
+            สั่งซื้อ
+          </a>
+        </div>
+      </article>
+
+    </div><!-- /product-grid -->
+
+    <!-- ══════════════════════════════════════════
+         เพิ่มหมวดหมู่สินค้าใหม่ได้ด้านล่างนี้
+         โดย copy pattern:
+         <div class="category-strip">…</div>
+         <div class="product-grid">…</div>
+    ══════════════════════════════════════════ -->
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-brand">อ้อโฮมเมดเอนไซม์สดและขนมปัง</div>
+    <div class="footer-links">
+      <a href="tel:0924151550">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C9.61 21 3 14.39 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.26.2 2.47.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z"/></svg>
+        092-415-1550
+      </a>
+      <a href="https://lin.ee/aorhomemade" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.07 2 11.07c0 4.55 3.53 8.34 8.22 9l.78.1V17.5c-4.09-.67-7-3.8-7-7.43C4 6.98 7.58 4 12 4s8 2.98 8 6.07c0 2.05-1.28 3.9-3.38 5.12L15.5 17a.5.5 0 01-.5-.5v-1.93l-.45.06C14.37 14.87 13.2 15 12 15c-1.2 0-2.37-.13-3.05-.37v1.93a.5.5 0 01-.5.5l-1.12-2.31C9.12 15.65 10.5 16 12 16c.95 0 1.88-.1 2.72-.28A9.56 9.56 0 0022 11.07C22 6.07 17.52 2 12 2z"/></svg>
+        Line OA: @aorhomemade
+      </a>
+      <a href="https://www.facebook.com/aorhomemade" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        อ้อโฮมเมดเอนไซม์สดและขนมปัง
+      </a>
+      <a href="https://aorhomemade.page365.net/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.99-1.74L23 6H6"/></svg>
+        สั่งซื้อออนไลน์
+      </a>
+    </div>
+    <div class="footer-copy">© 2025 อ้อโฮมเมดเอนไซม์สดและขนมปัง · สงวนลิขสิทธิ์</div>
+  </footer>
+
+</body>
+</html>

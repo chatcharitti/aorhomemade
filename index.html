@@ -51,9 +51,25 @@
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-6 font-medium">
                     <a href="#story" class="hover:text-brand-green transition">เรื่องราวของเรา</a>
-                    <a href="#products" class="hover:text-brand-green transition">สินค้า</a>
                     
-                    <!-- Dropdown Menu: คลิกอ่านสิ (มีประโยชน์) -->
+					<!-- <a href="#products" class="hover:text-brand-green transition">สินค้า</a> -->
+                    
+                    <!-- Dropdown Menu: สินค้า -->
+                    <div class="relative dropdown">
+                        <button class="flex items-center hover:text-brand-green transition focus:outline-none">
+                            สินค้า <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-menu absolute hidden bg-white shadow-xl rounded-lg py-2 w-56 mt-0 border border-gray-100">
+                            <a href="AorHomemade_menu01.html" class="block px-4 py-2 text-sm hover:bg-green-50 hover:text-brand-green">ขนมปังซินนาม่อน</a>
+                      <!-- เผื่อให้เพื่มรายการได้ 
+							<a href="Rice_enzyme_v1.html" class="block px-4 py-2 text-sm hover:bg-green-50 hover:text-brand-green">ประโยชน์ของข้าวก่ำ</a>
+                            <a href="live_qa_enzyme_1.html" class="block px-4 py-2 text-sm hover:bg-green-50 hover:text-brand-green">คำถาม คำคอบ เรื่องเอนไซม์ </a>
+							<a href="#" class="block px-4 py-2 text-sm hover:bg-green-50 hover:text-brand-green">การดูแลสุขภาพด้วยโภชนบำบัด</a>
+                       -->
+                        </div>
+                    </div>
+
+					<!-- Dropdown Menu: คลิกอ่านสิ (มีประโยชน์) -->
                     <div class="relative dropdown">
                         <button class="flex items-center hover:text-brand-green transition focus:outline-none">
                             คลิกอ่านสิ (มีประโยชน์) <i class="fas fa-chevron-down ml-1 text-xs"></i>
