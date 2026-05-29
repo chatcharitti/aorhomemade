@@ -1703,7 +1703,7 @@ async function exportEPUB() {
     title: 'ปก',
     body: `<div style="text-align:center;padding:60px 20px;">
       <p style="font-size:14px;color:#C9A96E;font-weight:bold;letter-spacing:2px;">E-BOOK ฉบับสมบูรณ์</p>
-      <h1 style="font-size:32px;color:#7A9A6D;margin:20px 0;">กินเป็น หลับดี<br><span style="color:#C9A96E;">ขับถ่ายคล่อง</span></h1>
+      <h2 style="font-size:32px;color:#7A9A6D;margin:20px 0;">กินเป็น หลับดี ขับถ่ายคล่อง</h2>
       <p style="font-size:18px;color:#5C5549;">วิชาคุณแม่นักสู้ ปรุงอาหารฟื้นฟูระดับเซลล์ สไตล์วัย 50+</p>
       <p style="font-size:16px;color:#A88B4A;margin-top:20px;font-weight:bold;">โดย อ้อ — อ้อโฮมเมด</p>
       <p style="font-size:12px;color:#8A8275;margin-top:40px;">สงวนลิขสิทธิ์ © 2024 ร้านอ้อโฮมเมด</p>
@@ -1739,7 +1739,7 @@ async function exportEPUB() {
   // Chapter: ลำไส้คือสมองที่สอง
   chapters.push({
     id: 'ch3-gut',
-    title: 'ลำไส้คือสมองที่สอง & อัศวินตัวน้อย',
+    title: 'ลำไส้คือสมองที่สอง และ อัศวินตัวน้อย',
     body: extractSection('gut')
   });
 
@@ -1750,7 +1750,7 @@ async function exportEPUB() {
   // Chapter: เอนไซม์คือชีวิต
   chapters.push({
     id: 'ch4-enzyme',
-    title: 'เอนไซม์คือชีวิต & เทคนิคเคี้ยวคือยา',
+    title: 'เอนไซม์คือชีวิต และ เทคนิคเคี้ยวคือยา',
     body: extractSection('enzyme')
   });
 
@@ -1853,6 +1853,8 @@ hr { border: none; border-top: 2px solid #D4E2CB; margin: 2em 0; }
 
     chapters.forEach((ch, i) => {
       const fname = ch.id + '.xhtml';
+      // Sanitize body for XHTML compliance
+      const safeBody = sanitizeForXhtml(ch.body);
       const xhtml = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="th" lang="th">
@@ -1863,7 +1865,7 @@ hr { border: none; border-top: 2px solid #D4E2CB; margin: 2em 0; }
 </head>
 <body>
   <h1>${escXml(ch.title)}</h1>
-  ${ch.body}
+  ${safeBody}
 </body>
 </html>`;
       oebps.file(fname, xhtml);
@@ -2113,6 +2115,21 @@ function extractSection(sectionId) {
   if (!html) html = '<p>(ไม่พบเนื้อหา)</p>';
 
   return html;
+}
+
+// Helper: sanitize HTML string for strict XHTML compliance
+function sanitizeForXhtml(html) {
+  return html
+    // Fix self-closing tags for XHTML
+    .replace(/<br\s*>/gi, '<br/>')
+    .replace(/<hr\s*>/gi, '<hr/>')
+    .replace(/<img([^>]*?)(?<!\/)>/gi, '<img$1/>')
+    // Fix bare & that aren't already entities
+    .replace(/&(?!amp;|lt;|gt;|quot;|apos;|#\d+;|#x[0-9a-fA-F]+;)/g, '&amp;')
+    // Remove any stray non-XML characters
+    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '')
+    // Ensure no empty tags that could cause issues
+    .replace(/<(\w+)([^>]*)>\s*<\/\1>/g, '<$1$2> </$1>');
 }
 
 // Helper: escape XML entities
