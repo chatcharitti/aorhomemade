@@ -715,6 +715,146 @@ body {
 }
 .disclaimer-footer strong { color: var(--text-secondary); }
 
+/* ===== FONT SIZE CONTROLS ===== */
+.toolbar-panel {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 950;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.toolbar-group {
+  background: var(--white);
+  border-radius: 14px;
+  box-shadow: var(--shadow-lg);
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border: 1px solid var(--sage-pale);
+}
+.toolbar-group .tb-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 0 8px;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+}
+.toolbar-btn {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: 'Sarabun', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+.toolbar-btn:hover { background: var(--sage-bg); color: var(--sage); }
+.toolbar-btn.active { background: var(--sage); color: var(--white); }
+.toolbar-btn.font-sm { font-size: 13px; }
+.toolbar-btn.font-md { font-size: 16px; }
+.toolbar-btn.font-lg { font-size: 20px; }
+.toolbar-btn.export-btn {
+  width: auto;
+  padding: 0 14px;
+  font-size: 13px;
+  gap: 6px;
+  font-weight: 600;
+}
+.toolbar-btn.export-btn:hover { background: var(--sage); color: var(--white); }
+.toolbar-sep { width: 1px; height: 24px; background: var(--sage-pale); margin: 0 2px; }
+
+/* ===== PRINT STYLES (PDF E-Book) ===== */
+@media print {
+  /* Reset for clean print */
+  *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html { scroll-padding-top: 0; }
+  body { font-size: 14px; line-height: 1.7; background: white !important; color: #222 !important; }
+
+  /* Hide interactive elements */
+  .disclaimer-bar, .nav, .back-to-top, .toolbar-panel, .hero-scroll-cta,
+  .checklist-result, #epubProgress { display: none !important; }
+
+  /* Force visible all animate-on-scroll */
+  .animate-on-scroll { opacity: 1 !important; transform: none !important; }
+
+  /* Open all recipe cards */
+  .recipe-body { max-height: none !important; overflow: visible !important; }
+  .recipe-header { cursor: default; }
+  .toggle-icon { display: none !important; }
+
+  /* Page breaks */
+  .hero { min-height: auto; page-break-after: always; padding: 80px 24px; }
+  section { page-break-inside: avoid; }
+  .section { padding: 40px 24px; }
+  .knowledge-card, .letter-card, .recipe-card, .pillar-card { break-inside: avoid; }
+  .contact-section { page-break-before: always; }
+
+  /* Simplify backgrounds */
+  .hero::before, .hero::after { display: none; }
+  section[style*="background"] { background: white !important; }
+  .checklist-intro, .check-item, .knowledge-card, .letter-card,
+  .recipe-card, .pillar-card, .kitchen-col, .routine-item { box-shadow: none !important; border: 1px solid #ddd; }
+
+  /* Image placeholders */
+  .img-placeholder { border: 1px solid #ccc; background: #f5f5f5 !important; }
+
+  /* Closing card for print */
+  .closing-card { background: #7A9A6D !important; }
+
+  /* Footer */
+  .disclaimer-footer { page-break-before: always; padding: 20px; }
+
+  /* Page setup */
+  @page { size: A4 portrait; margin: 18mm 15mm; }
+}
+
+/* ===== EPUB PROGRESS ===== */
+#epubProgress {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+#epubProgress.show { display: flex; }
+#epubProgress .modal {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  text-align: center;
+  max-width: 360px;
+  box-shadow: var(--shadow-lg);
+}
+#epubProgress .modal h3 { color: var(--sage); margin-bottom: 16px; }
+#epubProgress .progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--sage-pale);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 16px 0;
+}
+#epubProgress .progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--sage), var(--gold));
+  border-radius: 4px;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+#epubProgress .status { font-size: 14px; color: var(--text-muted); }
+
 /* ===== ANIMATIONS ===== */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
@@ -1409,6 +1549,35 @@ body {
   <strong>⚕️ ข้อสังเกตสำคัญ:</strong> เนื้อหาทั้งหมดในหนังสือเล่มนี้เป็นการแบ่งปันประสบการณ์ส่วนตัวและความรู้ทั่วไปด้านโภชนาการเท่านั้น <strong>ไม่ได้มีเจตนาทดแทนคำแนะนำทางการแพทย์</strong> หากท่านมีอาการเจ็บป่วยหรือปัญหาสุขภาพ กรุณาปรึกษาแพทย์หรือผู้เชี่ยวชาญก่อนเสมอ
 </div>
 
+<!-- ===== TOOLBAR: FONT SIZE + EXPORT ===== -->
+<div class="toolbar-panel" id="toolbarPanel">
+  <!-- Font size controls -->
+  <div class="toolbar-group">
+    <span class="tb-label">ขนาด</span>
+    <button class="toolbar-btn font-sm" onclick="setFontSize(15)" title="ตัวเล็ก">A</button>
+    <div class="toolbar-sep"></div>
+    <button class="toolbar-btn font-md active" onclick="setFontSize(17)" title="ปกติ">A</button>
+    <div class="toolbar-sep"></div>
+    <button class="toolbar-btn font-lg" onclick="setFontSize(20)" title="ตัวใหญ่">A</button>
+  </div>
+  <!-- Export controls -->
+  <div class="toolbar-group">
+    <span class="tb-label">บันทึก</span>
+    <button class="toolbar-btn export-btn" onclick="exportPDF()" title="พิมพ์เป็น PDF">📄 PDF</button>
+    <div class="toolbar-sep"></div>
+    <button class="toolbar-btn export-btn" onclick="exportEPUB()" title="ดาวน์โหลด EPUB">📕 EPUB</button>
+  </div>
+</div>
+
+<!-- ===== EPUB PROGRESS MODAL ===== -->
+<div id="epubProgress">
+  <div class="modal">
+    <h3>🌿 กำลังสร้าง E-Book</h3>
+    <div class="progress-bar"><div class="progress-fill" id="epubFill"></div></div>
+    <div class="status" id="epubStatus">กำลังเตรียมเนื้อหา...</div>
+  </div>
+</div>
+
 <!-- ===== BACK TO TOP ===== -->
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="กลับด้านบน">▲</button>
 
@@ -1492,6 +1661,478 @@ window.addEventListener('scroll', () => {
     if (a.getAttribute('href') === '#' + current) a.classList.add('active');
   });
 });
+
+// ===== FONT SIZE CONTROL =====
+function setFontSize(size) {
+  document.body.style.fontSize = size + 'px';
+  document.querySelectorAll('.toolbar-btn.font-sm, .toolbar-btn.font-md, .toolbar-btn.font-lg').forEach(b => b.classList.remove('active'));
+  if (size <= 15) document.querySelector('.toolbar-btn.font-sm').classList.add('active');
+  else if (size >= 20) document.querySelector('.toolbar-btn.font-lg').classList.add('active');
+  else document.querySelector('.toolbar-btn.font-md').classList.add('active');
+}
+
+// ===== PDF EXPORT =====
+function exportPDF() {
+  // Expand all recipe cards for print
+  document.querySelectorAll('.recipe-card').forEach(c => c.classList.add('open'));
+  // Force all animations visible
+  document.querySelectorAll('.animate-on-scroll').forEach(el => el.classList.add('visible'));
+  setTimeout(() => { window.print(); }, 200);
+}
+
+// ===== EPUB EXPORT =====
+async function exportEPUB() {
+  const progress = document.getElementById('epubProgress');
+  const fill = document.getElementById('epubFill');
+  const status = document.getElementById('epubStatus');
+  progress.classList.add('show');
+  fill.style.width = '10%';
+  status.textContent = 'กำลังเตรียมเนื้อหา...';
+
+  // Collect all text content from sections
+  const bookTitle = 'กินเป็น หลับดี ขับถ่ายคล่อง';
+  const bookAuthor = 'อ้อ — อ้อโฮมเมด (Aor Homemade)';
+  const bookId = 'aor-homemade-ebook-' + Date.now();
+
+  // Extract chapters from sections
+  const chapters = [];
+
+  // Chapter: Cover
+  chapters.push({
+    id: 'cover',
+    title: 'ปก',
+    body: `<div style="text-align:center;padding:60px 20px;">
+      <p style="font-size:14px;color:#C9A96E;font-weight:bold;letter-spacing:2px;">E-BOOK ฉบับสมบูรณ์</p>
+      <h1 style="font-size:32px;color:#7A9A6D;margin:20px 0;">กินเป็น หลับดี<br><span style="color:#C9A96E;">ขับถ่ายคล่อง</span></h1>
+      <p style="font-size:18px;color:#5C5549;">วิชาคุณแม่นักสู้ ปรุงอาหารฟื้นฟูระดับเซลล์ สไตล์วัย 50+</p>
+      <p style="font-size:16px;color:#A88B4A;margin-top:20px;font-weight:bold;">โดย อ้อ — อ้อโฮมเมด</p>
+      <p style="font-size:12px;color:#8A8275;margin-top:40px;">สงวนลิขสิทธิ์ © 2024 ร้านอ้อโฮมเมด</p>
+    </div>`
+  });
+
+  fill.style.width = '20%';
+  status.textContent = 'กำลังรวบรวมบทที่ 1...';
+  await sleep(200);
+
+  // Chapter: จดหมายจากใจแม่นักสู้
+  chapters.push({
+    id: 'ch1-letter',
+    title: 'จดหมายจากใจแม่นักสู้',
+    body: extractSection('letter')
+  });
+
+  fill.style.width = '30%';
+  status.textContent = 'กำลังรวบรวมบทที่ 2...';
+  await sleep(200);
+
+  // Chapter: เช็คลิสต์ 7 สัญญาณเตือน
+  chapters.push({
+    id: 'ch2-checklist',
+    title: 'เช็คลิสต์ 7 สัญญาณเตือน',
+    body: extractSection('checklist')
+  });
+
+  fill.style.width = '40%';
+  status.textContent = 'กำลังรวบรวมบทที่ 3...';
+  await sleep(200);
+
+  // Chapter: ลำไส้คือสมองที่สอง
+  chapters.push({
+    id: 'ch3-gut',
+    title: 'ลำไส้คือสมองที่สอง & อัศวินตัวน้อย',
+    body: extractSection('gut')
+  });
+
+  fill.style.width = '50%';
+  status.textContent = 'กำลังรวบรวมบทที่ 4...';
+  await sleep(200);
+
+  // Chapter: เอนไซม์คือชีวิต
+  chapters.push({
+    id: 'ch4-enzyme',
+    title: 'เอนไซม์คือชีวิต & เทคนิคเคี้ยวคือยา',
+    body: extractSection('enzyme')
+  });
+
+  // Chapter: 6 เสาหลักสุขภาพ
+  chapters.push({
+    id: 'ch5-pillars',
+    title: '6 เสาหลักสุขภาพ',
+    body: extractSection('pillars')
+  });
+
+  fill.style.width = '60%';
+  status.textContent = 'กำลังรวบรวมบทที่ 5-6...';
+  await sleep(200);
+
+  // Chapter: ตู้เย็นบำบัดโรค
+  chapters.push({
+    id: 'ch6-kitchen',
+    title: 'ตู้เย็นบำบัดโรค',
+    body: extractSection('kitchen')
+  });
+
+  // Chapter: สูตรอาหาร
+  // Expand all recipes first
+  document.querySelectorAll('.recipe-card').forEach(c => c.classList.add('open'));
+  await sleep(100);
+  chapters.push({
+    id: 'ch7-recipes',
+    title: 'เมนูปรุงรักให้เป็นยา',
+    body: extractSection('recipes')
+  });
+
+  fill.style.width = '70%';
+  status.textContent = 'กำลังรวบรวมบทที่ 7-8...';
+  await sleep(200);
+
+  // Chapter: กิจวัตรประจำวัน
+  chapters.push({
+    id: 'ch8-routine',
+    title: 'กิจวัตรประจำวัน ฉบับแม่นักสู้',
+    body: extractSection('routine')
+  });
+
+  // Chapter: บทส่งท้าย
+  chapters.push({
+    id: 'ch9-closing',
+    title: 'บทส่งท้าย',
+    body: extractSection('closing') + extractSection('contact')
+  });
+
+  fill.style.width = '80%';
+  status.textContent = 'กำลังสร้างไฟล์ EPUB...';
+  await sleep(300);
+
+  // Build EPUB using JSZip
+  try {
+    // Load JSZip dynamically
+    if (typeof JSZip === 'undefined') {
+      await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js');
+    }
+
+    const zip = new JSZip();
+
+    // mimetype (must be first, uncompressed)
+    zip.file('mimetype', 'application/epub+zip', { compression: 'STORE' });
+
+    // META-INF/container.xml
+    zip.folder('META-INF').file('container.xml',
+      `<?xml version="1.0" encoding="UTF-8"?>
+<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+  <rootfiles>
+    <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+  </rootfiles>
+</container>`);
+
+    const oebps = zip.folder('OEBPS');
+
+    // Stylesheet
+    oebps.file('style.css', `
+@charset "UTF-8";
+body { font-family: 'Sarabun', sans-serif; font-size: 1em; line-height: 1.8; color: #2D2A26; margin: 1em; }
+h1 { font-size: 1.8em; color: #7A9A6D; margin: 0.5em 0; line-height: 1.3; }
+h2 { font-size: 1.4em; color: #7A9A6D; margin: 1em 0 0.5em; }
+h3 { font-size: 1.2em; color: #A88B4A; margin: 0.8em 0 0.4em; }
+h4 { font-size: 1.1em; color: #A88B4A; margin: 0.6em 0 0.3em; }
+p { margin: 0.5em 0; text-indent: 2em; }
+.center { text-align: center; text-indent: 0; }
+.highlight { background: #EFF5EB; padding: 12px 16px; border-radius: 8px; border-left: 4px solid #7A9A6D; margin: 1em 0; text-indent: 0; }
+.quote { font-style: italic; color: #7A9A6D; font-weight: 600; text-indent: 0; }
+.benefit { background: #EFF5EB; padding: 10px 14px; border-radius: 6px; font-weight: 600; color: #5A8F4A; margin: 0.8em 0; text-indent: 0; }
+.warning { background: #FFF5F5; padding: 10px 14px; border-radius: 6px; color: #C75C5C; margin: 0.8em 0; text-indent: 0; }
+.good { background: #F0F8ED; padding: 10px 14px; border-radius: 6px; color: #5A8F4A; margin: 0.5em 0; text-indent: 0; }
+.section-label { font-size: 0.8em; color: #C9A96E; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-indent: 0; }
+hr { border: none; border-top: 2px solid #D4E2CB; margin: 2em 0; }
+.disclaimer { font-size: 0.85em; color: #8A8275; text-align: center; margin: 2em 0; padding: 10px; border: 1px solid #D4E2CB; border-radius: 6px; text-indent: 0; }
+`);
+
+    // Generate chapter XHTML files
+    const manifest = [];
+    const spine = [];
+
+    chapters.forEach((ch, i) => {
+      const fname = ch.id + '.xhtml';
+      const xhtml = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="th" lang="th">
+<head>
+  <meta charset="UTF-8"/>
+  <title>${escXml(ch.title)}</title>
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+  <h1>${escXml(ch.title)}</h1>
+  ${ch.body}
+</body>
+</html>`;
+      oebps.file(fname, xhtml);
+      manifest.push(`<item id="${ch.id}" href="${fname}" media-type="application/xhtml+xml"/>`);
+      spine.push(`<itemref idref="${ch.id}"/>`);
+    });
+
+    // TOC (toc.ncx)
+    const navPoints = chapters.map((ch, i) =>
+      `<navPoint id="nav-${ch.id}" playOrder="${i+1}">
+        <navLabel><text>${escXml(ch.title)}</text></navLabel>
+        <content src="${ch.id}.xhtml"/>
+      </navPoint>`
+    ).join('\n');
+
+    oebps.file('toc.ncx', `<?xml version="1.0" encoding="UTF-8"?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+  <head>
+    <meta name="dtb:uid" content="${bookId}"/>
+    <meta name="dtb:depth" content="1"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+  <docTitle><text>${escXml(bookTitle)}</text></docTitle>
+  <navMap>
+    ${navPoints}
+  </navMap>
+</ncx>`);
+
+    // Nav XHTML (EPUB3)
+    const navLi = chapters.map(ch =>
+      `<li><a href="${ch.id}.xhtml">${escXml(ch.title)}</a></li>`
+    ).join('\n');
+
+    oebps.file('nav.xhtml', `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="th" lang="th">
+<head><meta charset="UTF-8"/><title>สารบัญ</title><link rel="stylesheet" type="text/css" href="style.css"/></head>
+<body>
+  <nav epub:type="toc" id="toc">
+    <h1>สารบัญ</h1>
+    <ol>${navLi}</ol>
+  </nav>
+</body>
+</html>`);
+
+    // content.opf
+    oebps.file('content.opf', `<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="bookid" version="3.0">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+    <dc:identifier id="bookid">${bookId}</dc:identifier>
+    <dc:title>${escXml(bookTitle)}</dc:title>
+    <dc:creator>${escXml(bookAuthor)}</dc:creator>
+    <dc:language>th</dc:language>
+    <dc:publisher>อ้อโฮมเมด (Aor Homemade)</dc:publisher>
+    <dc:rights>สงวนลิขสิทธิ์ © 2024 ร้านอ้อโฮมเมด</dc:rights>
+    <meta property="dcterms:modified">${new Date().toISOString().split('.')[0]+'Z'}</meta>
+  </metadata>
+  <manifest>
+    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+    <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+    <item id="css" href="style.css" media-type="text/css"/>
+    ${manifest.join('\n    ')}
+  </manifest>
+  <spine toc="ncx">
+    ${spine.join('\n    ')}
+  </spine>
+</package>`);
+
+    fill.style.width = '90%';
+    status.textContent = 'กำลังบีบอัดไฟล์...';
+    await sleep(200);
+
+    // Generate and download
+    const blob = await zip.generateAsync({
+      type: 'blob',
+      mimeType: 'application/epub+zip',
+      compression: 'DEFLATE',
+      compressionOptions: { level: 9 }
+    });
+
+    fill.style.width = '100%';
+    status.textContent = 'เสร็จแล้ว! กำลังดาวน์โหลด...';
+    await sleep(400);
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'อ้อโฮมเมด-กินเป็น-หลับดี-ขับถ่ายคล่อง.epub';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    setTimeout(() => { progress.classList.remove('show'); }, 1000);
+
+  } catch (err) {
+    status.textContent = 'เกิดข้อผิดพลาด: ' + err.message;
+    fill.style.width = '100%';
+    fill.style.background = '#C75C5C';
+    setTimeout(() => {
+      progress.classList.remove('show');
+      fill.style.background = '';
+    }, 3000);
+  }
+}
+
+// Helper: extract readable text from a section
+function extractSection(sectionId) {
+  const el = document.getElementById(sectionId);
+  if (!el) return '<p>(ไม่พบเนื้อหา)</p>';
+
+  // Clone to avoid modifying the DOM
+  const clone = el.cloneNode(true);
+
+  // Remove interactive-only elements
+  clone.querySelectorAll('.toggle-icon, .checkbox, .checklist-result, .section-label, .section-divider, .img-placeholder, .hero-scroll-cta, .hero-badge, .hero-img-placeholder').forEach(e => e.remove());
+
+  // Process remaining content
+  let html = '';
+  const processNode = (node) => {
+    if (node.nodeType === 3) { // text node
+      const t = node.textContent.trim();
+      if (t) return t + ' ';
+      return '';
+    }
+    if (node.nodeType !== 1) return '';
+
+    const tag = node.tagName.toLowerCase();
+    const cls = node.className || '';
+
+    // Skip hidden or irrelevant
+    if (tag === 'button' || tag === 'nav' || cls.includes('toolbar') || cls.includes('nav-')) return '';
+
+    // Headings
+    if (['h1','h2','h3','h4'].includes(tag)) {
+      const txt = node.textContent.trim();
+      if (txt) return `<${tag}>${escXml(txt)}</${tag}>\n`;
+      return '';
+    }
+
+    // Paragraphs
+    if (tag === 'p') {
+      const txt = node.textContent.trim();
+      if (txt) {
+        if (cls.includes('recipe-benefit') || cls.includes('benefit')) return `<p class="benefit">${escXml(txt)}</p>\n`;
+        if (cls.includes('quote') || cls.includes('motto')) return `<p class="quote">${escXml(txt)}</p>\n`;
+        if (cls.includes('hero-subtitle')) return `<p class="center">${escXml(txt)}</p>\n`;
+        if (cls.includes('hero-author')) return `<p class="center quote">${escXml(txt)}</p>\n`;
+        return `<p>${escXml(txt)}</p>\n`;
+      }
+      return '';
+    }
+
+    // Div with special classes
+    if (tag === 'div') {
+      if (cls.includes('recipe-benefit') || cls.includes('benefit')) {
+        return `<p class="benefit">${escXml(node.textContent.trim())}</p>\n`;
+      }
+      if (cls.includes('letter-greeting')) {
+        return `<h2>${escXml(node.textContent.trim())}</h2>\n`;
+      }
+      if (cls.includes('letter-sign') || cls.includes('signature')) {
+        return `<p class="quote center">${escXml(node.textContent.trim())}</p>\n`;
+      }
+      if (cls.includes('closing-card')) {
+        let inner = '';
+        node.childNodes.forEach(child => { inner += processNode(child); });
+        return `<div class="highlight">${inner}</div>\n`;
+      }
+      if (cls.includes('check-text')) {
+        const strong = node.querySelector('strong');
+        const span = node.querySelector('span');
+        let out = '';
+        if (strong) out += `<p><strong>${escXml(strong.textContent.trim())}</strong>`;
+        if (span) out += ` — ${escXml(span.textContent.trim())}`;
+        out += '</p>\n';
+        return out;
+      }
+      if (cls.includes('check-item')) {
+        let inner = '';
+        const ct = node.querySelector('.check-text');
+        if (ct) inner = processNode(ct);
+        return inner;
+      }
+      if (cls.includes('knight-item') || cls.includes('ingredient-card') || cls.includes('pillar-card')) {
+        const h = node.querySelector('h4');
+        const p = node.querySelector('p');
+        let out = '';
+        if (h) out += `<h3>${escXml(h.textContent.trim())}</h3>\n`;
+        if (p) out += `<p>${escXml(p.textContent.trim())}</p>\n`;
+        return out;
+      }
+      if (cls.includes('routine-item')) {
+        const time = node.querySelector('.time');
+        const h = node.querySelector('h4');
+        const p = node.querySelector('p');
+        let out = '';
+        if (time) out += `<h3>${escXml(time.textContent.trim())} ${h ? escXml(h.textContent.trim()) : ''}</h3>\n`;
+        if (p) out += `<p>${escXml(p.textContent.trim())}</p>\n`;
+        return out;
+      }
+      if (cls.includes('kitchen-col')) {
+        const h = node.querySelector('h4');
+        let out = '';
+        if (h) out += `<h3>${escXml(h.textContent.trim())}</h3>\n`;
+        const items = node.querySelectorAll('li');
+        items.forEach(li => {
+          const s = li.querySelector('strong');
+          const sp = li.querySelector('span');
+          const isBad = cls.includes('bad');
+          out += `<p class="${isBad ? 'warning' : 'good'}"><strong>${s ? escXml(s.textContent.trim()) : ''}</strong> ${sp ? escXml(sp.textContent.trim()) : ''}</p>\n`;
+        });
+        return out;
+      }
+      if (cls.includes('contact-item')) {
+        return `<p>${escXml(node.textContent.trim())}</p>\n`;
+      }
+      if (cls.includes('motto')) {
+        return `<p class="quote center">${escXml(node.textContent.trim())}</p>\n`;
+      }
+      if (cls.includes('contact-copyright')) {
+        return `<p class="disclaimer">${escXml(node.textContent.trim())}</p>\n`;
+      }
+    }
+
+    // Links in contact section
+    if (tag === 'a' && cls.includes('contact-item')) {
+      return `<p>${escXml(node.textContent.trim())}</p>\n`;
+    }
+
+    // Lists
+    if (tag === 'li') {
+      return `<p>• ${escXml(node.textContent.trim())}</p>\n`;
+    }
+
+    // Default: recurse into children
+    let childHtml = '';
+    node.childNodes.forEach(child => { childHtml += processNode(child); });
+    return childHtml;
+  };
+
+  clone.childNodes.forEach(child => { html += processNode(child); });
+
+  // Clean up
+  html = html.replace(/\n{3,}/g, '\n\n').trim();
+  if (!html) html = '<p>(ไม่พบเนื้อหา)</p>';
+
+  return html;
+}
+
+// Helper: escape XML entities
+function escXml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');
+}
+
+// Helper: sleep
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// Helper: load external script
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = src;
+    s.onload = resolve;
+    s.onerror = () => reject(new Error('ไม่สามารถโหลด library: ' + src));
+    document.head.appendChild(s);
+  });
+}
 </script>
 
 </body>
