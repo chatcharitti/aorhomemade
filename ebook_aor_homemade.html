@@ -1680,14 +1680,89 @@ function exportPDF() {
   setTimeout(() => { window.print(); }, 200);
 }
 
+// ===== IMAGE FETCH HELPER =====
+// ดึงรูปภาพจาก URL แล้วแปลงเป็น Base64 ผ่าน Canvas
+async function fetchImageAsBase64(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+
+    img.onload = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth || img.width;
+        canvas.height = img.naturalHeight || img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        // แปลงเป็น JPEG เพื่อลดขนาดไฟล์
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+        // ตัด "data:image/jpeg;base64," ออก เหลือแค่ base64 string
+        const base64 = dataUrl.split(',')[1];
+        resolve({ base64, mimeType: 'image/jpeg', ext: 'jpg' });
+      } catch(e) {
+        resolve(null); // กรณี CORS หรือ canvas error
+      }
+    };
+
+    img.onerror = () => resolve(null); // รูปไม่มีหรือโหลดไม่ได้
+
+    // ถ้า src เป็น relative path ให้ resolve เป็น absolute URL ก่อน
+    if (!src.startsWith('http')) {
+      const base = window.location.href.replace(/\/[^\/]*$/, '/');
+      img.src = base + src;
+    } else {
+      img.src = src;
+    }
+  });
+}
+
 // ===== EPUB EXPORT =====
 async function exportEPUB() {
   const progress = document.getElementById('epubProgress');
   const fill = document.getElementById('epubFill');
   const status = document.getElementById('epubStatus');
   progress.classList.add('show');
-  fill.style.width = '10%';
-  status.textContent = 'กำลังเตรียมเนื้อหา...';
+  fill.style.width = '5%';
+  status.textContent = 'กำลังโหลดรูปภาพ...';
+
+  // ===== STEP 1: ดึงรูปภาพทั้งหมดก่อน =====
+  // รายการรูปทั้งหมดในหนังสือ
+  const imageList = [
+    { src: 'pic_page1.png',  alt: 'ปกหนังสือ' },
+    { src: 'pic_page2.png',  alt: 'คุณอ้อกับน้องชุนเทียน' },
+    { src: 'pic_page4.png',  alt: 'โหลหมักเอนไซม์' },
+    { src: 'pic_page6.png',  alt: 'สัญญาณเตือนสุขภาพ' },
+    { src: 'pic_page8.png',  alt: 'Gut-Brain Axis' },
+    { src: 'pic_page11.png', alt: 'เอนไซม์และการเคี้ยว' },
+    { src: 'pic_page13.png', alt: '6 เสาหลักสุขภาพ' },
+    { src: 'pic_page16.png', alt: 'ตู้เย็นบำบัดโรค' },
+    { src: 'pic_page19.png', alt: 'วัตถุดิบหลัก 3 อย่าง' },
+    { src: 'pic_page20.png', alt: 'สมูทตี้สีทอง' },
+    { src: 'pic_page22.png', alt: 'เทมเป้ผัดสมุนไพร' },
+    { src: 'pic_page24.png', alt: 'ยำแหนมเห็ด' },
+    { src: 'pic_page26.png', alt: 'ข้าวหมากข้าวก่ำ' },
+    { src: 'pic_page28.png', alt: 'สินค้าอ้อโฮมเมด' },
+    { src: 'pic_page29.png', alt: 'คุณอ้อและน้องชุนเทียน' },
+    { src: 'pic_page30.png', alt: 'โลโก้อ้อโฮมเมด' },
+  ];
+
+  // ดึงรูปทีละรูป พร้อม progress
+  const imageMap = {}; // { 'pic_page1.png': { base64, mimeType, ext } }
+  let loaded = 0;
+  for (const img of imageList) {
+    status.textContent = `กำลังโหลดรูป ${img.src} (${loaded+1}/${imageList.length})...`;
+    fill.style.width = (5 + (loaded / imageList.length) * 30) + '%';
+    const result = await fetchImageAsBase64(img.src);
+    if (result) {
+      imageMap[img.src] = result;
+    }
+    loaded++;
+  }
+
+  const loadedCount = Object.keys(imageMap).length;
+  status.textContent = `โหลดรูปสำเร็จ ${loadedCount}/${imageList.length} รูป กำลังเตรียมเนื้อหา...`;
+  fill.style.width = '35%';
+  await sleep(200);
 
   // Collect all text content from sections
   const bookTitle = 'กินเป็น หลับดี ขับถ่ายคล่อง';
@@ -1704,105 +1779,105 @@ async function exportEPUB() {
     body: `<div style="text-align:center;padding:60px 20px;">
       <p style="font-size:14px;color:#C9A96E;font-weight:bold;letter-spacing:2px;">E-BOOK ฉบับสมบูรณ์</p>
       <h2 style="font-size:32px;color:#7A9A6D;margin:20px 0;">กินเป็น หลับดี ขับถ่ายคล่อง</h2>
+      ${imageMap['pic_page1.png'] ? `<div style="text-align:center;margin:20px 0;"><img src="images/pic_page1.jpg" alt="ปกหนังสือ" style="max-width:80%;border-radius:12px;"/></div>` : ''}
       <p style="font-size:18px;color:#5C5549;">วิชาคุณแม่นักสู้ ปรุงอาหารฟื้นฟูระดับเซลล์ สไตล์วัย 50+</p>
       <p style="font-size:16px;color:#A88B4A;margin-top:20px;font-weight:bold;">โดย อ้อ — อ้อโฮมเมด</p>
       <p style="font-size:12px;color:#8A8275;margin-top:40px;">สงวนลิขสิทธิ์ © 2024 ร้านอ้อโฮมเมด</p>
     </div>`
   });
 
-  fill.style.width = '20%';
+  fill.style.width = '40%';
   status.textContent = 'กำลังรวบรวมบทที่ 1...';
-  await sleep(200);
+  await sleep(150);
 
   // Chapter: จดหมายจากใจแม่นักสู้
   chapters.push({
     id: 'ch1-letter',
     title: 'จดหมายจากใจแม่นักสู้',
-    body: extractSection('letter')
+    body: extractSectionWithImages('letter', imageMap)
   });
 
-  fill.style.width = '30%';
+  fill.style.width = '45%';
   status.textContent = 'กำลังรวบรวมบทที่ 2...';
-  await sleep(200);
+  await sleep(150);
 
   // Chapter: เช็คลิสต์ 7 สัญญาณเตือน
   chapters.push({
     id: 'ch2-checklist',
     title: 'เช็คลิสต์ 7 สัญญาณเตือน',
-    body: extractSection('checklist')
+    body: extractSectionWithImages('checklist', imageMap)
   });
 
-  fill.style.width = '40%';
+  fill.style.width = '50%';
   status.textContent = 'กำลังรวบรวมบทที่ 3...';
-  await sleep(200);
+  await sleep(150);
 
   // Chapter: ลำไส้คือสมองที่สอง
   chapters.push({
     id: 'ch3-gut',
     title: 'ลำไส้คือสมองที่สอง และ อัศวินตัวน้อย',
-    body: extractSection('gut')
+    body: extractSectionWithImages('gut', imageMap)
   });
 
-  fill.style.width = '50%';
+  fill.style.width = '55%';
   status.textContent = 'กำลังรวบรวมบทที่ 4...';
-  await sleep(200);
+  await sleep(150);
 
   // Chapter: เอนไซม์คือชีวิต
   chapters.push({
     id: 'ch4-enzyme',
     title: 'เอนไซม์คือชีวิต และ เทคนิคเคี้ยวคือยา',
-    body: extractSection('enzyme')
+    body: extractSectionWithImages('enzyme', imageMap)
   });
 
   // Chapter: 6 เสาหลักสุขภาพ
   chapters.push({
     id: 'ch5-pillars',
     title: '6 เสาหลักสุขภาพ',
-    body: extractSection('pillars')
+    body: extractSectionWithImages('pillars', imageMap)
   });
 
   fill.style.width = '60%';
   status.textContent = 'กำลังรวบรวมบทที่ 5-6...';
-  await sleep(200);
+  await sleep(150);
 
   // Chapter: ตู้เย็นบำบัดโรค
   chapters.push({
     id: 'ch6-kitchen',
     title: 'ตู้เย็นบำบัดโรค',
-    body: extractSection('kitchen')
+    body: extractSectionWithImages('kitchen', imageMap)
   });
 
-  // Chapter: สูตรอาหาร
-  // Expand all recipes first
+  // Chapter: สูตรอาหาร — เปิด recipe cards ทั้งหมดก่อน
   document.querySelectorAll('.recipe-card').forEach(c => c.classList.add('open'));
   await sleep(100);
   chapters.push({
     id: 'ch7-recipes',
     title: 'เมนูปรุงรักให้เป็นยา',
-    body: extractSection('recipes')
+    body: extractSectionWithImages('recipes', imageMap)
   });
 
-  fill.style.width = '70%';
+  fill.style.width = '68%';
   status.textContent = 'กำลังรวบรวมบทที่ 7-8...';
-  await sleep(200);
+  await sleep(150);
 
   // Chapter: กิจวัตรประจำวัน
   chapters.push({
     id: 'ch8-routine',
     title: 'กิจวัตรประจำวัน ฉบับแม่นักสู้',
-    body: extractSection('routine')
+    body: extractSectionWithImages('routine', imageMap)
   });
 
   // Chapter: บทส่งท้าย
   chapters.push({
     id: 'ch9-closing',
     title: 'บทส่งท้าย',
-    body: extractSection('closing') + extractSection('contact')
+    body: extractSectionWithImages('closing', imageMap) + extractSectionWithImages('contact', imageMap)
   });
 
-  fill.style.width = '80%';
+  fill.style.width = '72%';
   status.textContent = 'กำลังสร้างไฟล์ EPUB...';
-  await sleep(300);
+  await sleep(200);
 
   // Build EPUB using JSZip
   try {
@@ -1826,6 +1901,24 @@ async function exportEPUB() {
 </container>`);
 
     const oebps = zip.folder('OEBPS');
+    const imagesFolder = oebps.folder('images');
+
+    // ===== STEP 2: ฝังรูปภาพลง OEBPS/images/ =====
+    const imageManifest = [];
+    fill.style.width = '75%';
+    status.textContent = 'กำลังฝังรูปภาพลง EPUB...';
+
+    for (const [filename, imgData] of Object.entries(imageMap)) {
+      // เปลี่ยนนามสกุลเป็น .jpg เนื่องจากแปลงผ่าน canvas เป็น JPEG แล้ว
+      const epubFilename = filename.replace(/\.(png|jpg|jpeg|gif|webp)$/i, '.jpg');
+      const itemId = 'img-' + filename.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+
+      // decode base64 string เป็น binary array สำหรับ JSZip
+      imagesFolder.file(epubFilename, imgData.base64, { base64: true });
+      imageManifest.push(
+        `<item id="${itemId}" href="images/${epubFilename}" media-type="image/jpeg"/>`
+      );
+    }
 
     // Stylesheet
     oebps.file('style.css', `
@@ -1836,6 +1929,7 @@ h2 { font-size: 1.4em; color: #7A9A6D; margin: 1em 0 0.5em; }
 h3 { font-size: 1.2em; color: #A88B4A; margin: 0.8em 0 0.4em; }
 h4 { font-size: 1.1em; color: #A88B4A; margin: 0.6em 0 0.3em; }
 p { margin: 0.5em 0; text-indent: 2em; }
+img { max-width: 100%; height: auto; display: block; margin: 1em auto; border-radius: 8px; }
 .center { text-align: center; text-indent: 0; }
 .highlight { background: #EFF5EB; padding: 12px 16px; border-radius: 8px; border-left: 4px solid #7A9A6D; margin: 1em 0; text-indent: 0; }
 .quote { font-style: italic; color: #7A9A6D; font-weight: 600; text-indent: 0; }
@@ -1850,6 +1944,9 @@ hr { border: none; border-top: 2px solid #D4E2CB; margin: 2em 0; }
     // Generate chapter XHTML files
     const manifest = [];
     const spine = [];
+
+    fill.style.width = '82%';
+    status.textContent = 'กำลังสร้างบทต่างๆ...';
 
     chapters.forEach((ch, i) => {
       const fname = ch.id + '.xhtml';
@@ -1928,6 +2025,7 @@ hr { border: none; border-top: 2px solid #D4E2CB; margin: 2em 0; }
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
     <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
     <item id="css" href="style.css" media-type="text/css"/>
+    ${imageManifest.join('\n    ')}
     ${manifest.join('\n    ')}
   </manifest>
   <spine toc="ncx">
@@ -1971,6 +2069,40 @@ hr { border: none; border-top: 2px solid #D4E2CB; margin: 2em 0; }
       fill.style.background = '';
     }, 3000);
   }
+}
+
+// Helper: extract section content and remap image paths for EPUB
+function extractSectionWithImages(sectionId, imageMap) {
+  // Get base text content
+  let html = extractSection(sectionId);
+
+  // extractSection removes images — we need to re-inject them from the DOM
+  // by scanning the original section for img tags
+  const el = document.getElementById(sectionId);
+  if (!el) return html;
+
+  // Find all active img tags in this section
+  const imgs = el.querySelectorAll('img[src]');
+  imgs.forEach(img => {
+    const origSrc = img.getAttribute('src'); // e.g. "pic_page4.png"
+    if (!origSrc || origSrc.startsWith('data:')) return;
+
+    const basename = origSrc.split('/').pop(); // strip any path prefix
+    if (imageMap[basename]) {
+      // Change extension to .jpg (canvas output)
+      const epubSrc = 'images/' + basename.replace(/\.(png|jpg|jpeg|gif|webp)$/i, '.jpg');
+      const altText = escXml(img.getAttribute('alt') || basename);
+      const imgTag = `<p class="center"><img src="${epubSrc}" alt="${altText}"/></p>\n`;
+
+      // Inject image block at start of the html (after first heading if any)
+      // to avoid duplication; place before first <p>
+      if (!html.includes(epubSrc)) {
+        html = imgTag + html;
+      }
+    }
+  });
+
+  return html;
 }
 
 // Helper: extract readable text from a section
