@@ -7,75 +7,127 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Sarabun',sans-serif;background:#f0ebe3;color:#333;min-height:100vh;}
-.page-wrapper{max-width:960px;margin:0 auto;padding:24px 16px;}
+body{font-family:'Sarabun',sans-serif;background:#f0ebe3;color:#333;min-height:100vh;font-size:16px;transition:font-size .2s ease;}
+.page-wrapper{max-width:960px;margin:0 auto;padding:24px 16px 40px;}
 
-/* HEADER */
+/* ===== FONT SIZE CONTROL ===== */
+.font-bar{
+  position:sticky;top:10px;z-index:999;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  border:1px solid rgba(201,106,30,.3);
+  border-radius:50px;
+  padding:8px 18px;
+  box-shadow:0 4px 20px rgba(123,45,0,.15);
+  margin-bottom:20px;
+  width:fit-content;
+  margin-left:auto;margin-right:auto;
+}
+.font-bar-label{
+  font-size:13px;font-weight:600;color:#7B2D00;
+  margin-right:4px;white-space:nowrap;
+}
+.font-btn{
+  width:34px;height:34px;border-radius:50%;border:none;cursor:pointer;
+  font-weight:800;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s ease;
+  color:#fff;
+}
+.font-btn.dec{background:linear-gradient(135deg,#A0450A,#7B2D00);}
+.font-btn.inc{background:linear-gradient(135deg,#C96A1E,#A0450A);}
+.font-btn:hover{transform:scale(1.1);box-shadow:0 2px 8px rgba(0,0,0,.2);}
+.font-btn:active{transform:scale(.95);}
+.font-size-display{
+  min-width:46px;text-align:center;
+  font-size:14px;font-weight:700;color:#7B2D00;
+  background:#fdf3ec;border-radius:8px;
+  padding:4px 8px;border:1px solid rgba(201,106,30,.25);
+}
+.font-btn.reset{
+  background:linear-gradient(135deg,#888,#555);
+  font-size:12px;width:auto;border-radius:30px;padding:0 12px;
+}
+
+/* ===== HEADER ===== */
 .header{background:linear-gradient(135deg,#7B2D00 0%,#A0450A 40%,#C96A1E 100%);border-radius:16px;padding:40px 30px 36px;text-align:center;color:#fff;box-shadow:0 6px 28px rgba(123,45,0,.35);margin-bottom:22px;position:relative;overflow:hidden;}
 .header::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:rgba(255,255,255,.05);border-radius:50%;}
 .header::after{content:'';position:absolute;bottom:-40px;left:-40px;width:150px;height:150px;background:rgba(255,255,255,.04);border-radius:50%;}
 .logo-wrap{margin-bottom:20px;}
 .logo-wrap img{width:150px;height:150px;border-radius:50%;object-fit:cover;border:4px solid rgba(255,255,255,.7);box-shadow:0 4px 16px rgba(0,0,0,.3);}
-.header-badge{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);border-radius:20px;padding:5px 18px;font-size:13px;letter-spacing:.5px;margin-bottom:14px;}
-.header h1{font-size:clamp(24px,5vw,38px);font-weight:800;line-height:1.25;text-shadow:0 2px 6px rgba(0,0,0,.25);margin-bottom:8px;}
-.header-sub{font-size:clamp(14px,3vw,18px);font-weight:400;opacity:.9;margin-bottom:18px;}
+.header-badge{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);border-radius:20px;padding:5px 18px;font-size:.82em;letter-spacing:.5px;margin-bottom:14px;}
+.header h1{font-size:clamp(1.5em,5vw,2.4em);font-weight:800;line-height:1.25;text-shadow:0 2px 6px rgba(0,0,0,.25);margin-bottom:8px;}
+.header-sub{font-size:clamp(.9em,3vw,1.15em);font-weight:400;opacity:.9;margin-bottom:18px;}
 .header-meta{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;}
-.meta-chip{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:30px;padding:7px 18px;font-size:14px;font-weight:600;}
+.meta-chip{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:30px;padding:7px 18px;font-size:.88em;font-weight:600;}
 
-/* SECTION */
+/* ===== SECTION ===== */
 .section{margin-bottom:22px;}
-.section-title{font-size:20px;font-weight:700;color:#7B2D00;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
-.section-title .icon{width:36px;height:36px;background:linear-gradient(135deg,#C96A1E,#7B2D00);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;flex-shrink:0;}
+.section-title{font-size:1.25em;font-weight:700;color:#7B2D00;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.section-title .icon{width:36px;height:36px;background:linear-gradient(135deg,#C96A1E,#7B2D00);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1em;color:#fff;flex-shrink:0;}
 
-/* CARDS */
+/* ===== CARDS ===== */
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
 .card{background:#fff;border-radius:12px;padding:20px;border-top:4px solid #C96A1E;box-shadow:0 2px 10px rgba(0,0,0,.07);}
-.card-label{font-size:11px;font-weight:700;color:#A0450A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;}
-.card p{font-size:15px;line-height:1.65;color:#444;}
+.card-label{font-size:.72em;font-weight:700;color:#A0450A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;}
+.card p{font-size:.94em;line-height:1.7;color:#444;}
 
-/* TIMELINE */
+/* ===== TIMELINE ===== */
 .timeline-list{display:flex;flex-direction:column;gap:16px;}
 .tl-item{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.07);border-left:5px solid #C96A1E;display:grid;grid-template-columns:160px 1fr;}
 .tl-left{background:linear-gradient(180deg,#7B2D00 0%,#A0450A 100%);color:#fff;padding:20px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;}
-.tl-time{font-size:clamp(12px,2vw,15px);font-weight:800;line-height:1.4;}
-.tl-emoji{font-size:32px;}
+.tl-time{font-size:.94em;font-weight:800;line-height:1.4;}
+.tl-emoji{font-size:2em;}
 .tl-right{padding:20px 22px;}
-.tl-title{font-size:clamp(16px,3vw,19px);font-weight:700;color:#7B2D00;margin-bottom:10px;}
-.tl-body{font-size:14px;line-height:1.8;color:#555;margin-bottom:14px;}
+.tl-title{font-size:1.19em;font-weight:700;color:#7B2D00;margin-bottom:10px;}
+.tl-body{font-size:.88em;line-height:1.85;color:#555;margin-bottom:14px;}
 .tl-body strong{color:#333;font-weight:600;}
-.action-pill{background:linear-gradient(135deg,#eef7e3,#dff0c8);border-left:4px solid #5D9E2F;border-radius:8px;padding:13px 16px;font-size:14px;color:#2f5c12;line-height:1.65;}
+.action-pill{background:linear-gradient(135deg,#eef7e3,#dff0c8);border-left:4px solid #5D9E2F;border-radius:8px;padding:13px 16px;font-size:.88em;color:#2f5c12;line-height:1.7;}
 .action-pill::before{content:'▶ ACTION: ';font-weight:800;color:#3e7d1b;}
 
-/* KEY POINTS */
+/* ===== KEY POINTS ===== */
 .kp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;}
-.kp-item{background:#fff;border-radius:10px;padding:16px;border-left:4px solid #5D9E2F;box-shadow:0 2px 8px rgba(0,0,0,.06);font-size:14px;line-height:1.65;color:#444;}
-.kp-item strong{color:#2f5c12;display:block;margin-bottom:4px;font-size:15px;}
+.kp-item{background:#fff;border-radius:10px;padding:16px;border-left:4px solid #5D9E2F;box-shadow:0 2px 8px rgba(0,0,0,.06);font-size:.88em;line-height:1.7;color:#444;}
+.kp-item strong{color:#2f5c12;display:block;margin-bottom:4px;font-size:.94em;}
 
-/* FOOTER */
+/* ===== FOOTER ===== */
 .footer{background:linear-gradient(135deg,#7B2D00,#A0450A);border-radius:14px;padding:28px 24px;text-align:center;color:#fff;margin-top:6px;}
 .footer-logo{width:80px;height:80px;border-radius:50%;border:3px solid rgba(255,255,255,.6);margin:0 auto 14px;display:block;object-fit:cover;}
-.footer h3{font-size:20px;font-weight:800;margin-bottom:4px;}
-.footer p{font-size:14px;opacity:.85;margin-bottom:4px;}
-.footer-phone{font-size:18px;font-weight:700;margin-top:12px;background:rgba(255,255,255,.15);display:inline-block;padding:8px 24px;border-radius:30px;border:1px solid rgba(255,255,255,.3);}
+.footer h3{font-size:1.25em;font-weight:800;margin-bottom:4px;}
+.footer p{font-size:.88em;opacity:.85;margin-bottom:4px;}
+.footer-phone{font-size:1.13em;font-weight:700;margin-top:12px;background:rgba(255,255,255,.15);display:inline-block;padding:8px 24px;border-radius:30px;border:1px solid rgba(255,255,255,.3);}
 
-/* PRINT */
+/* ===== PRINT ===== */
 @media print{
+  .font-bar{display:none!important;}
   body{background:#fff;}
   .page-wrapper{padding:0;}
   .header,.footer,.tl-left{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   .tl-item{page-break-inside:avoid;}
 }
 
-/* RESPONSIVE */
+/* ===== RESPONSIVE ===== */
 @media(max-width:640px){
   .tl-item{grid-template-columns:1fr;}
   .tl-left{padding:14px 16px;flex-direction:row;gap:12px;text-align:left;justify-content:flex-start;}
-  .tl-emoji{font-size:24px;}
+  .tl-emoji{font-size:1.6em;}
+  .font-bar{padding:7px 14px;gap:6px;}
 }
 </style>
 </head>
 <body>
 <div class="page-wrapper">
+
+  <!-- FONT SIZE BAR -->
+  <div class="font-bar" id="fontBar">
+    <span class="font-bar-label">🔤 ขนาดตัวอักษร:</span>
+    <button class="font-btn dec" onclick="changeFont(-1)" title="ลดขนาด">−</button>
+    <span class="font-size-display" id="fontDisplay">16px</span>
+    <button class="font-btn inc" onclick="changeFont(1)" title="เพิ่มขนาด">+</button>
+    <button class="font-btn reset" onclick="resetFont()" title="ค่าเริ่มต้น">รีเซ็ต</button>
+  </div>
 
   <!-- HEADER -->
   <div class="header">
@@ -212,9 +264,49 @@ body{font-family:'Sarabun',sans-serif;background:#f0ebe3;color:#333;min-height:1
     <h3>อ้อโฮมเมด | AOR HOMEMADE®</h3>
     <p>สินค้าเกษตรแปรรูปด้วยเอนไซม์สด เพื่อสุขภาพที่ดีจากธรรมชาติ</p>
     <div class="footer-phone">📞 092-415-1550</div>
-    <p style="margin-top:16px;font-size:12px;opacity:.6;">เอกสารนี้จัดทำเพื่อการบริหารจัดการสัมมนา | อ้อโฮมเมด 2568</p>
+    <p style="margin-top:16px;font-size:.75em;opacity:.6;">เอกสารนี้จัดทำเพื่อการบริหารจัดการสัมมนา | อ้อโฮมเมด 2568</p>
   </div>
 
 </div>
+
+<script>
+  const MIN = 12, MAX = 26, DEFAULT = 16;
+  let current = DEFAULT;
+
+  function changeFont(delta) {
+    current = Math.min(MAX, Math.max(MIN, current + delta));
+    apply();
+  }
+
+  function resetFont() {
+    current = DEFAULT;
+    apply();
+  }
+
+  function apply() {
+    document.body.style.fontSize = current + 'px';
+    document.getElementById('fontDisplay').textContent = current + 'px';
+
+    // อัปเดตสีปุ่มเมื่อถึงขีดจำกัด
+    document.querySelector('.font-btn.dec').style.opacity = current <= MIN ? '0.4' : '1';
+    document.querySelector('.font-btn.inc').style.opacity = current >= MAX ? '0.4' : '1';
+  }
+
+  // โหลดค่าที่บันทึกไว้ (ถ้ามี)
+  window.onload = function() {
+    const saved = localStorage.getItem('aor_font_size');
+    if (saved) {
+      current = parseInt(saved);
+      apply();
+    }
+  };
+
+  // บันทึกค่าเมื่อเปลี่ยน
+  const origApply = apply;
+  apply = function() {
+    origApply();
+    try { localStorage.setItem('aor_font_size', current); } catch(e) {}
+  };
+</script>
 </body>
 </html>
