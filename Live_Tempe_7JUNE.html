@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="th" class="h-full bg-slate-50 text-slate-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Stream Dashboard: Tempeh Masterclass (Light Theme)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons for UI elegance -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&display=swap');
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+        /* Custom scrollbar for premium light feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col overflow-hidden">
+
+    <!-- TOP HEADER / CONTROL BAR -->
+    <header class="bg-white border-b border-slate-200 px-6 py-4 flex flex-wrap items-center justify-between gap-4 z-10 shrink-0 shadow-sm">
+        <div class="flex items-center gap-3">
+            <span class="flex h-3 w-3 relative">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+            </span>
+            <h1 class="text-xl font-extrabold tracking-wider text-slate-900">TEMPEH LIVE <span class="text-emerald-600">DASHBOARD</span></h1>
+        </div>
+
+        <!-- Timer Panel -->
+        <div class="flex items-center gap-4 bg-slate-100 border border-slate-200 px-4 py-2 rounded-full shadow-inner">
+            <div class="flex items-center gap-2">
+                <i data-lucide="clock" class="w-5 h-5 text-emerald-600"></i>
+                <span id="timer-display" class="font-mono text-xl font-bold tracking-widest text-emerald-600">60:00</span>
+            </div>
+            <div class="flex gap-2">
+                <button id="btn-timer-toggle" onclick="toggleTimer()" class="bg-emerald-600 hover:bg-emerald-500 text-white p-1.5 rounded-full transition-all shadow-sm">
+                    <i id="play-icon" data-lucide="play" class="w-4 h-4"></i>
+                </button>
+                <button onclick="resetTimer()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 p-1.5 rounded-full transition-all">
+                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Teleprompter Controls -->
+        <div class="flex items-center gap-3">
+            <span class="text-sm text-slate-600 font-semibold">ขนาดตัวอักษร:</span>
+            <div class="inline-flex rounded-md shadow-sm border border-slate-200 bg-white p-0.5" role="group">
+                <button onclick="setFontSize('normal')" id="btn-size-normal" class="px-3 py-1.5 text-xs font-semibold rounded-md transition-all">
+                    ปกติ
+                </button>
+                <button onclick="setFontSize('large')" id="btn-size-large" class="px-3 py-1.5 text-xs font-semibold rounded-md transition-all">
+                    ใหญ่
+                </button>
+                <button onclick="setFontSize('xl')" id="btn-size-xl" class="px-3 py-1.5 text-xs font-semibold rounded-md transition-all">
+                    ใหญ่พิเศษ
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN INTERACTIVE WORKSPACE -->
+    <div class="flex-1 flex overflow-hidden">
+        
+        <!-- SIDEBAR NAVIGATION & QUICK CHECKLIST -->
+        <aside class="w-80 bg-white border-r border-slate-200 p-5 hidden md:flex flex-col gap-6 overflow-y-auto shrink-0 shadow-sm">
+            <!-- Timeline Shortcuts -->
+            <div>
+                <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">ดนตรี/ลำดับช่วงเวลา</h3>
+                <div class="space-y-2">
+                    <a href="#sec-intro" class="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-all group">
+                        <span class="text-sm font-bold text-slate-700 group-hover:text-emerald-600">1. เปิดรายการ (00:00)</span>
+                        <span class="text-xs px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 font-medium">5 นาที</span>
+                    </a>
+                    <a href="#sec-cook" class="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-all group">
+                        <span class="text-sm font-bold text-slate-700 group-hover:text-emerald-600">2. เทคนิคปรุงอาหาร</span>
+                        <span class="text-xs px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 font-medium">15 นาที</span>
+                    </a>
+                    <a href="#sec-smoothie" class="flex items-center justify-between p-2.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-all group border-l-4 border-l-emerald-500">
+                        <span class="text-sm font-bold text-emerald-800 group-hover:text-emerald-700">3. สาธิตสมูตตี้ [สด]</span>
+                        <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold">20 นาที</span>
+                    </a>
+                    <a href="#sec-qna" class="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-all group">
+                        <span class="text-sm font-bold text-slate-700 group-hover:text-emerald-600">4. เคลียร์ Q&A</span>
+                        <span class="text-xs px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 font-medium">15 นาที</span>
+                    </a>
+                    <a href="#sec-outro" class="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-all group">
+                        <span class="text-sm font-bold text-slate-700 group-hover:text-emerald-600">5. ปิดไลฟ์ (00:55)</span>
+                        <span class="text-xs px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 font-medium">5 นาที</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Smoothie Ingredients Checklists -->
+            <div>
+                <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">เช็กสมูตตี้สด (คลิกเพื่อติ๊ก)</h3>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                    <label class="flex items-start gap-3 cursor-pointer group">
+                        <input type="checkbox" class="mt-1 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+                        <span class="text-sm text-slate-700 group-hover:text-slate-900 transition-colors">
+                            <strong class="text-slate-900 block">เทมเป้สด (60-80g)</strong>
+                            <span class="text-xs text-slate-500">หั่นเต๋า โชว์เส้นใยแน่น</span>
+                        </span>
+                    </label>
+                    <label class="flex items-start gap-3 cursor-pointer group">
+                        <input type="checkbox" class="mt-1 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+                        <span class="text-sm text-slate-700 group-hover:text-slate-900 transition-colors">
+                            <strong class="text-slate-900 block">มิกซ์เบอร์รี่แช่แข็ง</strong>
+                            <span class="text-xs text-slate-500">1 กำมือ ตัดกลิ่นถั่ว</span>
+                        </span>
+                    </label>
+                    <label class="flex items-start gap-3 cursor-pointer group">
+                        <input type="checkbox" class="mt-1 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+                        <span class="text-sm text-slate-700 group-hover:text-slate-900 transition-colors">
+                            <strong class="text-slate-900 block">น้ำมะพร้าวน้ำหอมสด</strong>
+                            <span class="text-xs text-slate-500">150-200 มล. เพิ่มความเบา</span>
+                        </span>
+                    </label>
+                    <label class="flex items-start gap-3 cursor-pointer group">
+                        <input type="checkbox" class="mt-1 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+                        <span class="text-sm text-slate-700 group-hover:text-slate-900 transition-colors">
+                            <strong class="text-slate-900 block">เอนไซม์ข้าวก่ำ</strong>
+                            <span class="text-xs text-slate-500">1-2 ช้อนโต๊ะ เพิ่ม Synbiotics</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Pro Tips for Host -->
+            <div class="mt-auto bg-slate-50 border border-slate-200 p-4 rounded-xl">
+                <h4 class="text-xs font-bold text-emerald-700 uppercase tracking-widest mb-1">💡 Live Tips:</h4>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    เน้นทักทายคนดูเป็นระยะเพื่อความกระชับ และ "ดื่มโชว์จริง" เพื่อสร้างความมั่นใจเรื่องรสชาติ!
+                </p>
+            </div>
+        </aside>
+
+        <!-- TELEPROMPTER CONTENT AREA -->
+        <main class="flex-1 overflow-y-auto p-6 md:p-12 space-y-16 bg-white" id="teleprompter-content">
+
+            <!-- INTRO SECTION -->
+            <section id="sec-intro" class="scroll-mt-24 border-l-4 border-emerald-500 pl-6 space-y-4">
+                <div class="flex items-center gap-3 text-emerald-700">
+                    <span class="px-3 py-1 rounded bg-emerald-50 text-xs font-bold border border-emerald-200">00:00 - 00:05</span>
+                    <span class="text-sm font-semibold uppercase tracking-widest">ช่วงที่ 1: เปิดตัว & Hook คนดู</span>
+                </div>
+                <h2 class="title-text text-3xl md:text-4xl font-extrabold text-slate-950">ต้อนรับผู้ชมและชี้ประเด็นปัญหา</h2>
+                
+                <div class="teleprompt-text text-slate-800 space-y-4 leading-relaxed">
+                    <p class="font-extrabold text-slate-950 text-xl">"สวัสดีครับทุกคน ยินดีต้อนรับเข้าสู่ไลฟ์คุยเรื่องเทมเป้อีกครั้งครับ!"</p>
+                    <p>วันนี้ผมจะไม่เน้นทฤษฎีจ๋าๆ แต่อยากพาลงมือทำแบบกินได้จริงและอร่อยด้วย! เพราะคำถามที่ทักเข้ามาในอินบ็อกซ์หนักมากคือ <span class="text-emerald-600 underline font-semibold">"ซื้อไปแล้วทานไม่เป็น เอาไปปรุงยังไงไม่ให้สารอาหารหาย?"</span> และ <span class="text-amber-600 font-semibold">"กลัวกลิ่นเหม็นเขียวถั่วตอนปั่นสด..."</span></p>
+                    <p class="border-l-2 border-slate-300 pl-4 italic text-slate-600 text-lg">
+                        คีย์ลัดวันนี้: ผมมีเคล็ดลับการปรุงเทมเป้ไม่ให้เสียสารอาหาร และไฮไลท์สุดๆ คือการแจกสูตรและสาธิต <strong>"สมูตตี้เทมเป้สดสูตรดับกลิ่นถั่วสลายใจ"</strong> ที่ดื่มง่าย สดชื่นกระปรี้กระเปร่าแน่นอน ใครเข้ามาแล้วกดแชร์ด่วนเลยครับ!
+                    </p>
+                </div>
+            </section>
+
+            <!-- COOKING TECHNIQUES SECTION -->
+            <section id="sec-cook" class="scroll-mt-24 border-l-4 border-cyan-500 pl-6 space-y-4">
+                <div class="flex items-center gap-3 text-cyan-700">
+                    <span class="px-3 py-1 rounded bg-cyan-50 text-xs font-bold border border-cyan-200">00:05 - 00:20</span>
+                    <span class="text-sm font-semibold uppercase tracking-widest">ช่วงที่ 2: ปรุงยังไงไม่ให้สูญเสียคุณค่า</span>
+                </div>
+                <h2 class="title-text text-3xl md:text-4xl font-extrabold text-slate-950">เทคนิคการทำอาหารคาว-หวาน</h2>
+                
+                <div class="teleprompt-text text-slate-800 space-y-6 leading-relaxed">
+                    <div class="bg-red-50 border border-red-200 p-4 rounded-xl flex gap-3 items-start my-4">
+                        <i data-lucide="alert-triangle" class="w-6 h-6 text-red-600 shrink-0 mt-1"></i>
+                        <div>
+                            <strong class="text-red-700 text-lg font-bold">ความเข้าใจผิดมหันต์:</strong>
+                            <p class="text-sm text-slate-600 mt-1">คนส่วนใหญ่มักเอาเทมเป้ไปทอดน้ำมันท่วมๆ (Deep Fry) จนไหม้เกรียมเพื่อลดกลิ่นถั่ว วิธีนี้สารอาหารและไขมันดีหายหมด และยังเปลี่ยนของสุขภาพดีให้กลายเป็นแหล่งอนุมูลอิสระด้วย!</p>
+                        </div>
+                    </div>
+
+                    <p class="font-extrabold text-slate-950 text-xl">จำกฎเหล็กไว้: เทมเป้ผ่านกระบวนการหมักจนสุกในตัวมาระดับนึงแล้ว ไม่ต้องเคี่ยวนาน!</p>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <span class="text-cyan-600 font-extrabold">1. สายผัด / คั่วกลิ้ง / กะเพรา:</span>
+                            <span>แนะนำให้ใช้เทคนิค <strong>"นาบกระทะ (Sear)"</strong> บนกระทะเทฟลอน หรือใช้หม้อทอดไร้น้ำมัน (Air Fryer) ไฟ 160 องศา เพียง 10 นาที เพื่อให้ผิวกรอบตึงสวยงาม แล้วค่อยตักขึ้นไปคลุกซอสในขั้นตอนสุดท้าย</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-cyan-600 font-extrabold">2. สายต้ม / แกงจืด / แกงเลียง:</span>
+                            <span>ให้ใส่เทมเป้ลงไปในช่วง <strong>"5 นาทีสุดท้ายก่อนปิดแก๊ส"</strong> พอให้อุ่นร้อนซึมซับรสชาติแกง โดยไม่ต้องต้มเคี่ยวจนเปื่อยสลายคาหม้อ</span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SMOOTHIE HIGHLIGHT SECTION -->
+            <section id="sec-smoothie" class="scroll-mt-24 border-l-4 border-emerald-500 pl-6 space-y-4 bg-emerald-50/40 p-6 rounded-2xl border border-emerald-100">
+                <div class="flex items-center gap-3 text-emerald-700">
+                    <span class="px-3 py-1 rounded bg-emerald-100 text-xs font-bold border border-emerald-200">00:20 - 00:40</span>
+                    <span class="text-sm font-semibold uppercase tracking-widest">ช่วงที่ 3: สาธิตสมูตตี้เทมเป้สด (เว้นปั่นจริง)</span>
+                </div>
+                <h2 class="title-text text-3xl md:text-4xl font-extrabold text-slate-950">
+                    สมูตตี้สูตร <span class="text-emerald-600">Synbiotics</span> สยบกลิ่นถั่ว
+                </h2>
+                
+                <div class="teleprompt-text text-slate-800 space-y-6 leading-relaxed">
+                    <p class="text-xl font-bold text-slate-950">ทำไมต้องกินสด? และปั่นยังไงให้ไม่มีกลิ่นถั่วเลยแม้แต่นิดเดียว?</p>
+                    
+                    <!-- Science Hook -->
+                    <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+                        <span class="text-xs uppercase tracking-wider text-emerald-600 font-extrabold block mb-1">🔬 วิทยาศาสตร์อาหาร (ชวนคิด)</span>
+                        <p class="text-sm text-slate-600">เทมเป้สดที่เส้นใยขาวแน่น กินดิบสดๆ ได้อย่างปลอดภัย แถมย่อยง่ายมากเพราะเส้นใยรา <em>Rhizopus</em> ทำการย่อยโปรตีนและดึงกรดไฟติกที่เคยทำให้ท้องอืดออกล่วงหน้ามาแล้วถึง 50 ชั่วโมง!</p>
+                    </div>
+
+                    <!-- Step-by-Step Execution -->
+                    <div class="space-y-4">
+                        <h4 class="text-slate-950 font-bold text-lg border-b border-slate-200 pb-2">🥣 ลำดับการทำและคุย (ทำตามทีละขั้น):</h4>
+                        
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 border-l-4 border-emerald-500 shadow-sm">
+                            <span class="text-sm font-bold text-slate-950 block mb-2">ขั้นที่ 1: หยิบก้อนเทมเป้สดโชว์หน้ากล้อง (นาที 20-25)</span>
+                            <p class="text-slate-600 text-sm">"ดูใยขาวๆ นี่สิครับ แน่น สะอาด หากมีเมือกเหนียวหรือกลิ่นฉุนแอมโมเนีย ห้ามกินดิบเด็ดขาด แต่นี่ของสดคุณภาพสูง เราหั่นเต๋าง่ายๆ ใส่ลงโถปั่นเลย 60-80 กรัม ได้โปรตีนเน้นๆ เทียบเท่าเนื้ออกไก่เกือบ 100 กรัม!"</p>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 border-l-4 border-purple-500 shadow-sm">
+                            <span class="text-sm font-bold text-slate-950 block mb-2">ขั้นที่ 2: ใส่สมุนไพร/ผลไม้ลับ และอธิบายหลักการวิทยาศาสตร์ (นาที 25-35)</span>
+                            <ul class="text-slate-600 text-sm space-y-2 list-disc pl-5">
+                                <li><strong>มิกซ์เบอร์รี่แช่แข็ง:</strong> "กรดตามธรรมชาติจากเบอร์รี่จะช่วยทำลายกลิ่นหอมแรงของถั่วได้อย่างดีเยี่ยมครับ"</li>
+                                <li><strong>น้ำมะพร้าวสด:</strong> "เราใช้เพื่อให้น้ำใส สดชื่น เบาคอ ไม่หนืดเหนียวแบบใส่นม"</li>
+                                <li><strong>เอนไซม์ข้าวก่ำ:</strong> "พระเอกตัวสุดท้าย เติมโปรไบโอติกส์เข้มข้น เมื่อผสมกับพรีไบโอติกส์จากเทมเป้ จะกลายเป็นสารอาหาร Synbiotics ฟื้นฟูลำไส้แบบคูณสองทันทีครับ!"</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 border-l-4 border-amber-500 shadow-sm">
+                            <span class="text-sm font-bold text-slate-950 block mb-2">ขั้นที่ 3: เปิดเครื่องปั่นและรีบชิมโชว์ทันที (นาที 35-40)</span>
+                            <p class="text-amber-700 font-extrabold my-1 text-base">⚠️ [เว้นจังหวะให้คนดูรอเสียงปั่นประมาณ 30 วินาที เทสมูตตี้สีม่วงเข้มเนียนๆ ลงแก้วใส]</p>
+                            <p class="text-slate-600 text-sm italic">"เนื้อสัมผัสมันเนียนนุ่ม นัว เหมือนใส่โยเกิร์ตข้นๆ เลยครับ รสชาติสดชื่น อมหวานอมเปรี้ยวจากผลไม้และข้าวก่ำ อร่อยจนลืมกลิ่นถั่วไปได้เลย!"</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Q&A SECTION -->
+            <section id="sec-qna" class="scroll-mt-24 border-l-4 border-orange-500 pl-6 space-y-4">
+                <div class="flex items-center gap-3 text-orange-700">
+                    <span class="px-3 py-1 rounded bg-orange-50 text-xs font-bold border border-orange-200">00:40 - 00:55</span>
+                    <span class="text-sm font-semibold uppercase tracking-widest">ช่วงที่ 4: ถาม-ตอบอย่างจริงใจ ไม่หลอกคนดู</span>
+                </div>
+                <h2 class="title-text text-3xl md:text-4xl font-extrabold text-slate-950">เคลียร์ประเด็นสว่างคาตา (Q&A)</h2>
+                
+                <div class="teleprompt-text text-slate-800 space-y-6 leading-relaxed">
+                    <!-- Q1 -->
+                    <div class="space-y-2">
+                        <h4 class="text-slate-950 font-bold text-lg flex items-center gap-2">
+                            <span class="text-orange-600">Q:</span> กินเทมเป้ดิบๆ ท้องจะอืดหรือท้องร่วงไหม?
+                        </h4>
+                        <p class="pl-6 border-l border-slate-200 text-slate-600">
+                            <strong>คำตอบตรงไปตรงมา:</strong> ถ้าร่างกายคุณย่อยปกติ และเทมเป้ผ่านมาตรฐานการผลิตที่สะอาดปลอดภัย จะไม่มีอาการอืดท้องเด็ดขาด เพราะจุลินทรีย์สายพันธุ์ดีทำการย่อยอาหารแทนเรามาเรียบร้อยแล้ว ท้องไส้คุณจะยิ่งขอบคุณคุณด้วยซ้ำ! แต่หากใครลำไส้อ่อนแอมากจริงๆ ในระยะแรก ให้นำไปผ่านกระบวนการนึ่งสั้นๆ 3-5 นาทีก่อนนำมาปั่นจะช่วยให้อุ่นใจขึ้นครับ
+                        </p>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="space-y-2">
+                        <h4 class="text-slate-950 font-bold text-lg flex items-center gap-2">
+                            <span class="text-orange-500">Q:</span> กินเทมเป้แทนเนื้ออกไก่ได้ร้อยเปอร์เซ็นต์เลยหรือไม่?
+                        </h4>
+                        <p class="pl-6 border-l border-slate-200 text-slate-600">
+                            <strong>คำตอบตรงไปตรงมา:</strong> คุณทดแทนในแง่ของปริมาณ "โปรตีนพืช" ได้แน่นอนครับ แต่สิ่งที่แตกต่างคือ อกไก่จะมีไขมันและคาร์โบไฮเดรตเกือบเป็นศูนย์ ในขณะที่เทมเป้นั้นประกอบด้วยคาร์โบไฮเดรตเชิงซ้อนและไขมันชนิดดีที่ร่างกายต้องการด้วย ดังนั้น ต้องคำนวณปริมาณแคลอรีต่อวันให้พอดี ไม่ใช่อัดเทมเป้เยอะเกินไปจนอ้วนเพราะคิดว่าเป็นแค่โปรตีนล้วนๆ ครับ
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- OUTRO SECTION -->
+            <section id="sec-outro" class="scroll-mt-24 border-l-4 border-purple-500 pl-6 space-y-4">
+                <div class="flex items-center gap-3 text-purple-700">
+                    <span class="px-3 py-1 rounded bg-purple-50 text-xs font-bold border border-purple-200">00:55 - 01:00</span>
+                    <span class="text-sm font-semibold uppercase tracking-widest">ช่วงที่ 5: สรุปความรู้ & ปิดรายการ</span>
+                </div>
+                <h2 class="title-text text-3xl md:text-4xl font-extrabold text-slate-950">Call to Action สั่งการให้คนดูไปลองทำ</h2>
+                
+                <div class="teleprompt-text text-slate-800 space-y-4 leading-relaxed">
+                    <p class="font-extrabold text-slate-950 text-xl">"อย่าแค่นั่งฟังแล้วไม่ทำตาม สุขภาพของคุณเปลี่ยนไม่ได้ด้วยการมอง!"</p>
+                    <p>วันนี้ลองเอาเทคนิคปรุงสั้น และสูตรสมูตตี้เบอร์รี่รวมผสมน้ำมะพร้าวและเอนไซม์ข้าวก่ำนี้ไปจัดกันดูครับ อร่อยง่าย ได้โปรตีนล้นๆ และช่วยระบบย่อยได้อย่างมหัศจรรย์</p>
+                    <p class="text-emerald-600 font-extrabold">ใครลองทำตามสูตรวันนี้แล้วรสชาติเป็นอย่างไร ถ่ายรูปผลงานสมูตตี้ข้นเนียนสีม่วงสวยงามของคุณมาอวดกันในคอมเมนต์เพจด้วยนะครับ! แล้วพบกันใหม่ในไลฟ์ถัดไป สวัสดีครับทุกท่าน!</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-100 border-t border-slate-200 py-3 px-6 text-center text-xs text-slate-500 shrink-0">
+        คู่มือนี้ออกแบบมาเฉพาะเพื่อช่วยการ Live สดของเพจเพื่อสร้างคอนเทนต์สุขภาพระดับมืออาชีพ
+    </footer>
+
+    <!-- JAVASCRIPT FOR TIMER AND FONT-SIZE CONTROL -->
+    <script>
+        // Start Lucide Icons replacements
+        lucide.createIcons();
+
+        // Timer State Management
+        let timerSeconds = 60 * 60; // 60 minutes
+        let timerInterval = null;
+        let isTimerRunning = false;
+
+        const timerDisplay = document.getElementById('timer-display');
+        const btnTimerToggle = document.getElementById('btn-timer-toggle');
+        const playIcon = document.getElementById('play-icon');
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timerSeconds / 60);
+            const seconds = timerSeconds % 60;
+            timerDisplay.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            if (timerSeconds <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.classList.add('animate-pulse', 'text-red-600');
+                timerDisplay.classList.remove('text-emerald-600');
+            }
+        }
+
+        function toggleTimer() {
+            if (isTimerRunning) {
+                // Pause timer
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+                playIcon.setAttribute('data-lucide', 'play');
+            } else {
+                // Start timer
+                isTimerRunning = true;
+                playIcon.setAttribute('data-lucide', 'pause');
+                timerInterval = setInterval(() => {
+                    if (timerSeconds > 0) {
+                        timerSeconds--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                    }
+                }, 1000);
+            }
+            lucide.createIcons(); // Redraw icons
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerSeconds = 60 * 60;
+            isTimerRunning = false;
+            timerDisplay.classList.remove('animate-pulse', 'text-red-600');
+            timerDisplay.classList.add('text-emerald-600');
+            playIcon.setAttribute('data-lucide', 'play');
+            updateTimerDisplay();
+            lucide.createIcons();
+        }
+
+        // Font Size Configuration
+        const teleprompterContent = document.getElementById('teleprompter-content');
+        const sizeButtons = {
+            normal: document.getElementById('btn-size-normal'),
+            large: document.getElementById('btn-size-large'),
+            xl: document.getElementById('btn-size-xl')
+        };
+
+        function setFontSize(size) {
+            // Remove sizing classes
+            teleprompterContent.querySelectorAll('.teleprompt-text').forEach(el => {
+                el.classList.remove('text-base', 'text-lg', 'text-xl', 'text-2xl', 'text-3xl', 'space-y-4', 'space-y-6', 'space-y-8');
+            });
+            teleprompterContent.querySelectorAll('.title-text').forEach(el => {
+                el.classList.remove('text-2xl', 'text-3xl', 'text-4xl', 'text-5xl', 'text-6xl');
+            });
+
+            // Remove active button classes and apply Light theme defaults
+            Object.values(sizeButtons).forEach(btn => {
+                btn.classList.remove('bg-emerald-600', 'text-white', 'shadow-sm');
+                btn.classList.add('bg-transparent', 'text-slate-600', 'hover:bg-slate-100');
+            });
+
+            // Apply target sizes and active styles
+            if (size === 'normal') {
+                teleprompterContent.querySelectorAll('.teleprompt-text').forEach(el => {
+                    el.classList.add('text-lg', 'space-y-4');
+                });
+                teleprompterContent.querySelectorAll('.title-text').forEach(el => {
+                    el.classList.add('text-3xl', 'md:text-4xl');
+                });
+                sizeButtons.normal.classList.add('bg-emerald-600', 'text-white', 'shadow-sm');
+                sizeButtons.normal.classList.remove('text-slate-600', 'hover:bg-slate-100');
+            } else if (size === 'large') {
+                teleprompterContent.querySelectorAll('.teleprompt-text').forEach(el => {
+                    el.classList.add('text-2xl', 'space-y-6');
+                });
+                teleprompterContent.querySelectorAll('.title-text').forEach(el => {
+                    el.classList.add('text-4xl', 'md:text-5xl');
+                });
+                sizeButtons.large.classList.add('bg-emerald-600', 'text-white', 'shadow-sm');
+                sizeButtons.large.classList.remove('text-slate-600', 'hover:bg-slate-100');
+            } else if (size === 'xl') {
+                teleprompterContent.querySelectorAll('.teleprompt-text').forEach(el => {
+                    el.classList.add('text-3xl', 'space-y-8');
+                });
+                teleprompterContent.querySelectorAll('.title-text').forEach(el => {
+                    el.classList.add('text-5xl', 'md:text-6xl');
+                });
+                sizeButtons.xl.classList.add('bg-emerald-600', 'text-white', 'shadow-sm');
+                sizeButtons.xl.classList.remove('text-slate-600', 'hover:bg-slate-100');
+            }
+        }
+
+        // Initialize default sizes on load
+        setFontSize('normal');
+    </script>
+</body>
+</html>
