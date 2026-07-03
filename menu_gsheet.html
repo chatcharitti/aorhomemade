@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>อ้อโฮมเมด อาหารและเบเกอรี่เพื่อสุขภาพ | Aor Homemade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&family=Sarabun:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FAF3E8;
+  --cream-deep:#F1E4D0;
+  --brown:#6B4226;
+  --brown-dark:#3E2B1F;
+  --gold:#C9A24B;
+  --gold-soft:#E4CE9A;
+  --white:#FFFDF9;
+  --red-accent:#A64B2A;
+  --green-ok:#4C7A3F;
+  --shadow:0 4px 18px rgba(62,43,31,.12);
+  --radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Sarabun',sans-serif;background:var(--cream);color:var(--brown-dark);line-height:1.6}
+h1,h2,h3,.btn,.tab-btn{font-family:'Prompt',sans-serif}
+
+/* ===== Header ===== */
+header{position:sticky;top:0;z-index:50;background:var(--white);box-shadow:var(--shadow);border-bottom:3px solid var(--gold)}
+.head-inner{max-width:1060px;margin:auto;display:flex;align-items:center;gap:14px;padding:10px 18px;flex-wrap:wrap}
+.logo{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--gold)}
+.head-title h1{font-size:1.25rem;color:var(--brown)}
+.head-title p{font-size:.8rem;color:var(--red-accent)}
+.contacts{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap;font-size:.82rem}
+.contacts a{color:var(--brown);text-decoration:none;background:var(--cream-deep);padding:5px 12px;border-radius:20px;transition:.2s}
+.contacts a:hover{background:var(--gold-soft)}
+.font-ctl{display:inline-flex;border:1.5px solid var(--gold);border-radius:20px;overflow:hidden}
+.font-ctl button{border:none;background:var(--white);color:var(--brown);font-family:'Prompt';font-weight:600;
+  font-size:.82rem;padding:5px 12px;cursor:pointer;transition:.2s}
+.font-ctl button:first-child{border-right:1px solid var(--gold-soft)}
+.font-ctl button:hover{background:var(--gold-soft)}
+
+/* ===== Status bar ===== */
+.status-bar{max-width:1060px;margin:14px auto 0;padding:0 18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.82rem}
+.badge{padding:4px 12px;border-radius:20px;font-weight:600}
+.badge.ok{background:#E4EED9;color:var(--green-ok)}
+.badge.warn{background:#F6E3D3;color:var(--red-accent)}
+.badge.loading{background:var(--gold-soft);color:var(--brown)}
+.status-bar .mini-btn{border:1px solid var(--gold);background:var(--white);color:var(--brown);border-radius:20px;
+  padding:4px 14px;cursor:pointer;font-family:'Prompt';font-size:.8rem;text-decoration:none;transition:.2s}
+.status-bar .mini-btn:hover{background:var(--gold-soft)}
+
+/* ===== Tabs ===== */
+.tabs{max-width:1060px;margin:12px auto 0;display:flex;gap:8px;padding:0 18px}
+.tab-btn{flex:1;max-width:260px;padding:12px 10px;border:none;border-radius:var(--radius) var(--radius) 0 0;
+  background:var(--cream-deep);color:var(--brown);font-size:1rem;font-weight:600;cursor:pointer;transition:.2s}
+.tab-btn.active{background:var(--brown);color:var(--gold-soft)}
+.tab-btn:hover:not(.active){background:var(--gold-soft)}
+
+main{max-width:1060px;margin:0 auto 60px;padding:26px 18px;background:var(--white);border-radius:0 var(--radius) var(--radius) var(--radius);box-shadow:var(--shadow);min-height:300px}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fade .3s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ===== Menu list (Tab 1) ===== */
+.cat-block{margin-bottom:34px}
+.cat-title{display:flex;align-items:center;gap:10px;font-size:1.35rem;color:var(--brown);
+  border-bottom:2px dashed var(--gold);padding-bottom:8px;margin-bottom:14px}
+.cat-title .emoji{font-size:1.5rem}
+.sub-title{font-size:1.05rem;color:var(--red-accent);margin:14px 0 6px;font-weight:600}
+.item-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px 26px}
+.item{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:7px 10px;border-radius:8px}
+.item:hover{background:var(--cream)}
+.item a{color:var(--brown-dark);text-decoration:none;border-bottom:1px dotted var(--gold);font-size:1rem;cursor:pointer}
+.item a:hover{color:var(--red-accent);border-bottom-color:var(--red-accent)}
+.item .price{color:var(--brown);font-weight:600;white-space:nowrap}
+.item .code{font-size:.72rem;color:var(--gold);margin-left:6px;letter-spacing:.5px}
+.dots{flex:1;border-bottom:1px dotted var(--gold-soft);transform:translateY(-4px)}
+
+/* ===== Detail cards (Tab 2) ===== */
+.detail-tools{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+.btn{border:none;border-radius:24px;padding:10px 20px;font-size:.95rem;font-weight:600;cursor:pointer;transition:.2s;text-decoration:none;display:inline-block;text-align:center}
+.btn-gold{background:var(--gold);color:var(--white)}
+.btn-gold:hover{background:var(--brown)}
+.btn-outline{background:transparent;border:1.5px solid var(--gold);color:var(--brown)}
+.btn-outline:hover{background:var(--gold-soft)}
+.btn-brown{background:var(--brown);color:var(--gold-soft)}
+.btn-brown:hover{background:var(--brown-dark)}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:20px}
+.card{background:var(--cream);border:1px solid var(--gold-soft);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:.2s}
+.card:hover{box-shadow:var(--shadow);transform:translateY(-3px)}
+.card .media{width:100%;aspect-ratio:4/3;background:var(--cream-deep);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.card .media img,.card .media video,.card .media iframe{width:100%;height:100%;object-fit:cover;border:none}
+.card .body{padding:14px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card h3{font-size:1.02rem;color:var(--brown)}
+.card .code-line{font-size:.75rem;color:var(--gold);letter-spacing:1px}
+.card .price-line{font-family:'Prompt';font-size:1.15rem;font-weight:700;color:var(--red-accent)}
+.card .desc{font-size:.87rem;color:#6b5c4d;flex:1;white-space:pre-line}
+.card .actions{display:flex;gap:8px;margin-top:8px}
+.card .actions .btn{flex:1;padding:8px 6px;font-size:.85rem}
+
+/* ===== Modal ===== */
+.overlay{position:fixed;inset:0;background:rgba(62,43,31,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
+.overlay.open{display:flex}
+.modal{background:var(--white);border-radius:var(--radius);max-width:560px;width:100%;max-height:92vh;overflow:auto;box-shadow:0 10px 40px rgba(0,0,0,.3);position:relative;animation:fade .25s}
+.modal .close-x{position:absolute;top:10px;right:14px;background:var(--brown);color:#fff;border:none;width:34px;height:34px;border-radius:50%;font-size:1.05rem;cursor:pointer;z-index:2}
+.modal .media{width:100%;aspect-ratio:4/3;background:var(--cream-deep);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.modal .media img,.modal .media video,.modal .media iframe{width:100%;height:100%;object-fit:cover;border:none}
+.modal .content{padding:20px 24px 26px}
+.modal h3{color:var(--brown);font-size:1.25rem;margin-bottom:4px}
+.modal .price-line{font-family:'Prompt';font-size:1.3rem;font-weight:700;color:var(--red-accent);margin:6px 0 10px}
+.modal .desc{font-size:.92rem;white-space:pre-line;color:#5c4d3e;margin-bottom:16px}
+.modal .actions{display:flex;gap:10px;flex-wrap:wrap}
+
+/* ===== Loading / error ===== */
+.center-msg{text-align:center;padding:60px 20px;color:var(--brown)}
+.spinner{width:44px;height:44px;border:4px solid var(--gold-soft);border-top-color:var(--brown);border-radius:50%;
+  margin:0 auto 16px;animation:spin .9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.err-box{background:#F6E3D3;border:1px solid var(--red-accent);border-radius:var(--radius);padding:16px 20px;
+  font-size:.88rem;color:#7a3a1e;margin-bottom:22px}
+.err-box b{display:block;margin-bottom:4px}
+
+/* ===== Footer ===== */
+footer{background:var(--brown-dark);color:var(--gold-soft);text-align:center;padding:26px 18px;font-size:.88rem}
+footer a{color:var(--gold-soft)}
+
+@media(max-width:600px){
+  .head-title h1{font-size:1.05rem}
+  .contacts{width:100%;margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-inner">
+    <img class="logo" src="LOGO_aor_homemade__new_JULY2026.png" alt="Aor Homemade Logo"
+         onerror="this.style.display='none'">
+    <div class="head-title">
+      <h1>อ้อโฮมเมด อาหารและเบเกอรี่เพื่อสุขภาพ</h1>
+      <p>เอนไซม์สด · ขนมปังวีแกน · วัตถุดิบธรรมชาติ</p>
+    </div>
+    <nav class="contacts">
+      <a href="tel:0924151550">📞 092 415 1550</a>
+      <a href="https://line.me/R/ti/p/@aorhomemade" target="_blank" rel="noopener">💬 Line @aorhomemade</a>
+      <a href="https://www.facebook.com/aorhomemade" target="_blank" rel="noopener">👍 Facebook</a>
+      <a href="https://aorhomemade.page365.net" target="_blank" rel="noopener">🛒 สั่งซื้อสินค้า</a>
+      <span class="font-ctl" title="ปรับขนาดตัวอักษร">
+        <button onclick="fontStep(-1)" aria-label="ลดขนาดตัวอักษร">A−</button><button onclick="fontStep(1)" aria-label="เพิ่มขนาดตัวอักษร">A＋</button>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="status-bar">
+  <span class="badge loading" id="dataBadge">⏳ กำลังโหลดข้อมูล…</span>
+  <button class="mini-btn" onclick="loadData(true)">↻ รีเฟรชข้อมูล</button>
+  <a class="mini-btn" id="sheetLink" href="#" target="_blank" rel="noopener" style="display:none">📊 จัดการสินค้าใน Google Sheet</a>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" data-tab="menu" onclick="switchTab('menu')">📋 รายการสินค้า</button>
+  <button class="tab-btn" data-tab="detail" onclick="switchTab('detail')">🔎 รายละเอียดสินค้า</button>
+</div>
+
+<main>
+  <section id="tab-menu" class="tab-panel active">
+    <div class="center-msg"><div class="spinner"></div>กำลังโหลดรายการสินค้า…</div>
+  </section>
+  <section id="tab-detail" class="tab-panel">
+    <div class="detail-tools">
+      <h2 style="color:var(--brown)">รายละเอียดสินค้าทั้งหมด</h2>
+    </div>
+    <div id="detailArea"></div>
+  </section>
+</main>
+
+<!-- Popup: product preview -->
+<div class="overlay" id="previewOverlay" onclick="if(event.target===this)closePreview()">
+  <div class="modal">
+    <button class="close-x" onclick="closePreview()">✕</button>
+    <div class="media" id="pvMedia"></div>
+    <div class="content">
+      <h3 id="pvName"></h3>
+      <div id="pvCode" style="color:var(--gold);font-size:.78rem;letter-spacing:1px"></div>
+      <div class="price-line" id="pvPrice"></div>
+      <div class="desc" id="pvDesc"></div>
+      <div class="actions">
+        <a class="btn btn-brown" href="https://aorhomemade.page365.net" target="_blank" rel="noopener">🛒 สั่งซื้อสินค้า</a>
+        <button class="btn btn-outline" id="pvDetailBtn">ดูในหน้ารายละเอียด</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  อ้อโฮมเมด อาหารและเบเกอรี่เพื่อสุขภาพ · โทร 092 415 1550 · Line OA @aorhomemade ·
+  <a href="https://www.facebook.com/aorhomemade" target="_blank" rel="noopener">facebook.com/aorhomemade</a> ·
+  <a href="https://aorhomemade.page365.net" target="_blank" rel="noopener">aorhomemade.page365.net</a>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   การตั้งค่า Google Sheet (แก้เพียงบรรทัดเดียว)
+   1) สร้าง Google Sheet แล้วนำเข้าไฟล์ products_template.csv
+      (File → Import → Upload → Replace spreadsheet)
+   2) ตั้งชื่อแท็บล่างซ้ายว่า: products
+   3) กด "แชร์" → เปลี่ยนเป็น "ทุกคนที่มีลิงก์ = ผู้มีสิทธิ์อ่าน (Viewer)"
+   4) คัดลอกรหัสจาก URL ของชีต:
+      https://docs.google.com/spreadsheets/d/【รหัสตรงนี้】/edit
+      มาวางแทนค่า SHEET_ID ด้านล่าง
+   ════════════════════════════════════════════════════════════ */
+const SHEET_ID   = "1YxSaTaj2nFxVPTvp2GBmvS4wNpTEfd0NokDPYt_JckU";
+const SHEET_NAME = "products";
+const ORDER_URL  = "https://aorhomemade.page365.net";
+
+/* ── ข้อมูลสำรอง: ใช้เมื่อยังไม่ตั้งค่า SHEET_ID หรือดึงข้อมูลไม่สำเร็จ ── */
+const FALLBACK_PRODUCTS = [
+  {code:"ENZ01", name:"เอนไซม์ข้าวก่ำ",        cat:"🫘 เอนไซม์ปรับสมดุลลำไส้", sub:"", price:275, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"ENZ02", name:"แหนมเห็ดอินทรีย์",      cat:"🫘 เอนไซม์ปรับสมดุลลำไส้", sub:"", price:275, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"ENZ03", name:"กิมจิผักอินทรีย์",       cat:"🫘 เอนไซม์ปรับสมดุลลำไส้", sub:"", price:175, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"ENZ04", name:"น้ำมะกรูดมะนาวดอง",     cat:"🫘 เอนไซม์ปรับสมดุลลำไส้", sub:"", price:160, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"ENZ05", name:"น้ำเอนไซม์เห็ดเข้มข้น",  cat:"🫘 เอนไซม์ปรับสมดุลลำไส้", sub:"", price:450, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"ENZ06", name:"กะหล่ำปลีม่วงดอง",      cat:"🫘 เอนไซม์ปรับสมดุลลำไส้", sub:"", price:120, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"TEM01", name:"เทมเป้ผัดพริกขิง",  cat:"🍛 กับข้าวเทมเป้", sub:"", price:120, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"TEM02", name:"เทมเป้คั่วกลิ้ง",    cat:"🍛 กับข้าวเทมเป้", sub:"", price:120, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"TEM03", name:"เทมเป้ผัดพริกแกง",  cat:"🍛 กับข้าวเทมเป้", sub:"", price:120, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"HWV01", name:"โฮลวีทวีแกน ดั้งเดิม",       cat:"🍞 ขนมปัง", sub:"โฮลวีทวีแกน", price:140, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"HWV02", name:"โฮลวีทวีแกน ผักโขม",        cat:"🍞 ขนมปัง", sub:"โฮลวีทวีแกน", price:160, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"HWV03", name:"โฮลวีทวีแกน ฟักทอง",        cat:"🍞 ขนมปัง", sub:"โฮลวีทวีแกน", price:160, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"HWV04", name:"โฮลวีทวีแกน มอคค่า",        cat:"🍞 ขนมปัง", sub:"โฮลวีทวีแกน", price:160, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"HWV05", name:"โฮลวีทวีแกน ทูโทน",         cat:"🍞 ขนมปัง", sub:"โฮลวีทวีแกน", price:160, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"HWV06", name:"โฮลวีทวีแกน มันหวานญี่ปุ่น", cat:"🍞 ขนมปัง", sub:"โฮลวีทวีแกน", price:160, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"CIN01", name:"ชินนาม่อนอัลมอนด์แครนเบอรี่ ดั้งเดิม",  cat:"🍞 ขนมปัง", sub:"ชินนาม่อนอัลมอนด์แครนเบอรี่", price:130, mediaType:"image", mediaSrc:"cin01.png", desc:""},
+  {code:"CIN02", name:"ชินนาม่อนอัลมอนด์แครนเบอรี่ มอคค่า",   cat:"🍞 ขนมปัง", sub:"ชินนาม่อนอัลมอนด์แครนเบอรี่", price:145, mediaType:"image", mediaSrc:"cin02.png", desc:""},
+  {code:"CIN03", name:"ชินนาม่อนอัลมอนด์แครนเบอรี่ ฟักทอง",   cat:"🍞 ขนมปัง", sub:"ชินนาม่อนอัลมอนด์แครนเบอรี่", price:145, mediaType:"image", mediaSrc:"cin03.png", desc:""},
+  {code:"CIN04", name:"ชินนาม่อนอัลมอนด์แครนเบอรี่ งาดำ",     cat:"🍞 ขนมปัง", sub:"ชินนาม่อนอัลมอนด์แครนเบอรี่", price:145, mediaType:"image", mediaSrc:"cin04.png", desc:""},
+  {code:"CIN05", name:"ชินนาม่อนอัลมอนด์แครนเบอรี่ มัทฉะแท้",  cat:"🍞 ขนมปัง", sub:"ชินนาม่อนอัลมอนด์แครนเบอรี่", price:160, mediaType:"image", mediaSrc:"cin05.png", desc:""},
+  {code:"SDW01", name:"ซาวโดว์ ดั้งเดิม", cat:"🍞 ขนมปัง", sub:"ซาวโดว์", price:230, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"SDW02", name:"ซาวโดว์ ผักโขม",  cat:"🍞 ขนมปัง", sub:"ซาวโดว์", price:260, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"SDW03", name:"ซาวโดว์ ฟักทอง",  cat:"🍞 ขนมปัง", sub:"ซาวโดว์", price:260, mediaType:"image", mediaSrc:"", desc:""},
+  {code:"SDW04", name:"ซาวโดว์ มอคค่า",  cat:"🍞 ขนมปัง", sub:"ซาวโดว์", price:260, mediaType:"image", mediaSrc:"", desc:""}
+];
+
+let products = [];
+
+/* ================= โหลดข้อมูลจาก Google Sheet ================= */
+function sheetCsvUrl(){
+  return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_NAME)}&t=${Date.now()}`;
+}
+function setBadge(cls,text){
+  const b=document.getElementById("dataBadge");
+  b.className="badge "+cls; b.textContent=text;
+}
+async function loadData(manual){
+  const configured = SHEET_ID && !SHEET_ID.startsWith("PASTE_");
+  if(configured){
+    document.getElementById("sheetLink").style.display="inline-block";
+    document.getElementById("sheetLink").href=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit`;
+  }
+  setBadge("loading","⏳ กำลังโหลดข้อมูล…");
+  if(!configured){
+    products = FALLBACK_PRODUCTS;
+    setBadge("warn","⚠ ยังไม่เชื่อม Google Sheet — แสดงข้อมูลสำรองในไฟล์");
+    renderAll(); showSetupHint(); return;
+  }
+  try{
+    const res = await fetch(sheetCsvUrl(), {cache:"no-store"});
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    const rows = parseCSV(await res.text());
+    const list = rowsToProducts(rows);
+    if(!list.length) throw new Error("ไม่พบข้อมูลสินค้าในชีต");
+    products = list;
+    setBadge("ok","✔ ข้อมูลล่าสุดจาก Google Sheet · "+new Date().toLocaleTimeString("th-TH"));
+    renderAll();
+  }catch(err){
+    products = FALLBACK_PRODUCTS;
+    setBadge("warn","⚠ ดึงข้อมูลจากชีตไม่สำเร็จ — แสดงข้อมูลสำรอง");
+    renderAll(); showLoadError(err.message);
+    if(manual) alert("ดึงข้อมูลไม่สำเร็จ: "+err.message+"\nตรวจสอบว่าแชร์ชีตเป็น 'ทุกคนที่มีลิงก์ อ่านได้' และชื่อแท็บคือ '"+SHEET_NAME+"'");
+  }
+}
+function showSetupHint(){
+  document.getElementById("tab-menu").insertAdjacentHTML("afterbegin",
+    `<div class="err-box"><b>ยังไม่ได้เชื่อมต่อ Google Sheet</b>
+     เปิดไฟล์นี้ด้วยโปรแกรมแก้ไขข้อความ แล้ววางรหัสชีตที่บรรทัด <code>const SHEET_ID = "…"</code>
+     ตามขั้นตอนในคอมเมนต์ด้านบนของสคริปต์ (สร้างชีตจากไฟล์ products_template.csv)</div>`);
+}
+function showLoadError(msg){
+  document.getElementById("tab-menu").insertAdjacentHTML("afterbegin",
+    `<div class="err-box"><b>ดึงข้อมูลจาก Google Sheet ไม่สำเร็จ (${msg})</b>
+     ตรวจสอบ: ① แชร์ชีตเป็น "ทุกคนที่มีลิงก์ = ผู้อ่าน" ② ชื่อแท็บล่างซ้ายคือ "${SHEET_NAME}"
+     ③ รหัส SHEET_ID ถูกต้อง — ระหว่างนี้แสดงข้อมูลสำรองที่ฝังในไฟล์แทน</div>`);
+}
+
+/* ================= แปลง CSV → รายการสินค้า ================= */
+function parseCSV(text){
+  const rows=[]; let row=[], field="", inQ=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(inQ){
+      if(c==='"'){ if(text[i+1]==='"'){field+='"';i++;} else inQ=false; }
+      else field+=c;
+    }else{
+      if(c==='"') inQ=true;
+      else if(c===','){ row.push(field); field=""; }
+      else if(c==='\n'||c==='\r'){
+        if(c==='\r'&&text[i+1]==='\n') i++;
+        row.push(field); field="";
+        if(row.some(v=>v.trim()!=="")) rows.push(row);
+        row=[];
+      }
+      else field+=c;
+    }
+  }
+  row.push(field);
+  if(row.some(v=>v.trim()!=="")) rows.push(row);
+  return rows;
+}
+function rowsToProducts(rows){
+  if(rows.length<2) return [];
+  const head = rows[0].map(h=>h.trim().toLowerCase());
+  const idx = k=>head.indexOf(k);
+  const iCode=idx("code"), iName=idx("name"), iCat=idx("category"),
+        iSub=idx("subgroup"), iPrice=idx("price"),
+        iMT=idx("mediatype"), iMS=idx("mediasrc"), iDesc=idx("description");
+  return rows.slice(1).map(r=>({
+    code:(r[iCode]||"").trim(),
+    name:(r[iName]||"").trim(),
+    cat:(r[iCat]||"อื่น ๆ").trim(),
+    sub:(iSub>=0?(r[iSub]||""):"").trim(),
+    price:Number((r[iPrice]||"0").replace(/[^\d.]/g,""))||0,
+    mediaType:((iMT>=0?r[iMT]:"")||"image").trim().toLowerCase()==="video"?"video":"image",
+    mediaSrc:(iMS>=0?(r[iMS]||""):"").trim(),
+    desc:(iDesc>=0?(r[iDesc]||""):"").trim()
+  })).filter(p=>p.code && p.name);
+}
+
+/* ================= สื่อ (รูป/วิดีโอ/ตัวอย่าง) ================= */
+function placeholderSVG(name){
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'>
+    <rect width='100%' height='100%' fill='#F1E4D0'/>
+    <circle cx='200' cy='120' r='46' fill='#C9A24B' opacity='.35'/>
+    <text x='200' y='128' text-anchor='middle' font-size='40'>🥖</text>
+    <text x='200' y='210' text-anchor='middle' font-family='sans-serif' font-size='16' fill='#6B4226'>ภาพตัวอย่าง</text>
+    <text x='200' y='235' text-anchor='middle' font-family='sans-serif' font-size='13' fill='#9b8468'>${name.replace(/[<>&]/g,'')}</text>
+  </svg>`;
+  return "data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(svg);
+}
+function youtubeId(url){
+  const m = url.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{6,})/);
+  return m ? m[1] : null;
+}
+function driveId(url){
+  const m = url.match(/drive\.google\.com\/file\/d\/([\w-]+)/);
+  return m ? m[1] : null;
+}
+function mediaHTML(p){
+  let src = (p.mediaSrc||"").trim();
+  if(!src) return `<img src="${placeholderSVG(p.name)}" alt="${p.name}">`;
+  const dId = driveId(src);
+  if(p.mediaType==="video"){
+    const yt = youtubeId(src);
+    if(yt) return `<iframe src="https://www.youtube.com/embed/${yt}" allowfullscreen loading="lazy"></iframe>`;
+    if(dId) return `<iframe src="https://drive.google.com/file/d/${dId}/preview" allowfullscreen loading="lazy"></iframe>`;
+    return `<video src="${src}" controls preload="metadata"></video>`;
+  }
+  if(dId) src = `https://drive.google.com/thumbnail?id=${dId}&sz=w800`;
+  return `<img src="${src}" alt="${p.name}" loading="lazy" onerror="this.src='${placeholderSVG(p.name)}'">`;
+}
+
+/* ================= Render ================= */
+function categories(){ return [...new Set(products.map(p=>p.cat))]; }
+function splitCat(cat){
+  const m = cat.match(/^(\p{Extended_Pictographic}\uFE0F?)\s*(.*)$/u);
+  return m ? {emoji:m[1], label:m[2]||cat} : {emoji:"🍽️", label:cat};
+}
+function renderMenu(){
+  const wrap = document.getElementById("tab-menu");
+  wrap.innerHTML = categories().map(cat=>{
+    const {emoji,label} = splitCat(cat);
+    const items = products.filter(p=>p.cat===cat);
+    const subs = [...new Set(items.map(p=>p.sub||""))];
+    const body = subs.map(sub=>{
+      const list = items.filter(p=>(p.sub||"")===sub).map(p=>`
+        <div class="item">
+          <span><a onclick="openPreview('${p.code}')">${p.name}</a><span class="code">${p.code}</span></span>
+          <span class="dots"></span>
+          <span class="price">${p.price}.-</span>
+        </div>`).join("");
+      return (sub?`<div class="sub-title">▪ ${sub}</div>`:"")+`<div class="item-grid">${list}</div>`;
+    }).join("");
+    return `<div class="cat-block">
+      <h2 class="cat-title"><span class="emoji">${emoji}</span>${label}</h2>${body}</div>`;
+  }).join("");
+}
+function renderDetail(){
+  const wrap = document.getElementById("detailArea");
+  wrap.innerHTML = categories().map(cat=>{
+    const {emoji,label} = splitCat(cat);
+    const cards = products.filter(p=>p.cat===cat).map(p=>`
+      <div class="card" id="card-${p.code}">
+        <div class="media">${mediaHTML(p)}</div>
+        <div class="body">
+          <div class="code-line">${p.code}${p.sub?` · ${p.sub}`:""}</div>
+          <h3>${p.name}</h3>
+          <div class="price-line">${p.price} บาท</div>
+          <div class="desc">${p.desc || "— รายละเอียดสินค้าเพิ่มได้ในช่อง description ของ Google Sheet —"}</div>
+          <div class="actions">
+            <a class="btn btn-brown" href="${ORDER_URL}" target="_blank" rel="noopener">🛒 สั่งซื้อ</a>
+          </div>
+        </div>
+      </div>`).join("");
+    return `<div class="cat-block">
+      <h2 class="cat-title"><span class="emoji">${emoji}</span>${label}</h2>
+      <div class="card-grid">${cards}</div></div>`;
+  }).join("");
+}
+function renderAll(){ renderMenu(); renderDetail(); }
+
+/* ================= Tabs ================= */
+function switchTab(name){
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.toggle("active",b.dataset.tab===name));
+  document.querySelectorAll(".tab-panel").forEach(p=>p.classList.toggle("active",p.id==="tab-"+name));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ================= Popup ================= */
+function openPreview(code){
+  const p = products.find(x=>x.code===code); if(!p) return;
+  document.getElementById("pvMedia").innerHTML = mediaHTML(p);
+  document.getElementById("pvName").textContent = p.name;
+  document.getElementById("pvCode").textContent = p.code + (p.sub?` · ${p.sub}`:"");
+  document.getElementById("pvPrice").textContent = p.price + " บาท";
+  document.getElementById("pvDesc").textContent = p.desc || "";
+  document.getElementById("pvDetailBtn").onclick = ()=>{
+    closePreview(); switchTab("detail");
+    setTimeout(()=>{ const el=document.getElementById("card-"+p.code);
+      if(el){ el.scrollIntoView({behavior:"smooth",block:"center"});
+        el.style.outline="3px solid var(--gold)"; setTimeout(()=>el.style.outline="",1800);} },250);
+  };
+  document.getElementById("previewOverlay").classList.add("open");
+}
+function closePreview(){
+  document.getElementById("previewOverlay").classList.remove("open");
+  document.getElementById("pvMedia").innerHTML = "";
+}
+
+/* ================= ปรับขนาดตัวอักษร ================= */
+const FONT_KEY="aor_font_pct", FONT_MIN=85, FONT_MAX=140, FONT_STEP=10;
+function applyFont(pct){ document.documentElement.style.fontSize = pct+"%"; }
+function fontStep(dir){
+  let pct = Number(localStorage.getItem(FONT_KEY)) || 100;
+  pct = Math.min(FONT_MAX, Math.max(FONT_MIN, pct + dir*FONT_STEP));
+  localStorage.setItem(FONT_KEY, pct); applyFont(pct);
+}
+applyFont(Number(localStorage.getItem(FONT_KEY)) || 100);
+
+/* ================= เริ่มต้น ================= */
+loadData(false);
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") closePreview(); });
+</script>
+</body>
+</html>
