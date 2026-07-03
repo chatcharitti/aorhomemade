@@ -265,10 +265,17 @@ async function loadData(manual){
     renderAll(); showSetupHint(); return;
   }
   try{
-    const res = await fetch(sheetCsvUrl(), {cache:"no-store"});
-    if(!res.ok) throw new Error("HTTP "+res.status);
-    const rows = parseCSV(await res.text());
-    const list = rowsToProducts(rows);
+    let list;
+    try{
+      /* ช่องทางหลัก: ดึง CSV ด้วย fetch */
+      const res = await fetch(sheetCsvUrl(), {cache:"no-store"});
+      if(!res.ok) throw new Error("HTTP "+res.status);
+      list = rowsToProducts(parseCSV(await res.text()));
+    }catch(e1){
+      /* ช่องทางสำรอง: JSONP ผ่าน script tag (ไม่ติดข้อจำกัด CORS/fetch) */
+      const resp = await loadViaJSONP();
+      list = gvizToProducts(resp);
+    }
     if(!list.length) throw new Error("ไม่พบข้อมูลสินค้าในชีต");
     products = list;
     setBadge("ok","✔ ข้อมูลล่าสุดจาก Google Sheet · "+new Date().toLocaleTimeString("th-TH"));
@@ -291,6 +298,32 @@ function showLoadError(msg){
     `<div class="err-box"><b>ดึงข้อมูลจาก Google Sheet ไม่สำเร็จ (${msg})</b>
      ตรวจสอบ: ① แชร์ชีตเป็น "ทุกคนที่มีลิงก์ = ผู้อ่าน" ② ชื่อแท็บล่างซ้ายคือ "${SHEET_NAME}"
      ③ รหัส SHEET_ID ถูกต้อง — ระหว่างนี้แสดงข้อมูลสำรองที่ฝังในไฟล์แทน</div>`);
+}
+
+/* ================= ช่องทางสำรอง: JSONP ================= */
+function loadViaJSONP(){
+  return new Promise((resolve,reject)=>{
+    const cb = "gvizCb_"+Date.now();
+    const s = document.createElement("script");
+    const timer = setTimeout(()=>{ cleanup(); reject(new Error("หมดเวลารอข้อมูลจากชีต")); }, 12000);
+    function cleanup(){ clearTimeout(timer); s.remove(); delete window[cb]; }
+    window[cb] = resp=>{ cleanup(); resolve(resp); };
+    s.onerror = ()=>{ cleanup(); reject(new Error("Failed to fetch")); };
+    s.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json;responseHandler:${cb}`
+          + `&sheet=${encodeURIComponent(SHEET_NAME)}&headers=1&t=${Date.now()}`;
+    document.head.appendChild(s);
+  });
+}
+function gvizToProducts(resp){
+  const table = resp && resp.table; if(!table) return [];
+  let head = (table.cols||[]).map(c=>(c.label||"").trim().toLowerCase());
+  let rows = (table.rows||[]).map(r=>(r.c||[]).map(c=>c==null?"":(c.v==null?"":String(c.v))));
+  /* กรณี gviz ไม่ตรวจพบหัวตาราง: ใช้แถวแรกเป็นหัวแทน */
+  if(!head.includes("code") && rows.length){
+    head = rows[0].map(v=>v.trim().toLowerCase());
+    rows = rows.slice(1);
+  }
+  return rowsToProducts([head, ...rows]);
 }
 
 /* ================= แปลง CSV → รายการสินค้า ================= */
