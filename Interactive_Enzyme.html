@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>อาหารเอนไซม์สด - อ้อโฮมเมด | รายงานโภชนาการและการปรับสมดุลลำไส้</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Prompt & Sarabun -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #faf9f6;
+        }
+        h1, h2, h3, h4, .font-header {
+            font-family: 'Prompt', sans-serif;
+        }
+        /* ขนาดตัวอักษรใหญ่พิเศษเพื่อให้อ่านง่ายสำหรับทุกวัย */
+        .text-huge {
+            font-size: 1.25rem;
+            line-height: 2.1rem;
+        }
+        @media (min-width: 768px) {
+            .text-huge {
+                font-size: 1.35rem;
+                line-height: 2.3rem;
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-slate-200 z-40 shadow-sm">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex flex-row items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-md shadow-emerald-250 font-header">อ้อ</div>
+                <div>
+                    <h1 class="text-lg md:text-xl font-bold text-slate-900 tracking-tight">อ้อโฮมเมด อาหารและเบเกอรี่เพื่อสุขภาพ (Aor Homemade)</h1>
+                    <p class="text-xs font-semibold text-emerald-700 uppercase tracking-wider">Living Fermented Foods <a href="index.html">คลิกกลับหน้า Home</a></p>
+                </div>
+            </div>
+            <span class="bg-emerald-50 text-emerald-800 font-bold px-3 py-1.5 rounded-full text-xs md:text-sm uppercase tracking-wider border border-emerald-100 shadow-sm">
+                โภชนาการธรรมชาติบำบัด
+            </span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+        
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-tr from-emerald-50 via-teal-50 to-amber-50 rounded-3xl p-8 md:p-12 shadow-xl border border-emerald-100/50 flex flex-col lg:flex-row items-center gap-8">
+            <div class="space-y-6 flex-1">
+                <span class="inline-block bg-emerald-100 text-emerald-800 text-sm md:text-base font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-sm">
+                    Premium Living Fermented Foods
+                </span>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight">
+                    ทำความรู้จัก <br class="hidden md:inline">
+                    <span class="text-emerald-700">"อาหารเอนไซม์สด"</span><br>
+                    <span class="text-xl md:text-2xl text-slate-700 font-semibold">(Living Fermented Foods)</span>
+                </h1>
+                <p class="text-slate-700 text-huge font-medium leading-relaxed">
+                    นวัตกรรมโภชนาการปรับสมดุลลำไส้ คืนความเบาสบายและฟื้นฟูระบบย่อยอาหารอย่างยั่งยืน คัดสรรวัตถุดิบและใส่ใจปรุงสูตรโดย "อ้อโฮมเมด"
+                </p>
+                <div class="flex flex-wrap gap-4 pt-2">
+                    <div class="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2.5 rounded-xl border border-slate-200">
+                        <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span class="text-base font-semibold text-slate-750">เอนไซม์สดธรรมชาติ 100%</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2.5 rounded-xl border border-slate-200">
+                        <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                        <span class="text-base font-semibold text-slate-755">ไม่ผ่านความร้อน (Unpasteurized)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Presenter Profile Promo Card -->
+            <div class="w-full lg:w-80 bg-white p-6 rounded-2xl shadow-xl border border-slate-100 flex flex-col items-center text-center relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-emerald-500 via-teal-500 to-amber-500"></div>
+                <div class="w-28 h-32 rounded-full overflow-hidden mb-4 bg-emerald-50 flex items-center justify-center">
+                    <span class="text-6xl">👩‍🍳</span>
+                </div>
+                <span class="bg-amber-100 text-amber-900 font-bold px-3 py-1 rounded-full text-xs mb-2">เจ้าของเพจ อ้อโฮมเมดอาหารและเบเกอรี่เพื่อสุขภาพ</span>
+                <h3 class="text-xl font-bold text-slate-900">คุณอ้อ (อ้อโฮมเมด)</h3>
+                <p class="text-xs font-semibold text-slate-500 mt-1">ผู้นำเสนออาหารเอนไซม์สดจากธรรมชาติ&nbsp;</p>
+              <p class="text-slate-600 text-base mt-4 leading-relaxed italic bg-slate-50 p-4 rounded-xl border border-slate-100"> "ด้วยแนวคิด จากครัวบ้านเราสู่โต๊ะอาหารบ้านคุณ เราตั้งใจส่งมอบจุลินทรีย์ดีและเอนไซม์สดที่มีชีวิต เพื่อทำหน้าที่เสมือนเครื่องมือซ่อมแซมและคืนความสมดุลให้ลำไส้ของคุณอย่างยั่งยืน"&nbsp;&nbsp;</p>
+                <p class="text-slate-600 text-base mt-4 leading-relaxed italic bg-slate-50 p-4 rounded-xl border border-slate-100">- เอนไซม์ คือชีวิต - </p>
+            </div>
+        </section>
+
+        <!-- Current Crisis Section -->
+        <section class="space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900">วิถีชีวิตยุคใหม่ ที่คอยทำลายระบบย่อยโดยไม่รู้ตัว</h2>
+                <p class="text-slate-600 text-huge">เมื่อเราหลงลืมวิถีแห่งธรรมชาติ ร่างกายจึงต้องส่งสัญญาณเตือนผ่านระบบที่มีความยาวที่สุดในร่างกาย</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 md:p-8 rounded-2xl border border-slate-100 shadow-md hover:shadow-lg transition-all duration-300 space-y-4">
+                    <div class="w-12 h-12 bg-rose-50 rounded-xl flex items-center justify-center text-rose-600 text-2xl font-bold">⏱️</div>
+                    <h3 class="text-xl font-bold text-slate-900">ความเร่งรีบจนล้น</h3>
+                    <p class="text-slate-650 text-base leading-relaxed">การรีบเคี้ยวรีบกลืนเพื่อทำเวลา ทำให้กระเพาะอาหารต้องรับภาระบดเคี้ยวหนักขึ้นหลายสิบเท่า เกิดสารตกค้างหมักหมมสะสม</p>
+                </div>
+                <div class="bg-white p-6 md:p-8 rounded-2xl border border-slate-100 shadow-md hover:shadow-lg transition-all duration-300 space-y-4">
+                    <div class="w-12 h-12 bg-rose-50 rounded-xl flex items-center justify-center text-rose-600 text-2xl font-bold">🍔</div>
+                    <h3 class="text-xl font-bold text-slate-900">อาหารแปรรูปและสารเคมี</h3>
+                    <p class="text-slate-655 text-base leading-relaxed">การทานอาหารสำเร็จรูป สารกันเสีย สารปรุงแต่งรสชาติสังเคราะห์ มีส่วนทำลายและล้างบางจุลินทรีย์ชนิดดีในลำไส้โดยตรง</p>
+                </div>
+                <div class="bg-white p-6 md:p-8 rounded-2xl border border-slate-100 shadow-md hover:shadow-lg transition-all duration-300 space-y-4">
+                    <div class="w-12 h-12 bg-rose-50 rounded-xl flex items-center justify-center text-rose-600 text-2xl font-bold">⚡</div>
+                    <h3 class="text-xl font-bold text-slate-900">ความเครียดสะสม</h3>
+                    <p class="text-slate-655 text-base leading-relaxed">เมื่อสมองตึงเครียด ร่างกายจะตัดทอนพลังงานออกจากระบบย่อยอาหาร ส่งผลให้กรดหลั่งผิดปกติ เกิดลมแก๊สอัดแน่น</p>
+                </div>
+            </div>
+            <div class="bg-amber-50/70 border-l-4 border-amber-600 p-6 rounded-r-2xl max-w-4xl mx-auto shadow-sm">
+                <p class="text-amber-900 text-huge font-semibold leading-relaxed">
+                    💡 <span class="font-bold text-amber-950">ความจริงที่คุณต้องรู้:</span> การทานยาเคมีเพื่อบรรเทาอาการจุกเสียดหรือกรดไหลย้อนเป็นการแก้ปัญหาที่ปลายเหตุชั่วคราวเท่านั้น หากพึ่งพาเป็นประจำจะยิ่งทำให้ลำไส้อ่อนแอลงเรื่อยๆ การเติมจุลินทรีย์ดีและเอนไซม์สดจากวิถีธรรมชาติคือหนทางฟื้นฟูที่ยั่งยืนที่สุด
+                </p>
+            </div>
+        </section>
+
+        <!-- What is Living Fermented Food -->
+        <section class="bg-white rounded-3xl p-8 md:p-12 border border-slate-100 shadow-xl space-y-8">
+            <div class="max-w-3xl space-y-4">
+                <span class="text-emerald-700 font-bold uppercase tracking-widest text-sm md:text-base">เจาะลึกที่มาและความแตกต่าง</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900">"อาหารเอนไซม์สด" ของอ้อโฮมเมด คืออะไร?</h2>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <p class="text-slate-600 text-huge leading-relaxed">
+                        อาหารเอนไซม์สด <span class="font-bold text-emerald-700">ไม่ใช่อาหารเสริมแบบอัดเม็ดหรือยาเคมี</span> แต่คือ <span class="font-bold text-slate-950 underline decoration-emerald-500">"อาหารจากธรรมชาติเต็มเมล็ด (Whole-food)"</span> ที่ผ่านการเพาะบ่มและหมักทางชีวภาพ (Bio-Fermentation) อย่างละเอียดประณีต
+                    </p>
+                    <p class="text-slate-600 text-huge leading-relaxed">
+                        เราคัดสรรธัญพืช 3 ชนิดมาเป็นพรีไบโอติกส์ (อาหารจุลินทรีย์) กระบวนการทั้งหมดผลิตสดใหม่แบบโฮมเมด และที่สำคัญที่สุดคือ <span class="text-rose-600 font-bold underline">ไม่ผ่านกระบวนการฆ่าเชื้อด้วยความร้อนใดๆ ทั้งสิ้น (Unpasteurized)</span> เอนไซม์สดและจุลินทรีย์ดีที่มีชีวิตจึงรอดชีวิตอยู่ครบ 100% พร้อมตื่นขึ้นมาดูแลลำไส้ของคุณทันทีที่รับประทาน
+                    </p>
+                    <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-100">
+                        <p class="text-emerald-900 font-semibold text-lg">
+                            ✨ แตกต่างจากอาหารเสริมอัดเม็ดทั่วไป ร่างกายมองอาหารเอนไซม์สดเป็นสารอาหารธรรมชาติ จึงดูดซึมและนำไปใช้เยียวยาลำไส้ได้ทันทีโดยไม่มีการตกค้างสะสมที่ตับหรือไต
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Grain Ingredients Showcase -->
+                <div class="space-y-6 bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                    <h3 class="text-xl font-bold text-slate-800 border-b border-slate-200 pb-3 flex items-center gap-2">
+                        <span>🌾</span> 3 ขุมทรัพย์จากธัญพืชเต็มเมล็ดคัดเกรด
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex gap-4 items-start bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                            <div class="w-10 h-10 bg-purple-50 text-purple-750 rounded-lg flex items-center justify-center text-xl font-bold flex-shrink-0">🍇</div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-base md:text-lg">ข้าวก่ำ (Black Glutinous Rice)</h4>
+                                <p class="text-slate-600 text-sm md:text-base mt-1">อุดมด้วยสารต้านอนุมูลอิสระกลุ่มแอนโทไซยานินเข้มข้น และเป็นแหล่งอาหารชั้นดีที่ช่วยเพิ่มปริมาณจุลินทรีย์ดี</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                            <div class="w-10 h-10 bg-amber-50 text-amber-700 rounded-lg flex items-center justify-center text-xl font-bold flex-shrink-0">🌾</div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-base md:text-lg">ข้าวโอ๊ต (Oats)</h4>
+                                <p class="text-slate-600 text-sm md:text-base mt-1">อุดมด้วยใยอาหารกลุ่มเบต้ากลูแคน ช่วยดูดซับสารพิษ เป็นพรีไบโอติกชั้นยอด และช่วยรักษาสภาพแวดล้อมที่เหมาะสมในลำไส้</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                            <div class="w-10 h-10 bg-emerald-50 text-emerald-700 rounded-lg flex items-center justify-center text-xl font-bold flex-shrink-0">⚪</div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-base md:text-lg">ลูกเดือย (Job's tears)</h4>
+                                <p class="text-slate-600 text-sm md:text-base mt-1">ธัญพืชฤทธิ์เย็นตามตำราสมุนไพร ช่วยปรับอุณหภูมิในร่างกาย ปรับสมดุลธาตุ ย่อยง่าย ท้องไม่อืดพอง</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Symptom Checklist (Self-Test) -->
+        <section class="bg-gradient-to-br from-amber-50/50 to-orange-50/50 rounded-3xl p-8 md:p-12 border border-amber-100 shadow-lg space-y-8">
+            <div class="max-w-3xl space-y-3">
+                <span class="text-amber-800 font-bold uppercase tracking-widest text-sm md:text-base">ตรวจวัดสมดุลระบบย่อยอาหารด้วยตัวคุณเอง</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900">Checklist: สัญญาณเตือนว่าร่างกายกำลัง "ขาดเอนไซม์"</h2>
+                <p class="text-slate-600 text-huge">ติ๊กเลือกอาการที่คุณมักเป็นบ่อยๆ เพื่อให้ระบบคำนวณระดับความเสี่ยงของสมดุลลำไส้ในปัจจุบัน</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                <!-- Checklist interactive form -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-100 space-y-4">
+                    <h3 class="font-bold text-slate-900 text-lg border-b border-slate-100 pb-3 flex items-center justify-between">
+                        <span>เลือกอาการที่พบบ่อย:</span>
+                        <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-md">อ้างอิงจากร่างกายของคุณ</span>
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl hover:bg-slate-50 cursor-pointer transition-all border border-slate-100">
+                            <input type="checkbox" class="symptom-checkbox w-6 h-6 rounded border-slate-350 text-emerald-600 focus:ring-emerald-500 mt-0.5" onchange="calculateEnzymeRisk()">
+                            <span class="text-slate-700 text-base md:text-huge font-medium">ทานอาหารเสร็จแล้วรู้สึกจุกเสียด แน่นท้อง อึดอัดเหมือนอาหารไม่ย่อย</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl hover:bg-slate-50 cursor-pointer transition-all border border-slate-100">
+                            <input type="checkbox" class="symptom-checkbox w-6 h-6 rounded border-slate-355 text-emerald-600 focus:ring-emerald-500 mt-0.5" onchange="calculateEnzymeRisk()">
+                            <span class="text-slate-700 text-base md:text-huge font-medium">มีลมตีขึ้นคอ แสบร้อนบริเวณหน้าอก โดยเฉพาะเวลานอนหลับ</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl hover:bg-slate-50 cursor-pointer transition-all border border-slate-100">
+                            <input type="checkbox" class="symptom-checkbox w-6 h-6 rounded border-slate-355 text-emerald-600 focus:ring-emerald-500 mt-0.5" onchange="calculateEnzymeRisk()">
+                            <span class="text-slate-700 text-base md:text-huge font-medium">ท้องอืด พุงป่องง่าย แม้จะไม่ได้ทานอาหารในปริมาณมาก</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl hover:bg-slate-50 cursor-pointer transition-all border border-slate-100">
+                            <input type="checkbox" class="symptom-checkbox w-6 h-6 rounded border-slate-355 text-emerald-600 focus:ring-emerald-500 mt-0.5" onchange="calculateEnzymeRisk()">
+                            <span class="text-slate-700 text-base md:text-huge font-medium">ระบบขับถ่ายไม่ปกติ (ท้องผูกสลับท้องเสีย หรือขับถ่ายไม่เป็นเวลา)</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl hover:bg-slate-50 cursor-pointer transition-all border border-slate-100">
+                            <input type="checkbox" class="symptom-checkbox w-6 h-6 rounded border-slate-355 text-emerald-600 focus:ring-emerald-500 mt-0.5" onchange="calculateEnzymeRisk()">
+                            <span class="text-slate-700 text-base md:text-huge font-medium">รู้สึกอ่อนเพลีย ง่วงซึม หลังมื้ออาหารมื้อใหญ่เป็นประจำ</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl hover:bg-slate-50 cursor-pointer transition-all border border-slate-100">
+                            <input type="checkbox" class="symptom-checkbox w-6 h-6 rounded border-slate-355 text-emerald-600 focus:ring-emerald-500 mt-0.5" onchange="calculateEnzymeRisk()">
+                            <span class="text-slate-700 text-base md:text-huge font-medium">ทานตัวช่วยลดกรดหรือยาช่วยย่อยเป็นประจำ แต่อาการก็ยังกลับมาวนลูปเดิม</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Self-test Result Display -->
+                <div class="bg-white p-8 rounded-2xl shadow-md border border-amber-250 h-full flex flex-col justify-between space-y-6 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-amber-500 text-white font-bold text-xs px-4 py-1.5 rounded-bl-xl uppercase tracking-wider">ระบบวิเคราะห์สุขภาพ</div>
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-bold text-slate-900">ระดับสัญญาณเตือนระบบย่อย:</h3>
+                        <div class="flex items-center gap-4">
+                            <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center text-4xl font-extrabold" id="risk-score">0/6</div>
+                            <div>
+                                <p class="text-xl font-bold text-slate-800" id="risk-level-title">ยังไม่ได้เลือกอาการ</p>
+                                <p class="text-sm text-slate-550" id="risk-status">กรุณากดติ๊กเลือกอาการที่คุณพบบ่อยทางด้านซ้ายเพื่อรับผลวิเคราะห์</p>
+                            </div>
+                        </div>
+                        <div class="w-full bg-slate-100 rounded-full h-3">
+                            <div id="risk-bar" class="bg-slate-400 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-50 p-5 rounded-xl border border-amber-100" id="risk-advice-box">
+                        <p class="text-amber-900 text-base leading-relaxed" id="risk-advice">
+                            หากคุณมีอาการเหล่านี้สะสมตั้งแต่ 2 ข้อขึ้นไป แสดงว่าถึงเวลาแล้วที่คุณต้องหันกลับมาดูแลและเติมเอนไซม์เพื่อช่วยเหลือระบบย่อยอาหารอย่างจริงจังค่ะ
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Crucial Truth: Not a Magic Drug -->
+        <section class="space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <span class="text-rose-600 font-bold uppercase tracking-widest text-sm md:text-base">สร้างความเข้าใจที่ถูกต้องก่อนเริ่มปรับตัว</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900">ความจริงที่ต้องตระหนัก: อาหารเอนไซม์สด "ไม่ใช่ยาวิเศษ"</h2>
+                <p class="text-slate-600 text-huge">กลไกธรรมชาติไม่เคยมีทางลัด ร่างกายที่แข็งแรงต้องการความเข้าใจและการดูแลควบคู่กัน</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Side A: The Repair Tool -->
+                <div class="bg-gradient-to-br from-emerald-50 to-teal-50 p-8 rounded-3xl border border-emerald-100 space-y-6">
+                    <div class="w-14 h-14 bg-emerald-600 rounded-2xl flex items-center justify-center text-white text-3xl shadow-md">🛠️</div>
+                    <h3 class="text-2xl font-bold text-emerald-950">เป็นเพียง "เครื่องมือซ่อมแซมชั้นดี"</h3>
+                    <p class="text-emerald-900 text-huge leading-relaxed">
+                        ระบบอวัยวะมนุษย์มีความซับซ้อน ไม่ใช่ระบบเครื่องยนต์ที่จะทานสารเคมีแล้วหายขาดทันที อาหารเอนไซม์สดทำหน้าที่เหมือนเครื่องมือบำรุงและแบ่งเบาภาระในระบบลำไส้ของเรา
+                    </p>
+                    <p class="text-emerald-900 text-huge font-semibold">
+                        ❌ แต่เครื่องมือธรรมชาตินี้จะไม่ทำงานเลย หากคุณยังดำเนินนิสัยทำลายผนังกระเพาะและทำลายจุลินทรีย์ดีในลำไส้อยู่ทุก ๆ วัน!
+                    </p>
+                </div>
+
+                <!-- Side B: The Destroyer Habits -->
+                <div class="bg-white p-8 rounded-3xl border border-rose-150 shadow-md space-y-6 relative">
+                    <div class="absolute top-0 left-0 w-2.5 h-full bg-rose-500 rounded-l-3xl"></div>
+                    <h3 class="text-2xl font-bold text-rose-950 flex items-center gap-2">
+                        <span>⚠️</span> 3 พฤติกรรมยอดฮิตที่สร้างสภาวะลำไส้พังเรื้อรัง:
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex gap-3 items-start">
+                            <span class="text-rose-500 font-bold text-xl">1.</span>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-base md:text-lg">ทานอาหารมื้อดึกจัด แล้วล้มตัวนอนทันที</h4>
+                                <p class="text-slate-600 text-sm md:text-base mt-0.5">กระเพาะจำต้องทำหน้าที่หนักในแนวราบทำให้น้ำย่อยไหลย้อน และทำให้ลำไส้ใหญ่ทำงานขัดข้องตลอดคืน</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 items-start">
+                            <span class="text-rose-500 font-bold text-xl">2.</span>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-base md:text-lg">นอนดึกและนอนไม่เป็นเวลา</h4>
+                                <p class="text-slate-600 text-sm md:text-base mt-0.5">ทำลายตารางการซ่อมแซมแผลในลำไส้ตามกลไกนาฬิกาชีวิต กระตุ้นให้สารเคมีความเครียดหลั่งเพิ่มขึ้น</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 items-start">
+                            <span class="text-rose-500 font-bold text-xl">3.</span>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-base md:text-lg">ทานอาหารฟาสต์ฟู้ด ของทอด ของทอดซ้ำ แอลกอฮอล์</h4>
+                                <p class="text-slate-600 text-sm md:text-base mt-0.5">สารเคมีและสารอนุมูลอิสระจะฆ่าจุลินทรีย์ดีตัวเล็ก ๆ ในลำไส้ใหญ่ให้ค่อย ๆ ลดจำนวนลงจนเสียสมดุล</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 text-white p-8 rounded-3xl text-center max-w-4xl mx-auto shadow-xl space-y-4">
+                <p class="text-xl md:text-2xl font-bold text-amber-300">"หากคุณหวังจะทานเอนไซม์สดเพื่อลบล้างพฤติกรรมทำลายสุขภาพลำไส้ อาการก็จะเพียงทุเลาลงชั่วคราวเท่านั้น"</p>
+                <p class="text-slate-300 text-huge max-w-2xl mx-auto">
+                    การฟื้นฟูคืนสมดุลที่แท้จริง ต้องอาศัยการประสานพลังงาน: <br>
+                    <span class="text-emerald-400 font-bold">"เติมจุลินทรีย์เอนไซม์ดี + ปรับวินัยพฤติกรรมการกินของคุณเอง"</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- Benefits of Living Enzymes -->
+        <section class="space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <span class="text-emerald-700 font-bold uppercase tracking-widest text-sm md:text-base">กลไกวิทยาศาสตร์ชีวภาพ</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900">ทานอาหารเอนไซม์สดแล้วดีอย่างไรต่อระบบย่อย?</h2>
+                <p class="text-slate-600 text-huge">ความจริงเบื้องหลังการปรับปรุงสภาวะแวดล้อมระบบทางเดินอาหาร</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Benefit 1 -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-md hover:shadow-lg transition-all duration-300 flex gap-6">
+                    <div class="w-14 h-14 bg-emerald-50 text-emerald-700 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0">🌟</div>
+                    <div class="space-y-2">
+                        <h3 class="text-xl font-bold text-slate-900">ลดภาระหนักของกระเพาะอาหาร</h3>
+                        <p class="text-slate-600 text-huge leading-relaxed">
+                            เอนไซม์ธรรมชาติตัวเป็นๆ จะเข้าทำหน้าที่เปรียบเสมือน <span class="font-bold text-emerald-700">"ผู้ย่อยอาหารขั้นแรก"</span> ช่วยกระสับกระส่ายย่อยและแตกตัวแป้งรวมถึงโปรตีนจากมื้ออาหารหลักก่อนที่ร่างกายจะต้องดึงพลังงานไปเคี่ยวกรดน้ำย่อย ลดขยะอาหารที่ย่อยไม่หมดตกค้าง
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Benefit 2 -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-md hover:shadow-lg transition-all duration-300 flex gap-6">
+                    <div class="w-14 h-14 bg-emerald-50 text-emerald-700 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0">🍃</div>
+                    <div class="space-y-2">
+                        <h3 class="text-xl font-bold text-slate-900">คืนความเบาสบาย ท้องไม่พองพุงไม่อืด</h3>
+                        <p class="text-slate-600 text-huge leading-relaxed">
+                            เมื่อปริมาณอาหารบูดเน่าตกค้างที่เกิดจากการย่อยอาหารไม่ดีลดลง แก๊สและลมแสบร้อนตีขึ้นคอตามทางเดินอาหารจะทุเลาลง ช่วยให้รู้สึกโล่ง ลมหายใจสบายขึ้น และพุงไม่พองตึงหลังรับประทานอาหาร
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Benefit 3 -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-md hover:shadow-lg transition-all duration-300 flex gap-6">
+                    <div class="w-14 h-14 bg-emerald-50 text-emerald-700 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0">🧬</div>
+                    <div class="space-y-2">
+                        <h3 class="text-xl font-bold text-slate-900">ปฏิรูปและปรับสมดุลนิเวศวิทยาในลำไส้ใหญ่</h3>
+                        <p class="text-slate-600 text-huge leading-relaxed">
+                            การนำส่งจุลินทรีย์ชนิดดีนับล้านตัวที่แข็งแรงและกระฉับกระเฉงเข้าสู่พื้นที่ส่วนปลายทางเดินอาหาร ช่วยจำกัดขยายอาณาเขตกับกลุ่มแบคทีเรียตัวร้าย (Pathogen) ส่งผลต่อรอบเวลาการขับถ่ายที่เป็นระบบและสุขภาพอุจจาระที่ดี
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Benefit 4 -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-md hover:shadow-lg transition-all duration-300 flex gap-6">
+                    <div class="w-14 h-14 bg-emerald-50 text-emerald-700 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0">🍯</div>
+                    <div class="space-y-2">
+                        <h3 class="text-xl font-bold text-slate-900">ความหวานที่ปลอดภัย 100% ปราศจากน้ำตาลปรุงแต่ง</h3>
+                        <p class="text-slate-600 text-huge leading-relaxed">
+                            รสชาติเปรี้ยวหวานกลมกล่อมตามสไตล์อ้อโฮมเมด ได้รับมาจากการสลายตัวของแป้งธัญพืชเป็นน้ำตาลโมเลกุลเดี่ยวตามธรรมชาติโดยจุลินทรีย์กระบวนการหมักชีวภาพ <span class="font-bold text-emerald-700">ไม่มีการเติมนวดน้ำตาลทราย สารเคมีสังเคราะห์ หรือสารให้ความหวานทดแทนใดๆ</span> จึงปลอดภัยต่อระบบเลือดและตับอ่อน
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Every Day Section (Age 40+) -->
+        <section class="bg-slate-900 text-white rounded-3xl p-8 md:p-12 overflow-hidden relative shadow-2xl">
+            <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-emerald-600/20 rounded-full blur-3xl"></div>
+            <div class="absolute -left-20 -top-20 w-80 h-80 bg-amber-600/15 rounded-full blur-3xl"></div>
+            
+            <div class="max-w-4xl space-y-6 relative z-10">
+                <span class="text-amber-400 font-bold uppercase tracking-wider text-sm md:text-base">ความจริงของกลไกอายุขัยมนุษย์</span>
+                <h2 class="text-2xl md:text-4xl font-extrabold text-white leading-tight">ทำไมคนเราจึงจำเป็นต้องรับประทาน "ทุกๆ วัน"?</h2>
+                <p class="text-slate-350 text-huge leading-relaxed">
+                    สภาวะร่างกายมนุษย์เปรียบได้กับมี <span class="text-amber-300 font-bold">"ธนาคารทุนสำรองเอนไซม์"</span> เมื่อแรกเกิดเรามีเอนไซม์สำรองในปริมาณมหาศาล ทว่าเมื่อเราเริ่มก้าวผ่านช่วงวัย 40 ปีเป็นต้นไป ประสิทธิภาพและอัตราการผลิตเอนไซม์ธรรมชาติตามธรรมชาติของอวัยวะจะหักลดลงอย่างต่อเนื่อง
+                </p>
+                <p class="text-slate-350 text-huge leading-relaxed">
+                    การรับประทานอาหารเอนไซม์สดอย่างสม่ำเสมอในทุก ๆ วัน (ในอัตรามื้อละ 1-2 ช้อนโต๊ะ) จึงเปรียบเป็นการ <span class="text-emerald-400 font-bold">"หยอดกระปุกฝากต้นทุนเอนไซม์เสริมเข้าไปในกระเพาะและลำไส้ใหญ่"</span> ทุกวัน ช่วยลดอาการจุกอึดอัดและช่วยบำรุงสุขภาพลำไส้ในระยะยาว
+                </p>
+                <div class="bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-700 max-w-2xl">
+                    <p class="text-amber-300 text-lg font-semibold flex items-center gap-2">
+                        <span>⚠️</span> สัญญาณเตือนสำคัญ:
+                    </p>
+                    <p class="text-slate-300 text-base mt-2 leading-relaxed">
+                        หากคุณหยุดเติมและขาดวินัยในการทานเอนไซม์ธรรมชาติ แล้วกลับไปใช้ชีวิตในสภาวะแวดล้อมทำลายสมดุลแบบเก่า ทุนสมดุลเอนไซม์ในทางเดินอาหารจะลดฮวบ และทำให้อาการจุกเสียดกลับมาแสดงตัวอีกครั้งได้อย่างรวดเร็ว
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline of Change (Interactive Tabs) -->
+        <section class="space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <span class="text-emerald-700 font-bold uppercase tracking-widest text-sm md:text-base">แผนภาพกระบวนการฟื้นฟูลำไส้</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900">สเต็ปการเดินทางและฟื้นฟูของสมดุลระบบย่อยอาหาร</h2>
+                <p class="text-slate-600 text-huge">การสะสมของเสียในลำไส้ใช้เวลานานนับปี การทำความสะอาดปรับสภาพจึงต้องอาศัยกลไกเวลาตามธรรมชาติ</p>
+            </div>
+
+            <!-- Timeline tabs selection -->
+            <div class="flex flex-col md:flex-row bg-slate-100 p-2 rounded-2xl max-w-4xl mx-auto gap-2">
+                <button onclick="switchTimeline(1)" id="tab-time-1" class="flex-1 py-4 px-6 rounded-xl font-bold text-base md:text-lg text-emerald-800 bg-white shadow-sm transition-all duration-200 text-center">
+                    ระยะที่ 1: สัมผัสความเบาสบาย (1-14 วันแรก)
+                </button>
+                <button onclick="switchTimeline(2)" id="tab-time-2" class="flex-1 py-4 px-6 rounded-xl font-bold text-base md:text-lg text-slate-600 hover:text-slate-900 transition-all duration-200 text-center">
+                    ระยะที่ 2: เริ่มสร้างนิเวศลำไส้ใหม่ (1-2 เดือน)
+                </button>
+                <button onclick="switchTimeline(3)" id="tab-time-3" class="flex-1 py-4 px-6 rounded-xl font-bold text-base md:text-lg text-slate-600 hover:text-slate-900 transition-all duration-200 text-center">
+                    ระยะที่ 3: คืนสมดุลอย่างยั่งยืน (3-6 เดือนขึ้นไป)
+                </button>
+            </div>
+
+            <!-- Timeline Contents -->
+            <div class="max-w-4xl mx-auto bg-white p-8 rounded-3xl border border-slate-100 shadow-xl min-h-[250px] flex flex-col justify-between">
+                
+                <!-- Content 1 -->
+                <div id="content-time-1" class="timeline-content space-y-4">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs font-bold uppercase px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full">ระยะบุกเบิกและย่อยช่วย</span>
+                        <span class="text-slate-400">|</span>
+                        <span class="text-slate-600 font-medium">สัปดาห์ที่ 1-2</span>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-900">เอนไซม์สดเริ่มทำงานคลายภาระกระเพาะทันที</h3>
+                    <p class="text-slate-600 text-huge leading-relaxed font-normal">
+                        เมื่อคุณเริ่มรับประทานคำแรกๆ เอนไซม์ธรรมชาติจะเข้าช่วยงานย่อยน้ำตาลและโครงสร้างสารอาหารในมื้อนั่นทันที สังเกตได้ว่าความรู้สึกแน่นอึดอัดใต้ลิ้นปี่และบริเวณลิ้นจี่ทุเลาลง ลมดันตีแสบร้อนกลางอกสงบตัวลงและระบบขับถ่ายรู้สึกคล่องตัวขึ้นอย่างสัมผัสได้
+                    </p>
+                </div>
+
+                <!-- Content 2 (Hidden) -->
+                <div id="content-time-2" class="timeline-content space-y-4 hidden">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs font-bold uppercase px-3 py-1 bg-teal-100 text-teal-800 rounded-full">ปรับระดับสภาวะแวดล้อมลำไส้</span>
+                        <span class="text-slate-400">|</span>
+                        <span class="text-slate-600 font-medium">เดือนที่ 1-2</span>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-900">การสร้างอาณาจักรของเหล่าจุลินทรีย์ดีตัวเล็ก ๆ</h3>
+                    <p class="text-slate-600 text-huge leading-relaxed font-normal">
+                        การรับประทานสม่ำเสมอช่วยส่งกองทัพจุลินทรีย์ประเภทดีลงหลักปักฐานยึดครองสภาวะลำไส้ใหญ่ คลี่คลายอาการท้องผูกสลับท้องเสีย รอบการขับถ่ายถ่ายเป็นตารางปกติ สุขภาพผิวพรรณเริ่มแจ่มใส และรู้สึกกระฉับกระเฉงตัวไม่อ่อนเพลียหลังทานอาหาร
+                    </p>
+                </div>
+
+                <!-- Content 3 (Hidden) -->
+                <div id="content-time-3" class="timeline-content space-y-4 hidden">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs font-bold uppercase px-3 py-1 bg-amber-100 text-amber-800 rounded-full">คืนสมบูรณ์ธรรมชาติ</span>
+                        <span class="text-slate-400">|</span>
+                        <span class="text-slate-600 font-medium">เดือนที่ 3 ขึ้นไป</span>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-900">ระบบนิเวศน์ทางเดินอาหารสมบูรณ์และจัดการตัวเองถาวร</h3>
+                    <p class="text-slate-600 text-huge leading-relaxed font-normal">
+                        นี่คือสเต็ปปลายทางที่ระดับเอนไซม์ดีและจุลินทรีย์ที่มีประโยชน์ในผนังลำไส้ทำงานร่วมกันได้อย่างสมบูรณ์แบบ แข็งแรงและดูแลตนเองได้โดยไม่ต้องพึ่งพาสารสกัดสังเคราะห์ นอนหลับลึกสบายไม่ตื่นเพราะอาการกรดไหลย้อนหรือจุกเสียดท้องอีกต่อไป
+                    </p>
+                </div>
+
+                <div class="pt-6 border-t border-slate-100 mt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs md:text-sm text-slate-500 gap-2">
+                    <span>* ผลลัพธ์จริงจะแตกต่างแปรผันตามพฤติกรรมการกินและวินัยของแต่ละบุคคล</span>
+                    <span class="font-semibold text-emerald-700">อ้อโฮมเมดมุ่งสนับสนุนการรักษาด้วยกลไกธรรมชาติ</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Target Audience Group -->
+        <section class="space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <span class="text-emerald-700 font-bold uppercase tracking-widest text-sm md:text-base">บุคคลที่จำเป็นต้องมีเอนไซม์ช่วยเหลือ</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900">ใครบ้างที่เหมาะสมจะรับประทานอาหารเอนไซม์สด?</h2>
+                <p class="text-slate-600 text-huge">อาหารเอนไซม์สดเหมาะกับทุกคนที่รักระบบย่อยอาหารและต้องการดูแลลำไส้เชิงรับเชิงรุก</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Group 1 -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-md flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <span class="text-3xl">💻</span>
+                        <h3 class="font-bold text-slate-900 text-lg">คนทำงานออฟฟิศเร่งรีบ</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">ผู้ทำงานหนัก ความเครียดสมองสะสม เคี้ยวอาหารไม่ตรงเวลา และมีอาการอึดอัดแน่นพุงสะสม</p>
+                    </div>
+                    <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-md self-start">กลุ่มระมัดระวังเป็นพิเศษ ⭐️</span>
+                </div>
+
+                <!-- Group 2 -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-md flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <span class="text-3xl">👵</span>
+                        <h3 class="font-bold text-slate-900 text-lg">กลุ่มผู้ใหญ่และวัย 40+</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">กลุ่มผู้ที่กำลังเผชิญกับการหักลดลงของน้ำย่อยตามกลไกอายุ ทำให้ย่อยอาหารและแป้งยากตัวขึ้น</p>
+                    </div>
+                    <span class="text-xs font-bold text-teal-700 bg-teal-50 px-3 py-1 rounded-md self-start font-semibold">แนะนำทานสม่ำเสมอ ⭐️</span>
+                </div>
+
+                <!-- Group 3 -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-md flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <span class="text-3xl">🩸</span>
+                        <h3 class="font-bold text-slate-900 text-lg">ผู้ควบคุมน้ำตาลในกระแสเลือด</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">ทานได้ปลอดภัยมาก เพราะเราไม่มีการแต่งเติมน้ำตาลทรายสังเคราะห์หรือสีเคมีใดๆ ตลอดการผลิต</p>
+                    </div>
+                    <span class="text-xs font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded-md self-start">ปลอดภัย 100% ⭐️</span>
+                </div>
+
+                <!-- Group 4 -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-md flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <span class="text-3xl">🥗</span>
+                        <h3 class="font-bold text-slate-900 text-lg">กลุ่มมังสวิรัติ เจ และวีแกน</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">เป็นแหล่งสกัดเอนไซม์ พรีไบโอติกส์ และแร่ธาตุคุณภาพเลอค่าที่มาจากธรรมชาติ 100% ปราศจากส่วนผสมของเนื้อสัตว์</p>
+                    </div>
+                    <span class="text-xs font-bold text-purple-700 bg-purple-50 px-3 py-1 rounded-md self-start">ธรรมชาติบำบัด ⭐️</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SAFETY WARNING SECTION: Contraindications / Precautions -->
+        <section class="space-y-8 bg-gradient-to-tr from-rose-50/40 via-slate-50 to-amber-50/40 rounded-3xl p-8 md:p-12 border border-slate-200/60 shadow-inner">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <span class="text-rose-600 font-bold uppercase tracking-widest text-sm md:text-base">ข้อพึงตระหนักด้านความปลอดภัยและการแพทย์</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900">ข้อควรระวังสำคัญ: ใครบ้างที่ไม่เหมาะกับการทาน "โพรไบโอติกส์และเอนไซม์สด"?</h2>
+                <p class="text-slate-600 text-huge">แม้ว่าเอนไซม์สดของอ้อโฮมเมดจะมาจากธรรมชาติ 100% และมีคุณประโยชน์สูง แต่สำหรับผู้ป่วยหรือสภาวะพิเศษบางกลุ่ม อ้อแนะนำให้เลี่ยงหรือปรึกษาแพทย์ประจำตัวก่อนเพื่อความปลอดภัยอย่างที่สุดค่ะ</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Group 1: Absolute Avoid -->
+                <div class="bg-white p-6 md:p-8 rounded-2xl border border-rose-100 shadow-md space-y-4 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-rose-500"></div>
+                    <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center text-2xl font-bold">🚨</div>
+                    <h3 class="text-lg md:text-xl font-bold text-slate-900">กลุ่มที่ 1: ห้ามทานหรือหลีกเลี่ยงเด็ดขาด</h3>
+                    <p class="text-slate-500 text-sm">ผู้ป่วยที่มีสภาวะภูมิคุ้มกันบกพร่องขั้นรุนแรง ซึ่งร่างกายไม่สามารถควบคุมจุลินทรีย์ธรรมดาได้ และอาจทำให้เสี่ยงต่อการติดเชื้อทางเลือด:</p>
+                    <ul class="space-y-2.5 text-slate-700 text-sm md:text-base pt-2">
+                        <li class="flex items-start gap-2">
+                            <span class="text-rose-500 font-bold text-sm">❌</span>
+                            <span>ผู้ป่วยมะเร็งที่กำลังทำเคมีบำบัด (Chemotherapy) หรือฉายรังสีรักษา</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-rose-500 font-bold text-sm">❌</span>
+                            <span>ผู้ป่วยผ่าตัดเปลี่ยนอวัยวะที่ต้องทานยากดภูมิขั้นรุนแรง (Immunosuppressants)</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-rose-500 font-bold text-sm">❌</span>
+                            <span>ผู้ป่วยวิกฤตที่ทำการคาสายสวนหลอดเลือดดำ (Central Venous Catheter)</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Group 2: Consult Physician -->
+                <div class="bg-white p-6 md:p-8 rounded-2xl border border-amber-100 shadow-md space-y-4 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-amber-500"></div>
+                    <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-2xl font-bold">⚠️</div>
+                    <h3 class="text-lg md:text-xl font-bold text-slate-900">กลุ่มที่ 2: ต้องพบปรึกษาแพทย์เจ้าของไข้ก่อน</h3>
+                    <p class="text-slate-500 text-sm">ผู้ป่วยที่มีปัญหาหรืออาการอักเสบรุนแรงเกี่ยวกับโครงสร้างทางอวัยวะและระบบอาหาร:</p>
+                    <ul class="space-y-2.5 text-slate-700 text-sm md:text-base pt-2">
+                        <li class="flex items-start gap-2">
+                            <span class="text-amber-600 font-bold text-sm">▫️</span>
+                            <span>ผู้ที่เพิ่งผ่านการผ่าตัดกระเพาะ ลำไส้ใหญ่ หรือรอยต่ออวัยวะน้ำย่อยที่แผลผ่าตัดภายในยังไม่สนิท</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-amber-600 font-bold text-sm">▫️</span>
+                            <span>ผู้ป่วยภาวะลำไส้สั้น (Short Bowel Syndrome) ซึ่งจะไวต่อแก๊สจากการหมักตัวค่อนข้างสูง</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-amber-600 font-bold text-sm">▫️</span>
+                            <span>ผู้ป่วยตับอ่อนอักเสบเฉียบพลันระดับรุนแรง</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Group 3: Sensitive to ingredients -->
+                <div class="bg-white p-6 md:p-8 rounded-2xl border border-purple-100 shadow-md space-y-4 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-purple-500"></div>
+                    <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-2xl font-bold">🌾</div>
+                    <h3 class="text-lg md:text-xl font-bold text-slate-900">กลุ่มที่ 3: ผู้มีอาการแพ้วัตถุดิบเฉพาะทาง</h3>
+                    <p class="text-slate-500 text-sm">ผู้ที่มีความไวหรือแพ้ส่วนผสม สารอาหาร หรือสปอร์ธรรมชาติตามพฤติกรรมร่างกาย:</p>
+                    <ul class="space-y-2.5 text-slate-700 text-sm md:text-base pt-2">
+                        <li class="flex items-start gap-2">
+                            <span class="text-purple-550 font-bold text-sm">🌾</span>
+                            <span>ผู้ป่วยแพ้กลูเตนรุนแรง หรือมีอาการแพ้ข้าวโอ๊ต ลูกเดือย และข้าวก่ำ อย่างรุนแรง</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-purple-555 font-bold text-sm">🌶️</span>
+                            <span>ผู้มีภาวะแพ้ฮิสตามีน (Histamine Intolerance) ซึ่งทานของหมักหมมแล้วจะปวดหัว ผื่นขึ้น คัน</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-purple-555 font-bold text-sm">💨</span>
+                            <span>ผู้ป่วยสภาวะจุลินทรีย์ในลำไส้เล็กโตเกินปกติ (SIBO) ควรบำบัดรักษาจุลินทรีย์ส่วนเกินกับแพทย์ให้เสร็จสิ้นก่อนทานเอนไซม์ธรรมชาติ</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Customer Call To Action (No tools, pure customer focus) -->
+        <section class="bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-3xl p-8 md:p-12 text-center shadow-xl space-y-6 relative overflow-hidden">
+            <div class="absolute -right-16 -top-16 w-64 h-64 bg-white/10 rounded-full blur-2xl"></div>
+            <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight relative z-10">เริ่มหยอดกระปุกฝากต้นทุนเอนไซม์ คืนสมดุลลำไส้วันนี้กับ "อ้อโฮมเมด"</h2>
+            <p class="text-white/90 text-huge max-w-2xl mx-auto font-light leading-relaxed relative z-10">
+                หากคุณก้าวผ่านวัย 40+ ปี และต้องการก้าวข้ามวัฏจักรพึ่งพายาเคมีแสบอกจุกอึดอัด ให้เอนไซม์สดโฮมเมดธรรมชาติของเราเป็นเพื่อนร่วมทางในการฟื้นฟูสุขภาพลำไส้ของคุณนะคะ
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4 relative z-10">
+                <div class="bg-white text-emerald-800 font-bold px-8 py-4 rounded-xl shadow-lg text-lg border border-white hover:bg-emerald-50 transition-all cursor-pointer">
+                    🛒 สั่งซื้ออาหารเอนไซม์สด
+                </div>
+                <div class="bg-emerald-700/60 border border-emerald-450 hover:bg-emerald-750 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all cursor-pointer">
+                    💬 สอบถามและปรึกษาสุขภาพลำไส้ฟรี
+                </div>
+            </div>
+            <p class="text-xs text-white/70 pt-2 font-mono">อ้อโฮมเมด • บรรจุสดใหม่แบบโฮมเมดธรรมชาติ 100% ไร้น้ำตาลและวัตถุกันเสีย</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-20">
+        <div class="max-w-5xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-sm">
+            <p>© 2026 อ้อโฮมเมด (Aor Homemade) - โภชนาการปรับสมดุลลำไส้ คืนความเบาสบายอย่างยั่งยืน</p>
+            <div class="flex gap-4">
+                <span class="hover:text-emerald-700 font-medium cursor-pointer">ธรรมชาติบำบัด</span>
+                <span>•</span>
+                <span class="hover:text-emerald-700 font-medium cursor-pointer">ความรู้เพื่อสุขภาพลำไส้</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive JS Script Logic -->
+    <script {nonce}>
+        // Timeline swapper control
+        function switchTimeline(index) {
+            // Hide all contents
+            document.querySelectorAll('.timeline-content').forEach(el => el.classList.add('hidden'));
+            
+            // Remove active classes from all buttons
+            for (let i = 1; i <= 3; i++) {
+                const btn = document.getElementById('tab-time-' + i);
+                btn.className = "flex-1 py-4 px-6 rounded-xl font-bold text-base md:text-lg text-slate-600 hover:text-slate-900 transition-all duration-200 text-center";
+            }
+
+            // Show active content and style active button
+            document.getElementById('content-time-' + index).classList.remove('hidden');
+            const activeBtn = document.getElementById('tab-time-' + index);
+            
+            if (index === 1) {
+                activeBtn.className = "flex-1 py-4 px-6 rounded-xl font-bold text-base md:text-lg text-emerald-800 bg-white shadow-sm transition-all duration-200 text-center";
+            } else if (index === 2) {
+                activeBtn.className = "flex-1 py-4 px-6 rounded-xl font-bold text-base md:text-lg text-teal-800 bg-white shadow-sm transition-all duration-200 text-center";
+            } else {
+                activeBtn.className = "flex-1 py-4 px-6 rounded-xl font-bold text-base md:text-lg text-amber-800 bg-white shadow-sm transition-all duration-200 text-center";
+            }
+        }
+
+        // Checklist risk evaluator logic
+        function calculateEnzymeRisk() {
+            const checkedBoxes = document.querySelectorAll('.symptom-checkbox:checked').length;
+            const scoreDisplay = document.getElementById('risk-score');
+            const levelTitle = document.getElementById('risk-level-title');
+            const statusDesc = document.getElementById('risk-status');
+            const riskBar = document.getElementById('risk-bar');
+            const adviceBox = document.getElementById('risk-advice-box');
+            const adviceText = document.getElementById('risk-advice');
+
+            const percent = (checkedBoxes / 6) * 100;
+            riskBar.style.width = percent + '%';
+            scoreDisplay.innerText = checkedBoxes + '/6';
+
+            if (checkedBoxes === 0) {
+                levelTitle.innerText = "สุขภาพดีเยี่ยม";
+                statusDesc.innerText = "ระบบทางเดินอาหารและลำไส้ยังสมบูรณ์ดีมาก";
+                levelTitle.className = "text-xl font-bold text-emerald-600";
+                riskBar.className = "bg-emerald-500 h-3 rounded-full transition-all duration-500";
+                adviceBox.className = "bg-emerald-50 p-5 rounded-xl border border-emerald-100";
+                adviceText.innerText = "ยินดีด้วยค่ะ! สภาพแวดล้อมระบบย่อยของคุณสมบูรณ์ดี ทานอาหารเอนไซม์สดเสริมวันละ 1 ช้อน เพื่อคงความเบาสบายและถนอมทุนเอนไซม์เอาไว้นานๆ ค่ะ";
+            } else if (checkedBoxes >= 1 && checkedBoxes <= 2) {
+                levelTitle.innerText = "ระดับระวังตัว (สัญญาณอ่อนๆ)";
+                statusDesc.innerText = "เริ่มมีสัญญาณเตือนว่าระบบย่อยขาดต้นทุน";
+                levelTitle.className = "text-xl font-bold text-amber-500";
+                riskBar.className = "bg-amber-400 h-3 rounded-full transition-all duration-500";
+                adviceBox.className = "bg-amber-50 p-5 rounded-xl border border-amber-100";
+                adviceText.innerText = "ร่างกายกำลังส่งเสียงเตือนเริ่มขาดเอนไซม์ช่วยบดย่อย! การทานเอนไซม์สดโฮมเมดจะช่วยสกัดไม่ให้ระดับสมดุลพังทลายเรื้อรัง และปรับปรุงอาการให้ดีขึ้นได้เร็ววัน";
+            } else if (checkedBoxes >= 3 && checkedBoxes <= 4) {
+                levelTitle.innerText = "ระดับวิกฤตปานกลาง (ลำไส้อ่อนล้า)";
+                statusDesc.innerText = "ระบบย่อยบอบช้ำสะสม ต้องช่วยเหลือทันที";
+                levelTitle.className = "text-xl font-bold text-orange-600";
+                riskBar.className = "bg-orange-500 h-3 rounded-full transition-all duration-500";
+                adviceBox.className = "bg-orange-50 p-5 rounded-xl border border-orange-100";
+                adviceText.innerText = "นี่คือสัญญาณชัดเจนว่ากระเพาะและลำไส้ทำงานหนักเกินขีดจำกัดแล้ว! การทานอาหารเอนไซม์สดช่วยแบ่งเบาภาระอย่างต่อเนื่องทุกวัน ควบคู่กับการเลิกพฤติกรรมทำร้ายลำไส้ คือหนทางเร่งด่วนที่สุด";
+            } else {
+                levelTitle.innerText = "ระดับอันตรายเร่งด่วน (สมดุลลำไส้พัง)";
+                statusDesc.innerText = "ระบบนิเวศน์ทางเดินอาหารแปรปรวนร้ายแรง";
+                levelTitle.className = "text-xl font-bold text-rose-600";
+                riskBar.className = "bg-rose-500 h-3 rounded-full transition-all duration-500";
+                adviceBox.className = "bg-rose-50 p-5 rounded-xl border border-rose-100";
+                adviceText.innerText = "ระดับวิกฤตสูงสุด! ระบบน้ำย่อยและจุลินทรีย์ล้มเหลวโดยสมบูรณ์ ทำให้เกิดอาการวนลูปปางตายทุกมื้ออาหาร แนะนำให้เริ่มทานเอนไซม์สด อ้อโฮมเมด ครั้งละ 2 ช้อนเคียงคู่ทุกมื้อหลัก และลดละเลิกนิสัยมื้อดึก อดนอน อย่างเด็ดขาดค่ะ!";
+            }
+        }
+    </script>
+</body>
+</html>
