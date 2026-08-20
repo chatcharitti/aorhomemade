@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ใบปลิว A5 — อ้อโฮมเมด (Aor Homemade)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Trirong:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --kraft:#7A4A24;
+    --kraft-deep:#42250F;
+    --cream:#FBF5E7;
+    --paper:#F2E7CE;
+    --gold:#C39A3E;
+    --leaf:#6C7A3B;
+    --ink:#2E1B0C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:#8b8378;
+    font-family:'Sarabun',sans-serif;
+    color:var(--ink);
+    padding:16px;
+    display:flex;flex-direction:column;align-items:center;gap:16px;
+  }
+  .page{
+    width:148mm;height:210mm;
+    background:var(--cream);
+    padding:9mm 9mm 7mm;
+    position:relative;overflow:hidden;
+    box-shadow:0 6px 24px rgba(0,0,0,.35);
+    display:flex;flex-direction:column;
+  }
+  .page::before{
+    content:"";position:absolute;inset:4mm;
+    border:1px solid rgba(122,74,36,.35);
+    border-radius:3px;pointer-events:none;
+  }
+  h1,h2,h3,.display{font-family:'Trirong',serif}
+
+  /* ---------- ทั่วไป: กรอบรูป ---------- */
+  .frame{
+    border:1.2px dashed var(--kraft);border-radius:3px;
+    background:#EADFC4;overflow:hidden;position:relative;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .frame span{font-size:6.5pt;color:var(--kraft);text-align:center;line-height:1.3;padding:2px}
+  .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+  /* ---------- หน้าหน้า ---------- */
+  .brandbar{display:flex;align-items:center;gap:7px;border-bottom:2px solid var(--kraft);padding-bottom:4px}
+  .mark{
+    width:11mm;height:11mm;border-radius:50%;flex:none;
+    border:1.5px dashed var(--kraft);position:relative;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    font-size:6pt;line-height:1.05;text-align:center;color:var(--kraft);
+  }
+  .mark img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff}
+  .brandbar .name{font-size:17pt;font-weight:700;color:var(--kraft-deep);line-height:1.1}
+  .brandbar .en{font-size:7.5pt;letter-spacing:.12em;color:var(--kraft);text-transform:uppercase}
+  .slogan{
+    text-align:center;margin:4px 0 2px;
+    font-family:'Trirong',serif;font-size:11.5pt;color:var(--kraft-deep);
+  }
+  .sub{text-align:center;font-size:8pt;color:var(--leaf);font-weight:600;letter-spacing:.02em}
+
+  .story-mini{
+    background:var(--paper);border-radius:4px;padding:5px 7px;margin:6px 0 3px;
+  }
+  .story-mini h2{font-size:10pt;color:var(--kraft-deep);margin-bottom:2px}
+  .story-mini p{font-size:7.5pt;line-height:1.42;text-indent:10px;color:#4a3524}
+
+  .eyebrow{
+    display:flex;align-items:center;gap:6px;margin:6px 0 4px;
+    font-size:8.5pt;font-weight:700;letter-spacing:.16em;color:var(--kraft);text-transform:uppercase;
+  }
+  .eyebrow::after{content:"";flex:1;height:1px;background:rgba(122,74,36,.4)}
+
+  .menu{display:flex;flex-direction:column;gap:4px;flex:1}
+  .item{
+    display:grid;grid-template-columns:31mm 1fr;gap:6px;
+    background:var(--paper);border-radius:4px;padding:5px;position:relative;
+  }
+  .item .frame{aspect-ratio:765/1024}
+  .item .frame span{font-size:6pt}
+  .item h3{font-size:12pt;color:var(--kraft-deep);line-height:1.15}
+  .item .en{font-size:7.5pt;color:var(--leaf);letter-spacing:.03em;margin-bottom:2px}
+  .item ul{list-style:none;font-size:8pt;line-height:1.45}
+  .item li{padding-left:9px;position:relative}
+  .item li::before{content:"";position:absolute;left:0;top:6px;width:4px;height:4px;border-radius:50%;background:var(--gold)}
+  .seal{
+    position:absolute;right:5px;bottom:5px;
+    width:16mm;height:16mm;border-radius:50%;
+    background:var(--gold);color:#fff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-family:'Trirong',serif;line-height:1;
+    box-shadow:0 1px 4px rgba(0,0,0,.25);
+  }
+  .seal b{font-size:14pt}
+  .seal small{font-size:6pt;font-family:'Sarabun',sans-serif;font-weight:600}
+  .promo{
+    display:inline-block;margin-top:3px;font-size:7.5pt;font-weight:700;
+    color:#fff;background:var(--leaf);border-radius:2px;padding:1px 6px;
+  }
+  .nutri{
+    margin-top:3px;font-size:7pt;color:var(--kraft-deep);
+    background:#fff;border-left:3px solid var(--gold);padding:2px 5px;display:inline-block;
+  }
+  .footnote{
+    margin-top:4px;text-align:center;font-size:7pt;font-weight:600;color:#fff;
+    background:var(--kraft);border-radius:3px;padding:2px 3px;
+  }
+
+  /* ---------- หน้าหลัง ---------- */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px}
+  .card{border:1px solid rgba(122,74,36,.4);border-radius:4px;padding:6px 7px}
+  .card h3{font-size:10pt;color:var(--kraft-deep);border-bottom:1px solid var(--gold);padding-bottom:2px;margin-bottom:4px}
+  .card dl{font-size:7.8pt;line-height:1.4}
+  .card dt{font-weight:700;color:var(--kraft)}
+  .card dd{margin:0 0 4px 0;color:#4a3524}
+
+  .infoframe{margin-top:6px;display:flex;justify-content:center}
+  .infoframe .frame{aspect-ratio:1/1;width:74mm}
+  .infoframe .frame span{font-size:7pt}
+
+  .order{margin-top:6px;background:var(--kraft-deep);color:#F6E9CF;border-radius:4px;padding:7px 9px}
+  .order h3{font-size:10.5pt;color:#fff;margin-bottom:3px}
+  .order p{font-size:8pt;line-height:1.45}
+  .offer{
+    display:grid;grid-template-columns:24mm 1fr;gap:8px;align-items:center;
+    margin-top:6px;border:1.5px solid var(--gold);border-radius:4px;padding:6px;background:#fff;
+  }
+  .offer .frame{aspect-ratio:1/1;border-color:var(--gold)}
+  .offer h3{font-size:11pt;color:var(--kraft-deep);line-height:1.2}
+  .offer .big{font-family:'Trirong',serif;font-size:16pt;color:var(--leaf);font-weight:700}
+  .offer p{font-size:7.8pt;line-height:1.4;margin-top:2px}
+  .contact{
+    margin-top:auto;border-top:2px solid var(--kraft);padding-top:5px;
+    display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:8pt;
+  }
+  .contact b{color:var(--kraft-deep)}
+  .contact .tel{font-family:'Trirong',serif;font-size:12pt;color:var(--kraft-deep)}
+
+  @media print{
+    @page{size:A5;margin:0}
+    body{background:#fff;padding:0;gap:0;display:block}
+    .page{box-shadow:none;width:148mm;height:210mm;page-break-after:always}
+    .page:last-child{page-break-after:auto}
+    .noprint{display:none}
+  }
+  .noprint{
+    font-family:'Sarabun',sans-serif;font-size:9pt;color:#fff;background:rgba(0,0,0,.45);
+    padding:8px 12px;border-radius:4px;max-width:148mm;line-height:1.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="noprint">
+  วางไฟล์รูปไว้โฟลเดอร์เดียวกับไฟล์นี้: <b>logo_Aorhomemade-v1.png</b> (โลโก้) · <b>photo1.jpg</b> คุกกี้ (765×1024) · <b>photo2.jpg</b> ขนมปังสายรุ้ง (765×1024) · <b>photo3.jpg</b> ซินนามอนโรล (765×1024) · <b>photo4.jpg</b> วิธีเก็บ/อุ่น (1024×1024) · <b>qr-line.png</b> QR LINE OA แล้วสั่งพิมพ์ A5 (เปิด Background graphics)
+</div>
+
+<!-- ================= หน้าหน้า ================= -->
+<section class="page">
+  <div class="brandbar">
+    <div class="mark">
+      <img src="logo_Aorhomemade-v1.png" alt="" onerror="this.remove()">
+      <span>โลโก้<br>กระต่าย</span>
+    </div>
+    <div>
+      <div class="name">อ้อโฮมเมด</div>
+      <div class="en">Aor Homemade</div>
+    </div>
+  </div>
+
+  <div class="slogan">“จากครัวบ้านเรา สู่โต๊ะอาหารบ้านคุณ”</div>
+  <div class="sub">อาหารและเบเกอรี่เพื่อสุขภาพ · พลังงานสะอาดจากธรรมชาติ 100%</div>
+
+  <div class="story-mini">
+    <h2>เรื่องเล่าจากครัวของเรา · Our Story</h2>
+    <p>เพราะจุดเริ่มต้นมาจากความใส่ใจในสุขภาพของคนในบ้าน เราจึงพิถีพิถันคัดสรรวัตถุดิบทุกชนิดอย่างเข้มงวด ปราศจากสารเคมีปรุงแต่ง เพื่อให้ทุกคำคือโภชนาการที่ปลอดภัยที่สุด และพร้อมส่งต่อความตั้งใจนี้จากครัวบ้านเราสู่โต๊ะอาหารของคุณ</p>
+  </div>
+
+  <div class="eyebrow">เมนูแนะนำประจำบูธ</div>
+
+  <div class="menu">
+
+    <article class="item">
+      <div class="frame"><span>photo2.jpg<br>ขนมปังสายรุ้ง</span><img src="photo2.jpg" alt="" onerror="this.remove()"></div>
+      <div>
+        <h3>ขนมปังสายรุ้งธัญพืช วีแกน</h3>
+        <div class="en">Vegan Rainbow Multi-Grain Bread</div>
+        <ul>
+          <li>อิ่มนาน ไฟเบอร์สูง สีธรรมชาติ 100% จากฟักทอง มันม่วง ผักโขม งาดำ</li>
+          <li>Plant-Based 100% ปราศจากนม เนย ไข่ และสารกันเสีย</li>
+        </ul>
+      </div>
+      <div class="seal"><b>65</b><small>บาท</small></div>
+    </article>
+
+    <article class="item">
+      <div class="frame"><span>photo3.jpg<br>ซินนามอนโรล</span><img src="photo3.jpg" alt="" onerror="this.remove()"></div>
+      <div>
+        <h3>ซินนามอนโรล อัลมอนด์ แครนเบอร์รี่</h3>
+        <div class="en">Cinnamon Almond Cranberry Roll</div>
+        <ul>
+          <li>หอมอบเชยแท้ กรุบอัลมอนด์ เปรี้ยวอมหวานจากแครนเบอร์รี่</li>
+          <li>ย่อยง่าย สบายท้อง ทานคู่กาแฟเข้ากันที่สุด</li>
+        </ul>
+        <span class="promo">โปร 2 ถาด 120 บาท</span>
+      </div>
+      <div class="seal"><b>65</b><small>บาท</small></div>
+    </article>
+
+    <article class="item">
+      <div class="frame"><span>photo1.jpg<br>คุกกี้มัลติเกรน</span><img src="photo1.jpg" alt="" onerror="this.remove()"></div>
+      <div>
+        <h3>คุกกี้โฮลเกรน ธัญพืชรวม</h3>
+        <div class="en">Whole Grain Plant-Based Cookies · Gluten-Free</div>
+        <ul>
+          <li>ของว่างระหว่างทำงาน หวานน้อยจากน้ำตาลมะพร้าวแท้</li>
+          <li>ไฟเบอร์และไขมันดีจากธัญพืชเต็มเมล็ด อิ่มสบาย ไม่หลุดไดเอต</li>
+        </ul>
+        <span class="nutri">ต่อชิ้น ~125 kcal · คาร์บ 9 ก. · โปรตีน 3 ก. · ไขมัน 9 ก.</span>
+      </div>
+      <div class="seal"><b>120</b><small>บาท / 6 ชิ้น</small></div>
+    </article>
+
+  </div>
+
+  <div class="footnote">อบสดใหม่ทุกออเดอร์ · ไม่ใช้น้ำตาลทรายขาวและสารกันบูด</div>
+</section>
+
+<!-- ================= หน้าหลัง ================= -->
+<section class="page">
+
+  <div class="eyebrow">วิธีเก็บรักษาและอุ่นให้อร่อย</div>
+
+  <div class="two">
+    <div class="card">
+      <h3>วิธีเก็บรักษา</h3>
+      <dl>
+        <dt>อุณหภูมิห้อง — 3 วัน</dt>
+        <dd>วางในที่แห้ง พ้นแสงแดดและความร้อน ปิดปากถุงให้สนิททุกครั้ง</dd>
+        <dt>ตู้เย็นช่องธรรมดา — 5–7 วัน</dt>
+        <dd>ใส่กล่องสุญญากาศเพื่อรักษาความชุ่มชื้น</dd>
+        <dt>ช่องแช่แข็ง — 1 เดือน</dt>
+        <dd>หั่นสไลซ์ ห่อแยกชิ้นก่อนแช่ หยิบอุ่นได้ทีละชิ้น</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <h3>อุ่นให้อร่อยเหมือนเพิ่งออกเตา</h3>
+      <dl>
+        <dt>ไมโครเวฟ</dt>
+        <dd>วางแก้วน้ำใบเล็กไว้ข้างๆ อุ่น 15–20 วินาที (~600W)</dd>
+        <dt>หม้อทอดไร้น้ำมัน / เตาอบ</dt>
+        <dd>พรมน้ำบางๆ ที่ผิว อบ 150–160°C นาน 2–3 นาที</dd>
+        <dt>นึ่ง</dt>
+        <dd>นึ่งบนน้ำเดือดเบา 2–3 นาที ได้เนื้อนุ่มนวล</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="infoframe">
+    <div class="frame"><span>photo4.jpg<br>อินโฟกราฟิกวิธีเก็บรักษาและอุ่นขนมปัง<br>(1024×1024)</span><img src="photo4.jpg" alt="" onerror="this.remove()"></div>
+  </div>
+
+  <div class="order">
+    <h3>รอบจัดส่ง</h3>
+    <p>อบสดใหม่ตามรอบออเดอร์ · บริการเดลิเวอรีตรงถึงอาคารสำนักงานและที่พักอาศัย · แจ้งรอบส่งประจำสัปดาห์ทาง LINE</p>
+  </div>
+
+  <div class="offer">
+    <div class="frame"><span>qr-line.png<br>QR LINE OA</span><img src="qr-line.png" alt="" onerror="this.remove()"></div>
+    <div>
+      <h3>สิทธิพิเศษเปิดตัวที่ ก.ล.ต.</h3>
+      <div class="big">ส่วนลด 10%</div>
+      <p>สแกนเพื่อเพิ่มเพื่อนใน LINE รับส่วนลดสำหรับการสั่งซื้อรอบถัดไป พร้อมติดตามเมนูใหม่และสั่งรอบส่งประจำสัปดาห์</p>
+    </div>
+  </div>
+
+  <div class="contact">
+    <div>
+      <div><b>LINE Official:</b> @aorhomemade</div>
+      <div><b>Facebook:</b> อ้อโฮมเมด อาหารและเบเกอรี่เพื่อสุขภาพ</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:7pt;color:#7A4A24">โทรสั่งซื้อ</div>
+      <div class="tel">092-415-1550</div>
+    </div>
+  </div>
+
+</section>
+
+</body>
+</html>
